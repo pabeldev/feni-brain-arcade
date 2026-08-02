@@ -174,7 +174,7 @@
       justify-content: center;
     }
 
-    /* ULTRA-SMOOTH BUTTERY SCALE UP/DOWN ANIMATION */
+    /* GENTLE, ULTRA-SUBTLE SMOOTH SCALE ANIMATION FOR HERO LOGO (SCALE 1 TO 1.03) */
     .welcome-hero-img {
       width: 100%;
       height: 100%;
@@ -182,18 +182,18 @@
       border-radius: 42px;
       border: 4px solid #FFD700;
       box-shadow: 0 0 35px rgba(255, 215, 0, 0.65), 0 20px 50px rgba(0, 0, 0, 0.9);
-      animation: heroSmoothScale 2.8s infinite cubic-bezier(0.4, 0, 0.2, 1) alternate;
+      animation: heroSubtleScale 3.2s infinite ease-in-out alternate;
       will-change: transform, box-shadow;
     }
 
-    @keyframes heroSmoothScale {
+    @keyframes heroSubtleScale {
       0% {
         transform: scale(1);
         box-shadow: 0 0 25px rgba(255, 215, 0, 0.45), 0 15px 40px rgba(0, 0, 0, 0.85);
       }
       100% {
-        transform: scale(1.06);
-        box-shadow: 0 0 50px rgba(255, 215, 0, 0.85), 0 25px 60px rgba(0, 0, 0, 0.95);
+        transform: scale(1.03);
+        box-shadow: 0 0 45px rgba(255, 215, 0, 0.75), 0 22px 55px rgba(0, 0, 0, 0.92);
       }
     }
 
@@ -500,6 +500,7 @@
     .mode-tab {
       flex: 1; padding: 6px 4px; border-radius: 12px; font-size: 0.76rem; font-weight: 900; text-align: center;
       background: rgba(10, 8, 25, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); color: #A090C0; cursor: pointer;
+      transition: all 0.2s ease;
     }
     .mode-tab.active { background: linear-gradient(135deg, var(--gold-glowing), #FF9100); border-color: #FFF; color: #FFF; box-shadow: 0 0 12px var(--gold-glow); }
 
@@ -1397,11 +1398,35 @@
       window.open(`https://wa.me/8801615288259?text=${message}`, '_blank');
     };
 
-    // STRICT 3x3 GAMEPLAY ENGINE WITH EVOLVING PIECES
+    // STRICT 3x3 GAMEPLAY ENGINE WITH MULTIPLAYER, EASY & HARD AI MODES
     let activePlayLevel = 1;
     let gameState = Array(9).fill('');
     let isGameActive = true;
     let currentGutiTheme = { pX: '❌', pO: '⭕' };
+    let currentMode = 'hard'; // 'hard', 'easy', 'multi'
+    let currentPlayerTurn = 'X'; // 'X' or 'O' for Multi mode
+
+    // GAME MODE TAB SELECTION LISTENERS
+    document.getElementById('modeHardBtn').addEventListener('click', () => {
+      audioManager.playClick();
+      setGameMode('hard');
+    });
+    document.getElementById('modeEasyBtn').addEventListener('click', () => {
+      audioManager.playClick();
+      setGameMode('easy');
+    });
+    document.getElementById('modeMultiBtn').addEventListener('click', () => {
+      audioManager.playClick();
+      setGameMode('multi');
+    });
+
+    function setGameMode(mode) {
+      currentMode = mode;
+      document.getElementById('modeHardBtn').classList.toggle('active', mode === 'hard');
+      document.getElementById('modeEasyBtn').classList.toggle('active', mode === 'easy');
+      document.getElementById('modeMultiBtn').classList.toggle('active', mode === 'multi');
+      resetMatchBoard();
+    }
 
     function startLevelGame(lvl) {
       activePlayLevel = lvl;
@@ -1425,7 +1450,13 @@
     function resetMatchBoard() {
       gameState = Array(9).fill('');
       isGameActive = true;
-      document.getElementById('statusText').textContent = `Player (${currentGutiTheme.pX}) Turn`;
+      currentPlayerTurn = 'X';
+
+      if (currentMode === 'multi') {
+        document.getElementById('statusText').textContent = `Player 1 (${currentGutiTheme.pX}) Turn`;
+      } else {
+        document.getElementById('statusText').textContent = `Player (${currentGutiTheme.pX}) Turn`;
+      }
 
       const boardEl = document.getElementById('board');
       boardEl.innerHTML = '';
@@ -1443,30 +1474,153 @@
     function handleCellClick(idx) {
       if (gameState[idx] !== '' || !isGameActive) return;
       audioManager.playClick();
-      totalMatchesPlayed++;
+
+      // 1. MULTIPLAYER 2-PLAYER MODE (SAME DEVICE)
+      if (currentMode === 'multi') {
+        const activePiece = (currentPlayerTurn === 'X') ? currentGutiTheme.pX : currentGutiTheme.pO;
+        makeMove(idx, activePiece);
+        totalMatchesPlayed++;
+
+        if (checkWin3x3(gameState, activePiece)) {
+          isGameActive = false;
+          audioManager.playVictory();
+          const winnerName = (currentPlayerTurn === 'X') ? 'Player 1' : 'Player 2';
+          document.getElementById('statusText').textContent = `🎉 ${winnerName} (${activePiece}) Wins!`;
+          setTimeout(() => {
+            alert(`🏆 ${winnerName} (${activePiece}) Wins the Match!`);
+            resetMatchBoard();
+          }, 250);
+          return;
+        }
+
+        if (gameState.every(c => c !== '')) {
+          isGameActive = false;
+          document.getElementById('statusText').textContent = '🤝 Match Draw!';
+          setTimeout(() => { alert('🤝 Match Draw!'); resetMatchBoard(); }, 250);
+          return;
+        }
+
+        // Alternate turn between Player 1 & Player 2
+        currentPlayerTurn = (currentPlayerTurn === 'X') ? 'O' : 'X';
+        const nextPiece = (currentPlayerTurn === 'X') ? currentGutiTheme.pX : currentGutiTheme.pO;
+        const playerLabel = (currentPlayerTurn === 'X') ? 'Player 1' : 'Player 2';
+        document.getElementById('statusText').textContent = `${playerLabel} (${nextPiece}) Turn`;
+        return;
+      }
+
+      // 2. SINGLE PLAYER VS AI (EASY OR HARD)
       makeMove(idx, currentGutiTheme.pX);
+      totalMatchesPlayed++;
 
       if (checkWin3x3(gameState, currentGutiTheme.pX)) {
         handleVictory();
         return;
       }
-      if (gameState.every(c => c !== '')) { alert('🤝 Match Draw!'); resetMatchBoard(); return; }
 
-      // AI TURN
+      if (gameState.every(c => c !== '')) {
+        isGameActive = false;
+        document.getElementById('statusText').textContent = '🤝 Match Draw!';
+        setTimeout(() => { alert('🤝 Match Draw!'); resetMatchBoard(); }, 250);
+        return;
+      }
+
+      // AI TURN EXECUTION
+      document.getElementById('statusText').textContent = `🤖 AI (${currentGutiTheme.pO}) Thinking...`;
+      isGameActive = false;
+
       setTimeout(() => {
-        if (!isGameActive) return;
-        let empty = [];
-        for (let i = 0; i < 9; i++) if (gameState[i] === '') empty.push(i);
-        if (empty.length > 0) {
-          let aiIdx = empty[Math.floor(Math.random() * empty.length)];
-          makeMove(aiIdx, currentGutiTheme.pO);
+        let emptyIndices = [];
+        for (let i = 0; i < 9; i++) if (gameState[i] === '') emptyIndices.push(i);
+
+        if (emptyIndices.length > 0) {
+          let chosenMoveIdx;
+          if (currentMode === 'easy') {
+            // AI EASY: 50% random move, 50% minimax move
+            if (Math.random() < 0.5) {
+              chosenMoveIdx = getBestMinimaxMove(gameState, currentGutiTheme.pO, currentGutiTheme.pX);
+            } else {
+              chosenMoveIdx = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            }
+          } else {
+            // AI HARD: Unbeatable Minimax Move
+            chosenMoveIdx = getBestMinimaxMove(gameState, currentGutiTheme.pO, currentGutiTheme.pX);
+          }
+
+          makeMove(chosenMoveIdx, currentGutiTheme.pO);
+
           if (checkWin3x3(gameState, currentGutiTheme.pO)) {
             totalLosses++;
             updateUI();
-            alert('💔 Match Defeat!'); resetMatchBoard();
+            document.getElementById('statusText').textContent = `💔 AI (${currentGutiTheme.pO}) Wins!`;
+            setTimeout(() => { alert('💔 AI Wins! Try again.'); resetMatchBoard(); }, 250);
+            return;
+          }
+
+          if (gameState.every(c => c !== '')) {
+            document.getElementById('statusText').textContent = '🤝 Match Draw!';
+            setTimeout(() => { alert('🤝 Match Draw!'); resetMatchBoard(); }, 250);
+            return;
+          }
+
+          isGameActive = true;
+          document.getElementById('statusText').textContent = `Player (${currentGutiTheme.pX}) Turn`;
+        }
+      }, 350);
+    }
+
+    // MINIMAX ENGINE FOR AI HARD & EASY
+    function getBestMinimaxMove(board, aiPiece, humanPiece) {
+      let bestScore = -Infinity;
+      let bestMove = -1;
+
+      for (let i = 0; i < 9; i++) {
+        if (board[i] === '') {
+          board[i] = aiPiece;
+          let score = minimax(board, 0, false, aiPiece, humanPiece);
+          board[i] = '';
+          if (score > bestScore) {
+            bestScore = score;
+            bestMove = i;
           }
         }
-      }, 300);
+      }
+
+      if (bestMove === -1) {
+        let empty = [];
+        for (let i = 0; i < 9; i++) if (board[i] === '') empty.push(i);
+        bestMove = empty[Math.floor(Math.random() * empty.length)];
+      }
+      return bestMove;
+    }
+
+    function minimax(board, depth, isMaximizing, aiPiece, humanPiece) {
+      if (checkWin3x3(board, aiPiece)) return 10 - depth;
+      if (checkWin3x3(board, humanPiece)) return depth - 10;
+      if (board.every(cell => cell !== '')) return 0;
+
+      if (isMaximizing) {
+        let maxEval = -Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === '') {
+            board[i] = aiPiece;
+            let evaluation = minimax(board, depth + 1, false, aiPiece, humanPiece);
+            board[i] = '';
+            maxEval = Math.max(maxEval, evaluation);
+          }
+        }
+        return maxEval;
+      } else {
+        let minEval = Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === '') {
+            board[i] = humanPiece;
+            let evaluation = minimax(board, depth + 1, true, aiPiece, humanPiece);
+            board[i] = '';
+            minEval = Math.min(minEval, evaluation);
+          }
+        }
+        return minEval;
+      }
     }
 
     function makeMove(idx, sym) {
