@@ -1,0 +1,12 @@
+# OS / System files
+.DS_Store
+Thumbs.db
+*.log
+
+# Temp files & Scratch
+scratch/
+.system_generated/
+
+# Binaries & Compiled APKs (optional ignore or track, we keep repo clean)
+*.apk
+node_modules/

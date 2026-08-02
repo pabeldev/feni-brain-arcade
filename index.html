@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tic Tac Toe- Not for Beginners (Feni 3D Flame Edition)</title>
+  <link rel="icon" type="image/jpeg" href="app-icon.jpg">
+  <style>
+    :root {
+      /* CYBER-NEON REFERENCE PALETTE */
+      --bg-dark-obsidian: #090915;
+      --bg-cyber-gradient: radial-gradient(circle at 50% 15%, #1D153B 0%, #090915 85%);
+      --glass-card: rgba(26, 22, 56, 0.85);
+      --glass-border: rgba(157, 78, 221, 0.38);
+      --glass-shine: rgba(255, 255, 255, 0.15);
+
+      /* ACCENT PALETTE */
+      --purple-electric: #9D4EDD;
+      --purple-glow: rgba(157, 78, 221, 0.45);
+      --gold-glowing: #FFD700;
+      --gold-glow: rgba(255, 215, 0, 0.45);
+      --pink-neon: #FF2E93;
+      --pink-glow: rgba(255, 46, 147, 0.45);
+      --cyan-vibrant: #00F5FF;
+      --cyan-glow: rgba(0, 245, 255, 0.45);
+      --diamond-blue: #00E5FF;
+      --diamond-glow: rgba(0, 229, 255, 0.5);
+      --google-green: #0F9D58;
+
+      /* STREAK MODAL BASE */
+      --modal-white-base: #FFFFFF;
+      --modal-subtle-glow: radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.12) 0%, rgba(255, 255, 255, 0) 70%), #FFFFFF;
+      --text-dark-slate: #1E293B;
+      --text-muted-slate: #64748B;
+      --orange-accent: #FF6B00;
+      --orange-soft-border: rgba(255, 138, 0, 0.28);
+      --red-cta: linear-gradient(135deg, #FF5252 0%, #FF1744 100%);
+      --green-yes: linear-gradient(135deg, #00E676 0%, #00C853 100%);
+      --ice-blue: #00E5FF;
+      --ice-bg: #E0F7FA;
+
+      --border-radius-lg: 32px;
+      --border-radius-md: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: var(--bg-dark-obsidian);
+      background-image: var(--bg-cyber-gradient);
+      color: #FFFFFF;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      position: relative;
+    }
+
+    html { height: -webkit-fill-available; }
+
+    /* CYBER-NEON BACKGROUND PARTICLES & GRID */
+    .bg-grid {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(157, 78, 221, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(157, 78, 221, 0.08) 1px, transparent 1px);
+      mask-image: radial-gradient(ellipse 85% 65% at 50% 30%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 30%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app-screen {
+      width: 100%;
+      max-width: 430px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px 20px 16px;
+      z-index: 1;
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .app-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) scale(0.95);
+    }
+
+    /* TOP HEADER BAR WITH OFFICIAL GAME TITLE */
+    .header-bar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--glass-card);
+      border: 1.5px solid var(--glass-border);
+      border-radius: var(--border-radius-md);
+      padding: 8px 12px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px var(--glass-shine);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand-title { display: flex; align-items: center; gap: 6px; }
+    .app-logo-img { width: 32px; height: 32px; border-radius: 9px; border: 1.5px solid var(--cyan-vibrant); object-fit: cover; box-shadow: 0 0 10px var(--cyan-glow); }
+    .game-name { font-size: 0.76rem; font-weight: 900; background: linear-gradient(135deg, #FFF, var(--cyan-vibrant)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .header-stats { display: flex; align-items: center; gap: 4px; }
+
+    .google-play-btn {
+      background: rgba(15, 157, 88, 0.2);
+      border: 1.5px solid var(--google-green);
+      border-radius: 12px;
+      padding: 3px 6px;
+      font-size: 0.72rem; font-weight: 900;
+      color: #57D9A3; cursor: pointer;
+      display: flex; align-items: center; gap: 2px;
+      box-shadow: 0 0 8px rgba(15, 157, 88, 0.3);
+      transition: transform 0.15s ease;
+    }
+    .google-play-btn:active { transform: scale(0.92); }
+
+    .stat-badge {
+      background: rgba(10, 8, 25, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 3px 7px;
+      font-size: 0.76rem; font-weight: 900;
+      display: flex; align-items: center; gap: 3px;
+      cursor: pointer; color: #FFF;
+      transition: transform 0.15s ease;
+    }
+    .stat-badge:active { transform: scale(0.92); }
+
+    .stat-badge.streak { border-color: var(--orange-accent); color: #FF9E00; }
+    .stat-badge.coins { border-color: var(--gold-glowing); color: var(--gold-glowing); box-shadow: 0 0 10px var(--gold-glow); }
+    .stat-badge.diamonds { border-color: var(--diamond-blue); color: var(--diamond-blue); box-shadow: 0 0 10px var(--diamond-glow); }
+
+    /* VIEW 1: MAP SCREEN */
+    .map-container {
+      width: 100%;
+      flex: 1;
+      overflow-y: auto;
+      margin: 8px 0;
+      padding: 24px 10px 34px 10px;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 32px;
+      scroll-behavior: smooth;
+    }
+
+    /* CUSTOM 3D FLAME NODE STRUCTURE */
+    .map-flame-node {
+      position: relative;
+      width: 76px;
+      height: 94px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .map-flame-node:active { transform: scale(0.92); }
+
+    .flame-badge-bg {
+      position: absolute;
+      top: -14px;
+      width: 58px;
+      height: 76px;
+      background: linear-gradient(0deg, #FFD54F 0%, #FF9100 45%, #FF3D00 100%);
+      clip-path: polygon(50% 0%, 88% 28%, 100% 60%, 80% 95%, 20% 95%, 0% 60%, 12% 28%);
+      border-radius: 40% 40% 50% 50%;
+      box-shadow: 0 -8px 22px rgba(255, 61, 0, 0.65);
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    .flame-circle-overlay {
+      position: relative;
+      z-index: 2;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #1D183B 0%, #0B0822 100%);
+      border: 3px solid #FF9100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.35);
+      margin-bottom: 8px;
+      color: #FFF;
+      font-size: 1.08rem;
+      font-weight: 950;
+    }
+
+    .map-flame-node.unlocked .flame-circle-overlay {
+      border-color: var(--cyan-vibrant);
+      box-shadow: 0 0 16px var(--cyan-glow), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    }
+
+    .map-flame-node.current .flame-badge-bg {
+      animation: flamePulseAnim 1.2s infinite alternate;
+    }
+
+    .map-flame-node.current .flame-circle-overlay {
+      border-color: var(--gold-glowing);
+      box-shadow: 0 0 22px var(--gold-glowing);
+    }
+
+    .map-flame-node.next-purchasable .flame-circle-overlay {
+      border-color: var(--gold-glowing);
+      color: var(--gold-glowing);
+      font-size: 0.85rem;
+      box-shadow: 0 0 14px var(--gold-glowing);
+    }
+
+    @keyframes flamePulseAnim {
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 -4px 10px #FF3D00); }
+      100% { transform: translateY(-4px) scale(1.14); filter: drop-shadow(0 -8px 24px #FFD54F); }
+    }
+
+    .map-flame-node.locked .flame-badge-bg {
+      background: linear-gradient(0deg, #64748B 0%, #475569 50%, #334155 100%);
+      box-shadow: none;
+      filter: opacity(0.6);
+    }
+
+    .map-flame-node.locked .flame-circle-overlay {
+      border-color: #64748B;
+      color: #94A3B8;
+    }
+
+    .node-name-label {
+      position: absolute; bottom: -22px;
+      font-size: 0.68rem; font-weight: 800;
+      white-space: nowrap; background: rgba(8, 6, 20, 0.92);
+      padding: 3px 10px; border-radius: 12px;
+      border: 1px solid var(--purple-electric); color: #FFF;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      z-index: 3;
+    }
+
+    /* ZIG-ZAG ALIGNMENT */
+    .map-flame-node:nth-child(4n+1) { align-self: flex-start; margin-left: 24px; }
+    .map-flame-node:nth-child(4n+2) { align-self: center; }
+    .map-flame-node:nth-child(4n+3) { align-self: flex-end; margin-right: 24px; }
+    .map-flame-node:nth-child(4n+0) { align-self: center; }
+
+    /* VIEW 2: CLEAN GAMEPLAY SCREEN */
+    .game-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-card);
+      border: 1.5px solid var(--glass-border);
+      border-radius: var(--border-radius-md);
+      padding: 8px 14px;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 14px;
+      color: #FFF; padding: 6px 12px;
+      font-size: 0.82rem; font-weight: 800;
+      cursor: pointer;
+    }
+
+    .level-title-banner { font-size: 0.92rem; font-weight: 900; color: var(--gold-glowing); }
+
+    .mode-selector-bar {
+      width: 100%;
+      background: var(--glass-card);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 6px;
+    }
+
+    .mode-tab {
+      flex: 1; padding: 6px 4px; border-radius: 12px;
+      font-size: 0.76rem; font-weight: 900; text-align: center;
+      background: rgba(10, 8, 25, 0.6); border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #A090C0; cursor: pointer; transition: all 0.25s ease;
+    }
+
+    .mode-tab.active {
+      background: linear-gradient(135deg, var(--purple-electric), #7B2CBF);
+      border-color: #FFF; color: #FFF;
+      box-shadow: 0 0 12px var(--purple-glow);
+    }
+
+    .rule-of-5-bar {
+      width: 100%;
+      background: var(--glass-card);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .wins-dots { display: flex; gap: 8px; }
+    .win-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3);
+      transition: all 0.3s ease;
+    }
+    .win-dot.active { background: var(--cyan-vibrant); border-color: var(--cyan-vibrant); box-shadow: 0 0 12px var(--cyan-vibrant); }
+
+    .center-zone { width: 100%; display: flex; justify-content: center; align-items: center; margin: auto 0; perspective: 1000px; }
+    .board {
+      width: 100%; max-width: clamp(270px, 82vw, 340px); aspect-ratio: 1 / 1;
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 10px;
+      background: rgba(14, 10, 36, 0.85); padding: 14px; border-radius: 30px;
+      border: 2px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 2px var(--glass-shine);
+      transform: rotateX(4deg); transition: transform 0.3s ease;
+    }
+
+    .cell {
+      background: rgba(24, 18, 56, 0.75);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; position: relative;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.2);
+      transition: transform 0.15s ease; overflow: hidden;
+    }
+
+    .cell:active:not(.taken) { transform: scale(0.93); }
+
+    .marker-svg { width: 68%; height: 68%; display: block; animation: pop3D 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    @keyframes pop3D { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+    .reset-btn {
+      width: 100%; max-width: 340px; height: 50px;
+      background: linear-gradient(135deg, var(--cyan-vibrant) 0%, #0077FF 100%);
+      border: none; border-radius: 25px; color: #FFF;
+      font-size: 0.95rem; font-weight: 900; letter-spacing: 0.5px;
+      text-transform: uppercase; cursor: pointer;
+      box-shadow: 0 8px 24px var(--cyan-glow);
+    }
+    .reset-btn:active { transform: scale(0.96); }
+
+    /* MODAL OVERLAY BASE */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(4, 3, 12, 0.85); backdrop-filter: blur(16px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+    }
+
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    /* FLOATING CONFIRMATION POPUP MODALS */
+    .confirm-card {
+      width: 88%; max-width: 350px; background: #FFFFFF;
+      border: 3px solid var(--gold-glowing); border-radius: 32px;
+      padding: 22px 18px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5); color: var(--text-dark-slate);
+      transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.active .confirm-card { transform: scale(1); }
+
+    .confirm-title { font-size: 1.4rem; font-weight: 950; color: var(--orange-accent); letter-spacing: 0.5px; }
+    .confirm-body { font-size: 0.88rem; font-weight: 700; color: var(--text-dark-slate); line-height: 1.3; }
+
+    .confirm-btn-row { width: 100%; display: flex; gap: 10px; margin-top: 4px; }
+    .btn-yes {
+      flex: 1; height: 44px; background: var(--green-yes);
+      border: none; border-radius: 20px; color: #FFF;
+      font-size: 0.95rem; font-weight: 900; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 230, 118, 0.4);
+    }
+    .btn-cancel {
+      flex: 1; height: 44px; background: var(--red-cta);
+      border: none; border-radius: 20px; color: #FFF;
+      font-size: 0.95rem; font-weight: 900; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255, 82, 82, 0.4);
+    }
+    .btn-yes:active, .btn-cancel:active { transform: scale(0.94); }
+
+    /* DYNAMIC MODE-SPECIFIC VICTORY CELEBRATION MODALS */
+    .victory-card {
+      width: 90%; max-width: 380px; background: #FFFFFF;
+      border: 3px solid var(--gold-glowing); border-radius: 36px;
+      padding: 24px 18px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      box-shadow: 0 25px 60px rgba(255, 215, 0, 0.35); color: var(--text-dark-slate);
+      transform: scale(0.85); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative; overflow: hidden;
+    }
+
+    .modal-overlay.active .victory-card { transform: scale(1); }
+
+    .victory-icon-hero {
+      font-size: 3.8rem; line-height: 1;
+      animation: victoryIconBounce 1.2s infinite alternate;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+    }
+    @keyframes victoryIconBounce { 0% { transform: scale(1) translateY(0); } 100% { transform: scale(1.15) translateY(-8px); } }
+
+    .victory-title-text {
+      font-size: 1.6rem; font-weight: 950; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .victory-title-text.easy {
+      background: linear-gradient(135deg, #00E676, #00C853);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 10px rgba(0, 230, 118, 0.4));
+    }
+
+    .victory-title-text.hard {
+      background: linear-gradient(135deg, #FFD700, #FF007F);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.6));
+    }
+
+    .victory-title-text.multi {
+      background: linear-gradient(135deg, #00F5FF, #0077FF);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.4));
+    }
+
+    .victory-reward-badge {
+      background: #FFF8E1; border: 2px solid var(--gold-glowing);
+      border-radius: 20px; padding: 8px 18px;
+      font-size: 1.15rem; font-weight: 950; color: #D84315;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 14px rgba(255, 215, 0, 0.3);
+      animation: coinPulse 1.4s infinite alternate;
+    }
+    @keyframes coinPulse { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+
+    /* ON-DEMAND COIN & DIAMOND STORE MODAL */
+    .store-card {
+      width: 92%; max-width: 390px; background: var(--modal-subtle-glow);
+      border: 2px solid #EFE6D5; border-radius: 36px;
+      padding: 22px 18px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      color: var(--text-dark-slate);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+      transform: translateY(100px) scale(0.85); transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.active .store-card { transform: translateY(0) scale(1); }
+
+    .store-header-bar {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .store-balance-banner {
+      width: 100%; background: #FFF8E1; border: 1.5px solid var(--gold-glowing);
+      border-radius: 16px; padding: 8px; font-size: 0.88rem; font-weight: 900; color: #D84315;
+      display: flex; justify-content: space-around; align-items: center;
+    }
+
+    .store-item {
+      width: 100%; background: #FFFFFF; border: 1.5px solid #E5DCCF;
+      border-radius: 20px; padding: 12px; display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .store-buy-btn {
+      background: var(--red-cta); border: none; border-radius: 14px;
+      padding: 8px 14px; color: #FFF; font-size: 0.82rem; font-weight: 900; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+    }
+    .store-buy-btn:active { transform: scale(0.93); }
+
+    /* GLOSSY 3D MILESTONE BADGES */
+    .streak-modal-card {
+      width: 92%; max-width: 395px;
+      background: var(--modal-subtle-glow);
+      border: 2px solid #EFE6D5; border-radius: 36px;
+      padding: 20px 16px 24px 16px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      transform: scale(0.85); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-height: 92vh; overflow-y: auto; color: var(--text-dark-slate);
+    }
+
+    .modal-overlay.active .streak-modal-card { transform: scale(1); }
+
+    .streak-modal-topbar {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .topbar-left, .topbar-right { display: flex; align-items: center; gap: 8px; }
+
+    .icon-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #FFFFFF; border: 1.5px solid #E6DCD0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; cursor: pointer; color: var(--text-dark-slate);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .freeze-pill {
+      background: var(--ice-bg); border: 1.5px solid #00E5FF;
+      border-radius: 18px; padding: 4px 12px;
+      font-size: 0.82rem; font-weight: 900; color: #0097A7;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    .streak-hero {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+
+    .fire-flame-icon {
+      font-size: 3.2rem;
+      animation: flamePulse 1.2s infinite alternate;
+      filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.4));
+    }
+
+    @keyframes flamePulse { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
+    .streak-num-big {
+      font-size: 3.4rem; font-weight: 950; color: var(--orange-accent);
+      line-height: 1;
+    }
+
+    .streak-label-big {
+      font-size: 1.3rem; font-weight: 900; color: var(--text-dark-slate);
+      text-align: left; line-height: 1.1;
+    }
+
+    /* 3D CAROUSEL SLIDER */
+    .carousel-view-container {
+      width: 100%;
+      perspective: 1000px;
+      position: relative;
+      margin: 4px 0;
+      overflow: hidden;
+      padding: 10px 0;
+    }
+
+    .carousel-track {
+      display: flex;
+      align-items: center;
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 100%;
+    }
+
+    .week-slide-card {
+      min-width: 100%;
+      background: #FFFFFF;
+      border: 2px solid var(--orange-soft-border);
+      border-radius: 24px;
+      padding: 14px 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transform-style: preserve-3d;
+      transition: transform 0.4s ease, opacity 0.4s ease, border-color 0.4s ease;
+      transform: scale(0.88) translateZ(-40px);
+      opacity: 0.5;
+    }
+
+    .week-slide-card.active-running {
+      transform: translateZ(30px) scale(1.02);
+      opacity: 1;
+      border-color: var(--orange-accent);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(255, 107, 0, 0.18);
+    }
+
+    .slide-header {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .slide-title { font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate); text-transform: uppercase; letter-spacing: 0.5px; }
+    .slide-status-tag { font-size: 0.68rem; font-weight: 800; background: rgba(255,107,0,0.12); color: var(--orange-accent); padding: 3px 8px; border-radius: 10px; }
+
+    .days-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
+    }
+
+    .day-cell { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .day-name { font-size: 0.68rem; font-weight: 800; color: var(--text-muted-slate); }
+
+    .day-node {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: #F4EFE4; border: 1.5px solid #E0D6C4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 900; color: var(--text-muted-slate);
+    }
+
+    .day-node.active-check {
+      background: var(--orange-accent); border-color: var(--orange-accent);
+      color: #FFF; box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
+    }
+
+    .day-node.fire-glow {
+      background: linear-gradient(135deg, #FF7043, #FF5722);
+      border-color: #FFF; color: #FFF;
+      box-shadow: 0 0 12px var(--orange-accent);
+    }
+
+    .carousel-nav-dots {
+      display: flex; justify-content: center; gap: 6px; margin-top: 8px;
+    }
+    .nav-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #D6CBB8;
+      transition: all 0.3s ease; cursor: pointer;
+    }
+    .nav-dot.active {
+      width: 20px; border-radius: 10px; background: var(--orange-accent);
+    }
+
+    /* GLOSSY 3D MILESTONE BADGES SYSTEM */
+    .badges-section {
+      width: 100%; display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .section-title {
+      font-size: 0.85rem; font-weight: 900; color: var(--text-dark-slate);
+      text-align: left; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .badges-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    }
+
+    .badge-frame-3d {
+      width: 100%; aspect-ratio: 1 / 1;
+      background: linear-gradient(145deg, #FFD700 0%, #FFA000 50%, #FF6F00 100%);
+      border: 2.5px solid #FFF8E1; border-radius: 22px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 8px 18px rgba(255, 160, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+      position: relative; overflow: hidden; color: #FFF; font-weight: 950;
+      transition: all 0.3s ease;
+    }
+
+    .badge-frame-3d.locked {
+      background: linear-gradient(145deg, #475569 0%, #334155 100%);
+      border-color: #64748B;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+      filter: opacity(0.7);
+    }
+
+    .badge-frame-3d.locked .badge-reward-preview {
+      filter: blur(1.2px); opacity: 0.6;
+    }
+
+    .badge-frame-3d.locked::after {
+      content: '🔒';
+      position: absolute; font-size: 1.2rem;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
+    }
+
+    .badge-frame-3d.unlocked {
+      animation: badgeGlowPulse 1.2s infinite alternate;
+    }
+
+    @keyframes badgeGlowPulse {
+      0% { transform: scale(1); box-shadow: 0 6px 16px rgba(255, 160, 0, 0.4); }
+      100% { transform: scale(1.06); box-shadow: 0 10px 24px rgba(255, 160, 0, 0.7); }
+    }
+
+    .badge-reward-preview { font-size: 0.75rem; text-align: center; }
+
+    .primary-cta-btn {
+      width: 100%; height: 50px;
+      background: var(--red-cta);
+      border: none; border-radius: 25px; color: #FFF;
+      font-size: 1rem; font-weight: 900; letter-spacing: 0.5px;
+      cursor: pointer; box-shadow: 0 8px 22px rgba(255, 82, 82, 0.4);
+      transition: transform 0.15s ease;
+    }
+    .primary-cta-btn:active { transform: scale(0.96); }
+
+    /* DAY 100 BDT 1000 CLAIM MODAL */
+    .claim-card {
+      width: 90%; max-width: 380px; background: #FFFFFF;
+      border: 2px solid #2ECC71; border-radius: 32px;
+      padding: 22px 18px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); color: var(--text-dark-slate);
+    }
+
+    .claim-form { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+    .claim-input {
+      width: 100%; height: 44px; background: #F8F5EE;
+      border: 1.5px solid #D8CEBE; border-radius: 14px;
+      padding: 0 14px; font-size: 0.9rem; outline: none; color: var(--text-dark-slate);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND CYBER-NEON GRID PATTERN -->
+  <div class="bg-grid"></div>
+
+  <!-- VIEW 1: MAP SCREEN -->
+  <div class="app-screen" id="mapScreen">
+    <div class="header-bar">
+      <div class="brand-title">
+        <img src="app-icon.jpg" alt="Logo" class="app-logo-img">
+        <span class="game-name">Tic Tac Toe- Not for Beginners</span>
+      </div>
+      <div class="header-stats">
+        <button class="google-play-btn" id="googlePlayBtn">🎮 <span id="googlePlayText">Sign In</span></button>
+        <div class="stat-badge streak" id="openStreakBtn">🔥 <span id="streakCount">4</span>d</div>
+        <div class="stat-badge coins" id="openStoreBtn">🪙 <span id="coinCount">0</span></div>
+        <div class="stat-badge diamonds" id="openStoreBtnFromDiamond">💎 <span id="diamondCount">0</span></div>
+      </div>
+    </div>
+
+    <!-- 100 VILLAGE SCROLLABLE MAP NODES -->
+    <div class="map-container" id="mapContainer"></div>
+
+    <div style="width: 100%; text-align: center; font-size: 0.78rem; color: #A090C0; font-weight: 700;">
+      Win 5 consecutive matches per level or tap 🛒 1k to purchase next level!
+    </div>
+  </div>
+
+  <!-- VIEW 2: CLEAN GAMEPLAY SCREEN -->
+  <div class="app-screen hidden" id="gameScreen">
+    <div class="game-header">
+      <button class="back-btn" id="backToMapBtn">◀ Map</button>
+      <div class="level-title-banner" id="levelTitleBanner">Level 1: Char Modhuai</div>
+      <div style="display: flex; gap: 4px;">
+        <div class="stat-badge coins" id="openStoreBtnFromGame">🪙 <span id="gameCoinCount">0</span></div>
+        <div class="stat-badge diamonds" id="openStoreBtnFromGameDiamond">💎 <span id="gameDiamondCount">0</span></div>
+      </div>
+    </div>
+
+    <!-- MODE SELECTOR (HARD, EASY, MULTIPLAYER) -->
+    <div class="mode-selector-bar">
+      <div class="mode-tab active" id="modeHardBtn">🤖 AI Hard</div>
+      <div class="mode-tab" id="modeEasyBtn">😊 AI Easy</div>
+      <div class="mode-tab" id="modeMultiBtn">👥 2 Player</div>
+    </div>
+
+    <!-- RULE OF 5 WINS PROGRESS BAR -->
+    <div class="rule-of-5-bar">
+      <span style="font-size: 0.8rem; font-weight: 800; color: #FFF;">5 Win Streak:</span>
+      <div class="wins-dots">
+        <div class="win-dot" id="dot0"></div>
+        <div class="win-dot" id="dot1"></div>
+        <div class="win-dot" id="dot2"></div>
+        <div class="win-dot" id="dot3"></div>
+        <div class="win-dot" id="dot4"></div>
+      </div>
+    </div>
+
+    <div class="top-zone">
+      <div id="statusBadge" style="background: rgba(22, 18, 48, 0.85); border: 1.5px solid var(--cyan-vibrant); padding: 6px 20px; border-radius: 20px; font-weight: 900; color: var(--cyan-vibrant); box-shadow: 0 0 14px var(--cyan-glow);">
+        <span id="statusText">Player (X) Turn</span>
+      </div>
+    </div>
+
+    <!-- 3D CYBER BOARD -->
+    <div class="center-zone">
+      <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+      </div>
+    </div>
+
+    <div class="bottom-zone">
+      <button class="reset-btn" id="resetBtn">Restart Level Match</button>
+    </div>
+  </div>
+
+  <!-- FLOATING CONFIRMATION POPUP MODAL -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="confirm-card">
+      <div class="confirm-title" id="confirmTitle">SKIP LEVEL?</div>
+      <div class="confirm-body" id="confirmBody">Are you sure you want to spend 1,000 Coins to skip to the next village?</div>
+      <div class="confirm-btn-row">
+        <button class="btn-yes" id="confirmYesBtn">YES</button>
+        <button class="btn-cancel" id="confirmCancelBtn">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DYNAMIC MODE-SPECIFIC VICTORY CELEBRATION MODAL -->
+  <div class="modal-overlay" id="victoryModal">
+    <div class="victory-card" id="victoryCard">
+      <div class="victory-icon-hero" id="victoryIconHero">🏆</div>
+      <div class="victory-title-text" id="victoryTitleText">VICTORY!</div>
+      <div style="font-size: 0.88rem; color: var(--text-dark-slate); font-weight: 700;" id="victorySubtext">
+        Great match! Keep pushing forward!
+      </div>
+      <div class="victory-reward-badge" id="victoryRewardBadge">
+        <span>🪙</span> <span>+100 Coins</span>
+      </div>
+      <button class="primary-cta-btn" id="continueVictoryBtn">Continue</button>
+    </div>
+  </div>
+
+  <!-- ON-DEMAND COIN & DIAMOND STORE MODAL -->
+  <div class="modal-overlay" id="storeModal">
+    <div class="store-card">
+      <div class="store-header-bar">
+        <div style="font-size: 1.2rem; font-weight: 950; color: var(--orange-accent);">🛒 CURRENCY & UTILITIES STORE</div>
+        <button class="icon-btn" id="closeStoreBtnIcon">✕</button>
+      </div>
+
+      <div class="store-balance-banner">
+        <div>🪙 <span id="storeModalCoinBalance">0</span> Coins</div>
+        <div>💎 <span id="storeModalDiamondBalance">0</span> Diamonds</div>
+      </div>
+
+      <div class="store-item">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; color: var(--text-dark-slate);">Purchase Next Level ⏭</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted-slate);">Purchase immediate next village node</div>
+        </div>
+        <button class="store-buy-btn" onclick="requestLevelSkipConfirm()">1,000 🪙</button>
+      </div>
+
+      <div class="store-item">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; color: var(--text-dark-slate);">Streak Freeze ❄️</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted-slate);">Protects 1 missed play day</div>
+        </div>
+        <button class="store-buy-btn" onclick="requestFreezeConfirm()">150 🪙</button>
+      </div>
+
+      <div class="store-item">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; color: var(--text-dark-slate);">Swap 10 💎 for 500 🪙</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted-slate);">Convert Diamonds into Gold Coins</div>
+        </div>
+        <button class="store-buy-btn" onclick="swapDiamondsForCoins()">10 💎</button>
+      </div>
+
+      <button class="primary-cta-btn" id="closeStoreBtn">Close Store</button>
+    </div>
+  </div>
+
+  <!-- STREAK MODAL WITH GLOSSY 3D MILESTONE BADGES -->
+  <div class="modal-overlay" id="streakModal">
+    <div class="streak-modal-card">
+      <div class="streak-modal-topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" title="Info">ℹ️</button>
+          <button class="icon-btn" id="shareStreakBtn" title="Share">🚀</button>
+        </div>
+        <div class="topbar-right">
+          <div class="freeze-pill">❄️ <span id="modalFreezeCount">3</span></div>
+          <button class="icon-btn" id="closeStreakBtn">✕</button>
+        </div>
+      </div>
+
+      <div class="streak-hero">
+        <span class="fire-flame-icon">🔥</span>
+        <span class="streak-num-big" id="modalStreakNum">4</span>
+        <div class="streak-label-big">Day<br>Streak!</div>
+      </div>
+
+      <!-- 3D CAROUSEL SLIDER ENGINE -->
+      <div class="carousel-view-container" id="carouselContainer">
+        <div class="carousel-track" id="carouselTrack"></div>
+        <div class="carousel-nav-dots" id="carouselNavDots"></div>
+      </div>
+
+      <!-- GLOSSY 3D MILESTONE BADGES -->
+      <div class="badges-section">
+        <div class="section-title">Streak Milestones</div>
+        <div class="badges-grid" id="badgesGrid"></div>
+      </div>
+
+      <button class="primary-cta-btn" id="awesomeStreakBtn">Awesome</button>
+    </div>
+  </div>
+
+  <!-- DAY 100 BDT 1000 CLAIM MODAL -->
+  <div class="modal-overlay" id="claimModal">
+    <div class="claim-card">
+      <div style="font-size: 2.5rem;">🎉 🎁</div>
+      <div style="font-size: 1.3rem; font-weight: 950; color: #2ECC71;">DAY 100 MEGA REWARD!</div>
+      <div style="font-size: 0.85rem; color: var(--text-dark-slate); font-weight: 700;">
+        You achieved a 100-Day Streak! Claim your <strong>BDT 1000 Direct Reward</strong> below:
+      </div>
+      <form class="claim-form" onsubmit="handleClaimSubmit(event)">
+        <input type="text" class="claim-input" placeholder="Full Name" required>
+        <input type="tel" class="claim-input" placeholder="bKash / Nagad Number" required>
+        <button type="submit" class="primary-cta-btn" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">Submit Claim</button>
+      </form>
+      <button class="back-btn" id="closeClaimBtn" style="width: 100%;">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // EXACT STRUCTURED 100-VILLAGE FENI DATABASE IN CHRONOLOGICAL ORDER
+    const FENI_100_VILLAGES = [
+      "Char Modhuai (Baligaon)",
+      "Baligaon", "Hakdi", "Maruar Char", "Betagaon", "Madhuai", "Char Hakdi", "Sundarpur", "Dhumsahadda", "Char Huzuri", "Kuruchia", "Akrampur", "Katalia", "Domra",
+      "Sarishadi", "Abupur", "Dakshin Abupur", "Fatehpur", "Jahanpur", "Kumira", "Noabad", "Safiabad", "Rashterkhil", "Darkhi", "Ghagra", "Zerkachhar",
+      "Panchgachhia", "Laxmipur", "Devipur", "Milongorh", "Vagolpur",
+      "Kazirbag", "Chanuya", "Kalidah", "Lemua", "Motobi", "Fazilpur", "Forhadnogor", "Dharmapur",
+      "Charmozlishpur", "Chhoto Khenali", "Boro Khenali", "Sonagazi", "Char Chandia", "Char Darbesh", "Amirabad", "Nababpur", "Bogadana", "Mongolkandi", "Motigonj", "Dasherhat", "Kashmirpur", "Olama Bazar Village",
+      "Daganbhuiyan", "Amanullapur", "Basudebpur", "Betua", "Chhota Malipur", "Dakshin Alipur", "Dakshin Karimpur", "Fatullapur", "Hayatpur", "Jagatpur", "Sindurpur", "Rajapur", "Purbachandrapur", "Ramnagar", "Yeakubpur", "Matubhuiyan", "Jayloskor",
+      "Mohamaya", "Pathannagar", "Radhanagar", "Shuvapur", "Ghopal", "Chandana", "Darogahat", "Mithamara", "Sreenagar", "East Devipur",
+      "Mirzanagar", "Citholia", "Boxmahmmud", "Gutuma", "Shamsernagar", "Baurkhuma", "Satkuchia", "Salimpur", "Anantapur", "Munshirkhil",
+      "Fulgazi", "Munshirhat", "Dorbarpur", "Anandopur", "Amzadhat", "G.M. Hat Village", "North Basudebpur", "Kismat Ghaniyamora", "Balla", "Bandua (Final Level)"
+    ];
+
+    const MILESTONE_CONFIG = [
+      { days: 7, preview: '🪙 200' },
+      { days: 15, preview: '💎 20' },
+      { days: 50, preview: '🪙 1,000' },
+      { days: 100, preview: '🎁 BDT 1000' },
+      { days: 200, preview: '💎 100' },
+      { days: 300, preview: '👑 Crown' },
+      { days: 500, preview: '💎 250' },
+      { days: 1000, preview: '🏆 Legend' }
+    ];
+
+    // GAME MODES: 'HARD', 'EASY', 'MULTI'
+    let currentMode = 'HARD';
+
+    // PERSISTENCE STATE
+    let currentLevel = parseInt(localStorage.getItem('feniCurrentLevel') || '1');
+    let levelConsecutiveWins = parseInt(localStorage.getItem('feniLevelWins') || '0');
+    let coins = parseInt(localStorage.getItem('feniCoins') || '500');
+    let diamonds = parseInt(localStorage.getItem('feniDiamonds') || '20');
+    let streakCount = parseInt(localStorage.getItem('feniStreak') || '4');
+    let streakFreezeCount = parseInt(localStorage.getItem('feniFreeze') || '3');
+    let lastPlayDate = localStorage.getItem('feniLastPlayDate') || new Date().toDateString();
+    let hasPlayedToday = localStorage.getItem('feniPlayedToday') === new Date().toDateString();
+    let isGoogleSignedIn = localStorage.getItem('feniGoogleSignedIn') === 'true';
+
+    function saveState() {
+      localStorage.setItem('feniCurrentLevel', currentLevel.toString());
+      localStorage.setItem('feniLevelWins', levelConsecutiveWins.toString());
+      localStorage.setItem('feniCoins', coins.toString());
+      localStorage.setItem('feniDiamonds', diamonds.toString());
+      localStorage.setItem('feniStreak', streakCount.toString());
+      localStorage.setItem('feniFreeze', streakFreezeCount.toString());
+      localStorage.setItem('feniLastPlayDate', lastPlayDate);
+      localStorage.setItem('feniGoogleSignedIn', isGoogleSignedIn.toString());
+      if (hasPlayedToday) localStorage.setItem('feniPlayedToday', new Date().toDateString());
+    }
+
+    // GOOGLE PLAY GAMES SIGN-IN ENGINE
+    const googlePlayBtn = document.getElementById('googlePlayBtn');
+    const googlePlayText = document.getElementById('googlePlayText');
+
+    function updateGooglePlayUI() {
+      if (isGoogleSignedIn) {
+        googlePlayText.textContent = 'Cloud Saved';
+        googlePlayBtn.style.borderColor = '#00F5FF';
+        googlePlayBtn.style.color = '#00F5FF';
+      } else {
+        googlePlayText.textContent = 'Sign In';
+        googlePlayBtn.style.borderColor = '#0F9D58';
+        googlePlayBtn.style.color = '#57D9A3';
+      }
+    }
+
+    googlePlayBtn.addEventListener('click', () => {
+      if (!isGoogleSignedIn) {
+        isGoogleSignedIn = true;
+        saveState();
+        updateGooglePlayUI();
+        alert('🎮 Signed in with Google Play Games! Progress & Currency synced to the Cloud!');
+      } else {
+        alert('🎮 Cloud Sync ACTIVE! Level: ' + currentLevel + ', Coins: ' + coins + ', Diamonds: ' + diamonds);
+      }
+    });
+
+    // RETENTION & STREAK LOGIC
+    function checkStreakOnMatchPlayed() {
+      const today = new Date().toDateString();
+      if (!hasPlayedToday) {
+        hasPlayedToday = true;
+        streakCount++;
+        lastPlayDate = today;
+        saveState();
+        updateHeaderUI();
+
+        if (streakCount === 100) {
+          setTimeout(() => { document.getElementById('claimModal').classList.add('active'); }, 600);
+        }
+      }
+    }
+
+    // DOM ELEMENTS
+    const mapScreen = document.getElementById('mapScreen');
+    const gameScreen = document.getElementById('gameScreen');
+    const mapContainer = document.getElementById('mapContainer');
+    const streakCountEl = document.getElementById('streakCount');
+    const coinCountEl = document.getElementById('coinCount');
+    const diamondCountEl = document.getElementById('diamondCount');
+    const gameCoinCountEl = document.getElementById('gameCoinCount');
+    const gameDiamondCountEl = document.getElementById('gameDiamondCount');
+    const levelTitleBanner = document.getElementById('levelTitleBanner');
+    const backToMapBtn = document.getElementById('backToMapBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const streakModal = document.getElementById('streakModal');
+    const openStreakBtn = document.getElementById('openStreakBtn');
+    const closeStreakBtn = document.getElementById('closeStreakBtn');
+    const awesomeStreakBtn = document.getElementById('awesomeStreakBtn');
+    const storeModal = document.getElementById('storeModal');
+    const openStoreBtn = document.getElementById('openStoreBtn');
+    const openStoreBtnFromGame = document.getElementById('openStoreBtnFromGame');
+    const openStoreBtnFromDiamond = document.getElementById('openStoreBtnFromDiamond');
+    const openStoreBtnFromGameDiamond = document.getElementById('openStoreBtnFromGameDiamond');
+    const closeStoreBtn = document.getElementById('closeStoreBtn');
+    const closeStoreBtnIcon = document.getElementById('closeStoreBtnIcon');
+    const claimModal = document.getElementById('claimModal');
+    const closeClaimBtn = document.getElementById('closeClaimBtn');
+    const victoryModal = document.getElementById('victoryModal');
+    const continueVictoryBtn = document.getElementById('continueVictoryBtn');
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmYesBtn = document.getElementById('confirmYesBtn');
+    const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+
+    // MODE SELECTOR BUTTONS
+    const modeHardBtn = document.getElementById('modeHardBtn');
+    const modeEasyBtn = document.getElementById('modeEasyBtn');
+    const modeMultiBtn = document.getElementById('modeMultiBtn');
+
+    function setMode(mode) {
+      currentMode = mode;
+      modeHardBtn.classList.remove('active');
+      modeEasyBtn.classList.remove('active');
+      modeMultiBtn.classList.remove('active');
+
+      if (mode === 'HARD') modeHardBtn.classList.add('active');
+      else if (mode === 'EASY') modeEasyBtn.classList.add('active');
+      else modeMultiBtn.classList.add('active');
+
+      resetGame();
+    }
+
+    modeHardBtn.addEventListener('click', () => setMode('HARD'));
+    modeEasyBtn.addEventListener('click', () => setMode('EASY'));
+    modeMultiBtn.addEventListener('click', () => setMode('MULTI'));
+
+    function updateHeaderUI() {
+      streakCountEl.textContent = streakCount;
+      coinCountEl.textContent = coins;
+      diamondCountEl.textContent = diamonds;
+      gameCoinCountEl.textContent = coins;
+      gameDiamondCountEl.textContent = diamonds;
+      document.getElementById('storeModalCoinBalance').textContent = coins;
+      document.getElementById('storeModalDiamondBalance').textContent = diamonds;
+      document.getElementById('modalFreezeCount').textContent = streakFreezeCount;
+      document.getElementById('modalStreakNum').textContent = streakCount;
+      updateGooglePlayUI();
+      saveState();
+    }
+    updateHeaderUI();
+
+    // RENDER 100 MAP NODES (WITH IMMEDIATE NEXT LEVEL PURCHASABLE OPTION)
+    function renderMap() {
+      mapContainer.innerHTML = '';
+      for (let i = 1; i <= 100; i++) {
+        const node = document.createElement('div');
+        const isUnlocked = i <= currentLevel;
+        const isCurrent = i === currentLevel;
+        const isImmediateNext = i === currentLevel + 1;
+
+        const villageName = FENI_100_VILLAGES[i - 1] || `Village ${i}`;
+
+        if (isUnlocked) {
+          node.className = 'map-flame-node unlocked' + (isCurrent ? ' current' : '');
+          node.innerHTML = `
+            <div class="flame-badge-bg"></div>
+            <div class="flame-circle-overlay">${i}</div>
+            <span class="node-name-label">${villageName}</span>
+          `;
+          node.addEventListener('click', () => startLevel(i));
+        } else if (isImmediateNext) {
+          node.className = 'map-flame-node next-purchasable';
+          node.innerHTML = `
+            <div class="flame-badge-bg"></div>
+            <div class="flame-circle-overlay">🛒 1k</div>
+            <span class="node-name-label">${villageName}</span>
+          `;
+          node.addEventListener('click', () => requestNextLevelPurchaseConfirm(i, villageName));
+        } else {
+          node.className = 'map-flame-node locked';
+          node.innerHTML = `
+            <div class="flame-badge-bg"></div>
+            <div class="flame-circle-overlay">🔒</div>
+            <span class="node-name-label">${villageName}</span>
+          `;
+          node.addEventListener('click', () => alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first or purchase Level ${currentLevel + 1}.`));
+        }
+
+        mapContainer.appendChild(node);
+      }
+    }
+    renderMap();
+
+    // PURCHASE IMMEDIATE NEXT LEVEL CONFIRMATION
+    window.requestNextLevelPurchaseConfirm = function(nextLvl, villageName) {
+      if (coins >= 1000) {
+        openConfirmDialog(
+          "PURCHASE NEXT LEVEL?",
+          `Spend 1,000 Coins to unlock & purchase Level ${nextLvl}: ${villageName}?`,
+          () => {
+            coins -= 1000;
+            currentLevel = nextLvl;
+            levelConsecutiveWins = 0;
+            updateHeaderUI();
+            renderMap();
+            alert(`🎉 Level Purchased! Unlocked Level ${nextLvl}: ${villageName}`);
+          }
+        );
+      } else {
+        alert(`Not enough coins! You need 1,000 Coins to purchase Level ${nextLvl} 🪙`);
+      }
+    };
+
+    let activePlayLevel = 1;
+
+    function startLevel(lvl) {
+      activePlayLevel = lvl;
+      levelTitleBanner.textContent = `Level ${lvl}: ${FENI_100_VILLAGES[lvl - 1] || 'Feni'}`;
+      mapScreen.classList.add('hidden');
+      gameScreen.classList.remove('hidden');
+      updateRuleOf5UI();
+      resetGame();
+    }
+
+    backToMapBtn.addEventListener('click', () => {
+      gameScreen.classList.add('hidden');
+      mapScreen.classList.remove('hidden');
+      renderMap();
+    });
+
+    function updateRuleOf5UI() {
+      for (let i = 0; i < 5; i++) {
+        const dot = document.getElementById(`dot${i}`);
+        if (i < levelConsecutiveWins) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      }
+    }
+
+    // GAME ENGINE
+    const PLAYER_X = 'X';
+    const PLAYER_O = 'O';
+    const WINNING_COMBOS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+    let gameState = Array(9).fill('');
+    let currentPlayer = PLAYER_X;
+    let isGameActive = true;
+    let isAiThinking = false;
+
+    const cellElements = document.querySelectorAll('.cell');
+
+    cellElements.forEach(cell => {
+      cell.addEventListener('click', () => {
+        const index = parseInt(cell.getAttribute('data-index'));
+        if (gameState[index] !== '' || !isGameActive || isAiThinking) return;
+
+        checkStreakOnMatchPlayed();
+
+        makeMove(index, currentPlayer);
+
+        const winResult = checkWin(gameState);
+        if (winResult) { handleMatchEnd(winResult); return; }
+        if (isBoardFull(gameState)) { handleMatchEnd({ winner: 'TIE', combo: [] }); return; }
+
+        if (currentMode === 'MULTI') {
+          currentPlayer = currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+          document.getElementById('statusText').textContent = `Player (${currentPlayer}) Turn`;
+        } else {
+          triggerAiTurn();
+        }
+      });
+    });
+
+    function triggerAiTurn() {
+      isAiThinking = true;
+      document.getElementById('statusText').textContent = 'AI Thinking...';
+      setTimeout(() => {
+        if (!isGameActive) return;
+        let aiMove = null;
+        if (currentMode === 'HARD') {
+          aiMove = getBestMove(gameState, PLAYER_O);
+        } else {
+          aiMove = getEasyMove(gameState, PLAYER_O);
+        }
+
+        if (aiMove !== null) {
+          makeMove(aiMove, PLAYER_O);
+        }
+
+        const winResult = checkWin(gameState);
+        if (winResult) {
+          handleMatchEnd(winResult);
+        } else if (isBoardFull(gameState)) {
+          handleMatchEnd({ winner: 'TIE', combo: [] });
+        } else {
+          isAiThinking = false;
+          currentPlayer = PLAYER_X;
+          document.getElementById('statusText').textContent = 'Player (X) Turn';
+        }
+      }, 400);
+    }
+
+    function makeMove(index, symbol) {
+      gameState[index] = symbol;
+      const cell = cellElements[index];
+      cell.classList.add('taken');
+      cell.innerHTML = symbol === PLAYER_X ? 
+        `<svg class="marker-svg" viewBox="0 0 100 100"><path d="M22 22 L78 78 M78 22 L22 78" stroke="#00F5FF" stroke-width="16" stroke-linecap="round" filter="drop-shadow(0 0 10px #00F5FF)"/></svg>` : 
+        `<svg class="marker-svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#FF2E93" stroke-width="16" fill="none" filter="drop-shadow(0 0 10px #FF2E93)"/></svg>`;
+    }
+
+    function handleMatchEnd(result) {
+      isGameActive = false;
+      isAiThinking = false;
+
+      if (result.winner === PLAYER_X || (currentMode === 'MULTI' && result.winner === PLAYER_O)) {
+        levelConsecutiveWins++;
+        coins += 100;
+        updateHeaderUI();
+        updateRuleOf5UI();
+
+        const iconHero = document.getElementById('victoryIconHero');
+        const titleText = document.getElementById('victoryTitleText');
+        const subtext = document.getElementById('victorySubtext');
+
+        titleText.className = 'victory-title-text';
+
+        if (currentMode === 'EASY') {
+          iconHero.textContent = '🛡️';
+          titleText.textContent = 'VICTORY!';
+          titleText.classList.add('easy');
+          subtext.textContent = 'Great warm-up! Keep pushing forward!';
+        } else if (currentMode === 'HARD') {
+          iconHero.textContent = '👑';
+          titleText.textContent = 'MASTERMIND VICTORY!';
+          titleText.classList.add('hard');
+          subtext.textContent = 'Unbelievable! You outsmarted the Impossible AI!';
+        } else {
+          iconHero.textContent = '⚔️';
+          titleText.textContent = `PLAYER ${result.winner === PLAYER_X ? '1' : '2'} WINS!`;
+          titleText.classList.add('multi');
+          subtext.textContent = 'Ultimate Bragging Rights Secured!';
+        }
+
+        victoryModal.classList.add('active');
+
+        if (levelConsecutiveWins >= 5) {
+          if (currentLevel < 100) {
+            currentLevel++;
+            if (currentLevel % 3 === 0) {
+              diamonds += 10;
+              alert('💎 LEVEL MILESTONE BONUS! You earned +10 Diamonds for completing 3 Levels!');
+            }
+          }
+          levelConsecutiveWins = 0;
+          saveState();
+        }
+      } else if (result.winner === PLAYER_O && currentMode !== 'MULTI') {
+        levelConsecutiveWins = 0;
+        updateRuleOf5UI();
+        saveState();
+        alert('💔 Defeat! Current level win progress reset to 0/5.');
+        resetGame();
+      } else {
+        alert('🤝 Match Draw!');
+        resetGame();
+      }
+    }
+
+    continueVictoryBtn.addEventListener('click', () => {
+      victoryModal.classList.remove('active');
+      if (levelConsecutiveWins === 0 && currentLevel > activePlayLevel) {
+        alert(`🎉 CONGRATULATIONS! You completed Level ${activePlayLevel}! Next village unlocked!`);
+        backToMapBtn.click();
+      } else {
+        resetGame();
+      }
+    });
+
+    resetBtn.addEventListener('click', resetGame);
+
+    function resetGame() {
+      gameState = Array(9).fill('');
+      currentPlayer = PLAYER_X;
+      isGameActive = true;
+      isAiThinking = false;
+      document.getElementById('statusText').textContent = 'Player (X) Turn';
+      cellElements.forEach(c => { c.innerHTML = ''; c.className = 'cell'; });
+    }
+
+    function checkWin(board) {
+      for (let c of WINNING_COMBOS) {
+        if (board[c[0]] && board[c[0]] === board[c[1]] && board[c[0]] === board[c[2]]) {
+          return { winner: board[c[0]], combo: c };
+        }
+      }
+      return null;
+    }
+
+    function isBoardFull(b) { return b.every(c => c !== ''); }
+
+    function getEasyMove(board, symbol) {
+      let emptyIndices = [];
+      for (let i = 0; i < 9; i++) {
+        if (board[i] === '') emptyIndices.push(i);
+      }
+      if (emptyIndices.length === 0) return null;
+      if (Math.random() < 0.75) {
+        return emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+      } else {
+        return getBestMove(board, symbol);
+      }
+    }
+
+    function getBestMove(board, symbol) {
+      let best = -Infinity; let move = null;
+      for (let i = 0; i < 9; i++) {
+        if (board[i] === '') {
+          board[i] = symbol;
+          let score = minimax(board, 0, false, symbol);
+          board[i] = '';
+          if (score > best) { best = score; move = i; }
+        }
+      }
+      return move;
+    }
+
+    function minimax(board, depth, isMax, symbol) {
+      const opp = symbol === PLAYER_O ? PLAYER_X : PLAYER_O;
+      const res = checkWin(board);
+      if (res) return res.winner === symbol ? 10 - depth : depth - 10;
+      if (isBoardFull(board)) return 0;
+
+      if (isMax) {
+        let best = -Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === '') {
+            board[i] = symbol;
+            best = Math.max(best, minimax(board, depth + 1, false, symbol));
+            board[i] = '';
+          }
+        }
+        return best;
+      } else {
+        let best = Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === '') {
+            board[i] = opp;
+            best = Math.min(best, minimax(board, depth + 1, true, symbol));
+            board[i] = '';
+          }
+        }
+        return best;
+      }
+    }
+
+    // FLOATING CONFIRMATION POPUP SYSTEM
+    let pendingConfirmAction = null;
+
+    function openConfirmDialog(title, body, onYes) {
+      document.getElementById('confirmTitle').textContent = title;
+      document.getElementById('confirmBody').textContent = body;
+      pendingConfirmAction = onYes;
+      confirmModal.classList.add('active');
+    }
+
+    confirmCancelBtn.addEventListener('click', () => {
+      confirmModal.classList.remove('active');
+      pendingConfirmAction = null;
+    });
+
+    confirmYesBtn.addEventListener('click', () => {
+      confirmModal.classList.remove('active');
+      if (pendingConfirmAction) pendingConfirmAction();
+      pendingConfirmAction = null;
+    });
+
+    // CONFIRMATION-GATED TRANSACTIONS
+    window.requestLevelSkipConfirm = function() {
+      const nextLvl = currentLevel + 1;
+      const villageName = FENI_100_VILLAGES[nextLvl - 1] || 'Feni';
+      requestNextLevelPurchaseConfirm(nextLvl, villageName);
+    };
+
+    window.requestFreezeConfirm = function() {
+      if (coins >= 150) {
+        openConfirmDialog(
+          "BUY STREAK FREEZE?",
+          "Spend 150 Coins to acquire 1 Streak Freeze shield?",
+          () => {
+            coins -= 150;
+            streakFreezeCount++;
+            updateHeaderUI();
+            alert('🛡️ Streak Freeze Shield Purchased!');
+          }
+        );
+      } else {
+        alert('Not enough coins! You need 150 coins 🪙');
+      }
+    };
+
+    window.swapDiamondsForCoins = function() {
+      if (diamonds >= 10) {
+        diamonds -= 10;
+        coins += 500;
+        updateHeaderUI();
+        alert('🎉 Swapped 10 Diamonds for 500 Gold Coins!');
+      } else {
+        alert('Not enough diamonds! You need 10 diamonds 💎');
+      }
+    };
+
+    // 3D CAROUSEL SLIDER ENGINE
+    let activeCarouselIndex = 0;
+
+    function render3DCarouselModal() {
+      const carouselTrack = document.getElementById('carouselTrack');
+      const carouselNavDots = document.getElementById('carouselNavDots');
+      carouselTrack.innerHTML = '';
+      carouselNavDots.innerHTML = '';
+
+      const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+      const isFirstWeekOnly = streakCount <= 7;
+      const totalWeeks = isFirstWeekOnly ? 1 : 2;
+
+      for (let w = 0; w < totalWeeks; w++) {
+        const slide = document.createElement('div');
+        const isRunningWeek = w === (totalWeeks - 1);
+        slide.className = 'week-slide-card' + (isRunningWeek ? ' active-running' : '');
+
+        const slideTitle = isFirstWeekOnly ? 'Running Week 1' : (w === 0 ? 'Previous Week' : 'Running Week');
+        const slideStatus = isRunningWeek ? 'Active 🔥' : 'Completed ✓';
+
+        let daysHtml = '';
+        for (let d = 0; d < 7; d++) {
+          let nodeContent = `<div class="day-node">${d + 1}</div>`;
+          if (!isRunningWeek) {
+            nodeContent = `<div class="day-node active-check">✓</div>`;
+          } else {
+            if (d < (streakCount % 7 || (streakCount > 0 ? 7 : 0))) {
+              nodeContent = `<div class="day-node fire-glow">🔥</div>`;
+            }
+          }
+
+          daysHtml += `
+            <div class="day-cell">
+              <div class="day-name">${dayNames[d]}</div>
+              ${nodeContent}
+            </div>
+          `;
+        }
+
+        slide.innerHTML = `
+          <div class="slide-header">
+            <span class="slide-title">${slideTitle}</span>
+            <span class="slide-status-tag">${slideStatus}</span>
+          </div>
+          <div class="days-grid">${daysHtml}</div>
+        `;
+
+        carouselTrack.appendChild(slide);
+
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot' + (isRunningWeek ? ' active' : '');
+        dot.addEventListener('click', () => switchCarouselSlide(w));
+        carouselNavDots.appendChild(dot);
+      }
+
+      activeCarouselIndex = totalWeeks - 1;
+      updateCarouselPosition();
+
+      // RENDER GLOSSY 3D MILESTONE BADGES WITH GHOSTED PREVIEW & PADLOCK
+      const badgesGrid = document.getElementById('badgesGrid');
+      badgesGrid.innerHTML = '';
+      MILESTONE_CONFIG.forEach(cfg => {
+        const isUnlocked = streakCount >= cfg.days;
+        const badge = document.createElement('div');
+        badge.className = 'badge-frame-3d' + (isUnlocked ? ' unlocked' : ' locked');
+
+        badge.innerHTML = `
+          <div style="font-size: 0.62rem; text-transform: uppercase;">Day ${cfg.days}</div>
+          <div class="badge-reward-preview">${cfg.preview}</div>
+        `;
+
+        badgesGrid.appendChild(badge);
+      });
+    }
+
+    function switchCarouselSlide(index) {
+      activeCarouselIndex = index;
+      updateCarouselPosition();
+    }
+
+    function updateCarouselPosition() {
+      const carouselTrack = document.getElementById('carouselTrack');
+      const slides = carouselTrack.querySelectorAll('.week-slide-card');
+      const dots = document.querySelectorAll('.nav-dot');
+
+      slides.forEach((slide, idx) => {
+        if (idx === activeCarouselIndex) {
+          slide.classList.add('active-running');
+        } else {
+          slide.classList.remove('active-running');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        if (idx === activeCarouselIndex) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+
+      carouselTrack.style.transform = `translateX(-${activeCarouselIndex * 100}%)`;
+    }
+
+    // TOUCH SWIPE MECHANICS
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.getElementById('carouselContainer');
+
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const slidesCount = document.querySelectorAll('.week-slide-card').length;
+      if (touchEndX < touchStartX - 40 && activeCarouselIndex < slidesCount - 1) {
+        switchCarouselSlide(activeCarouselIndex + 1);
+      }
+      if (touchEndX > touchStartX + 40 && activeCarouselIndex > 0) {
+        switchCarouselSlide(activeCarouselIndex - 1);
+      }
+    }
+
+    openStreakBtn.addEventListener('click', () => {
+      render3DCarouselModal();
+      streakModal.classList.add('active');
+    });
+
+    closeStreakBtn.addEventListener('click', () => streakModal.classList.remove('active'));
+    awesomeStreakBtn.addEventListener('click', () => streakModal.classList.remove('active'));
+
+    // STORE OPEN TRIGGERS
+    [openStoreBtn, openStoreBtnFromGame, openStoreBtnFromDiamond, openStoreBtnFromGameDiamond].forEach(btn => {
+      if (btn) btn.addEventListener('click', () => storeModal.classList.add('active'));
+    });
+
+    closeStoreBtn.addEventListener('click', () => storeModal.classList.remove('active'));
+    closeStoreBtnIcon.addEventListener('click', () => storeModal.classList.remove('active'));
+
+    closeClaimBtn.addEventListener('click', () => claimModal.classList.remove('active'));
+    window.handleClaimSubmit = function(e) {
+      e.preventDefault();
+      alert('✅ Claim Submitted! BDT 1000 will be transferred to your account within 24 hours.');
+      claimModal.classList.remove('active');
+    };
+  </script>
+</body>
+</html>
