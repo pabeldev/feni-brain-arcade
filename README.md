@@ -4,6 +4,14 @@
 
 ---
 
+## 📲 DIRECT DOWNLOAD (ANDROID APK)
+
+[<img src="https://img.shields.org/badge/📲_DOWNLOAD_ANDROID_APK-DIRECT_INSTALL-0F9D58?style=for-the-badge&logo=android&logoColor=white" height="48" alt="Download Android APK">](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)
+
+👉 **[Click Here to Download TicTacToe-3D.apk directly (v1.0.0)](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)**
+
+---
+
 ## ✨ Features
 
 - **🌆 Cyber-Neon Aesthetic System:** Deep Obsidian/Cyber Violet gradient (`#090915` to `#120E29`), dark navy glassmorphic containers (`#1A1638`), Electric Purple (`#9D4EDD`), Glowing Gold (`#FFD700`), Neon Pink (`#FF2E93`), and Vibrant Cyan (`#00F5FF`).
@@ -28,13 +36,13 @@
 
 ---
 
-## 🚀 Quick Start (Local Run)
+## 🚀 Quick Start (Local Web Server)
 
 No build tools or node_modules dependencies required! Simply open `index.html` in any browser or launch a local web server:
 
 ```bash
 # Clone the repository
-git clone https://github.com/<YOUR_USERNAME>/feni-brain-arcade.git
+git clone https://github.com/pabeldev/feni-brain-arcade.git
 
 # Navigate to directory
 cd feni-brain-arcade
@@ -49,9 +57,11 @@ Access at `http://localhost:9090/`.
 
 ---
 
-## 📦 Android APK Compilation
+## 📦 Android Release
 
-The repository includes standalone build scripts to package `index.html` into a native Android APK (`TicTacToe-3D.apk`) using Android SDK tools (aapt2, d8, apksigner).
+- **Latest Tag:** `v1.0.0`
+- **Release Name:** Feni Brain Arcade - Initial Release
+- **Direct APK Asset:** [TicTacToe-3D.apk](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)
 
 ---
 
