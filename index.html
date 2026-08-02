@@ -219,7 +219,7 @@
     }
     .start-app-btn:active { transform: scale(0.95); }
 
-    /* TOP HEADER BAR WITH AVATAR, SETTINGS & MASTER SFX MUTEMODE */
+    /* TOP HEADER BAR WITH AVATAR & STATS */
     .header-bar {
       width: 100%;
       display: flex;
@@ -251,17 +251,6 @@
     }
 
     .header-stats { display: flex; align-items: center; gap: 4px; }
-
-    .header-action-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.95rem; cursor: pointer; color: #FFF;
-      transition: transform 0.15s ease;
-    }
-    .header-action-btn:active { transform: scale(0.9); }
 
     .login-nav-pill {
       background: linear-gradient(135deg, var(--purple-electric), #7B2CBF);
@@ -582,16 +571,6 @@
       box-shadow: 0 0 12px var(--purple-glow); transform: scale(1.08);
     }
 
-    .stats-metrics-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%;
-    }
-    .metric-card {
-      background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 18px;
-      padding: 10px; text-align: center; display: flex; flex-direction: column; gap: 2px;
-    }
-    .metric-val { font-size: 1.1rem; font-weight: 950; color: var(--text-dark-slate); }
-    .metric-lbl { font-size: 0.68rem; font-weight: 800; color: var(--text-muted-slate); text-transform: uppercase; }
-
     /* SETTINGS TOGGLE ITEM */
     .setting-toggle-row {
       width: 100%; display: flex; align-items: center; justify-content: space-between;
@@ -732,8 +711,6 @@
 
       <div class="header-stats">
         <button class="login-nav-pill" id="navLoginBtn">🔑 Log In</button>
-        <button class="header-action-btn" id="soundToggleBtn" title="Sound Mute/Unmute">🔊</button>
-        <button class="header-action-btn" id="openSettingsBtn" title="Settings">⚙️</button>
         <div class="stat-badge streak" id="openStreakBtn">🔥 <span id="streakCount">4</span>d</div>
         <div class="stat-badge coins" id="openStoreBtn">🪙 <span id="coinCount">0</span></div>
         <div class="stat-badge diamonds" id="openStoreBtnFromDiamond">💎 <span id="diamondCount">0</span></div>
@@ -816,7 +793,7 @@
     </div>
   </div>
 
-  <!-- PLAYER PROFILE HUB & METRICS TRACKER MODAL -->
+  <!-- PLAYER PROFILE HUB & PROGRESS BAR METRICS SYSTEM MODAL -->
   <div class="modal-overlay" id="profileHubModal">
     <div class="profile-hub-card">
       <div class="store-header-bar">
@@ -841,28 +818,51 @@
       <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Choose Avatar:</div>
       <div class="avatar-grid" id="avatarGrid"></div>
 
-      <!-- REAL-TIME TIME TRACKER & METRICS -->
-      <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Gameplay Metrics:</div>
-      <div class="stats-metrics-grid">
-        <div class="metric-card">
-          <div class="metric-val" id="metricPlaytimeVal">0 mins</div>
-          <div class="metric-lbl">⏳ Total Playtime</div>
+      <!-- REAL-TIME TIME TRACKER & PROGRESS BARS METRICS SYSTEM -->
+      <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Gameplay Performance Metrics:</div>
+      <div class="stats-metrics-bars-container" style="width: 100%; display: flex; flex-direction: column; gap: 10px;">
+        
+        <!-- WIN RATE PROGRESS BAR -->
+        <div class="metric-bar-item" style="width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate);">
+            <span>🏆 Win Rate</span>
+            <span id="metricWinRateVal">0.0%</span>
+          </div>
+          <div style="width: 100%; height: 10px; background: #E2D9CC; border-radius: 5px; overflow: hidden;">
+            <div id="metricWinRateBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #00E676, #00C853); border-radius: 5px; transition: width 0.4s ease;"></div>
+          </div>
         </div>
-        <div class="metric-card">
-          <div class="metric-val" id="metricWinRateVal">0.0%</div>
-          <div class="metric-lbl">🏆 Win Rate</div>
+
+        <!-- MATCHES & VICTORIES PROGRESS BAR -->
+        <div class="metric-bar-item" style="width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate);">
+            <span>👑 Victories / Matches</span>
+            <span><span id="metricWinsVal">0</span> / <span id="metricMatchesVal">0</span></span>
+          </div>
+          <div style="width: 100%; height: 10px; background: #E2D9CC; border-radius: 5px; overflow: hidden;">
+            <div id="metricWinsBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #9D4EDD, #00F5FF); border-radius: 5px; transition: width 0.4s ease;"></div>
+          </div>
         </div>
-        <div class="metric-card">
-          <div class="metric-val" id="metricMatchesVal">0</div>
-          <div class="metric-lbl">⚔️ Total Matches</div>
+
+        <!-- PLAYTIME TRACKER BAR -->
+        <div class="metric-bar-item" style="width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate);">
+            <span>⏳ Total Playtime</span>
+            <span id="metricPlaytimeVal">0 mins</span>
+          </div>
+          <div style="width: 100%; height: 10px; background: #E2D9CC; border-radius: 5px; overflow: hidden;">
+            <div id="metricPlaytimeBar" style="width: 15%; height: 100%; background: linear-gradient(90deg, #FF6B00, #FFD700); border-radius: 5px; transition: width 0.4s ease;"></div>
+          </div>
         </div>
-        <div class="metric-card">
-          <div class="metric-val" id="metricWinsVal">0</div>
-          <div class="metric-lbl">👑 Total Victories</div>
-        </div>
+
       </div>
 
       <button class="primary-cta-btn" id="saveProfileHubBtn">Save Profile</button>
+
+      <!-- GAME SETTINGS BUTTON MOVED INSIDE PROFILE HUB AT THE BOTTOM -->
+      <button class="back-btn" id="openSettingsFromHubBtn" style="width: 100%; border-color: var(--purple-electric); color: var(--purple-electric); font-weight: 900; font-size: 0.9rem;">
+        ⚙️ Game Settings & Audio
+      </button>
     </div>
   </div>
 
@@ -1245,6 +1245,10 @@
 
     function updateProfilePlaytimeUI() {
       document.getElementById('metricPlaytimeVal').textContent = formatPlaytime(totalPlaytimeSeconds);
+      // Update Playtime Progress Bar (scaled relative to 1 hour = 3600s milestone)
+      const playtimePercent = Math.min(100, Math.max(5, (totalPlaytimeSeconds / 3600) * 100));
+      const playtimeBar = document.getElementById('metricPlaytimeBar');
+      if (playtimeBar) playtimeBar.style.width = playtimePercent + '%';
     }
 
     // WELCOME SCREEN TO MAP TRANSITION (NO FORCED LOGIN ON START)
@@ -1293,8 +1297,16 @@
 
       document.getElementById('metricMatchesVal').textContent = totalMatchesPlayed;
       document.getElementById('metricWinsVal').textContent = totalWins;
-      const winRate = totalMatchesPlayed > 0 ? ((totalWins / totalMatchesPlayed) * 100).toFixed(1) : '0.0';
-      document.getElementById('metricWinRateVal').textContent = winRate + '%';
+      const winRateNum = totalMatchesPlayed > 0 ? ((totalWins / totalMatchesPlayed) * 100) : 0;
+      document.getElementById('metricWinRateVal').textContent = winRateNum.toFixed(1) + '%';
+      
+      const winRateBar = document.getElementById('metricWinRateBar');
+      if (winRateBar) winRateBar.style.width = winRateNum + '%';
+
+      const winsBar = document.getElementById('metricWinsBar');
+      const winsPercent = totalMatchesPlayed > 0 ? Math.min(100, (totalWins / totalMatchesPlayed) * 100) : 0;
+      if (winsBar) winsBar.style.width = winsPercent + '%';
+
       updateProfilePlaytimeUI();
     }
 
@@ -1334,11 +1346,19 @@
     const closeProfileHubBtn = document.getElementById('closeProfileHubBtn');
     const saveProfileHubBtn = document.getElementById('saveProfileHubBtn');
     const hubLoginActionBtn = document.getElementById('hubLoginActionBtn');
+    const openSettingsFromHubBtn = document.getElementById('openSettingsFromHubBtn');
     const avatarGrid = document.getElementById('avatarGrid');
 
     hubLoginActionBtn.addEventListener('click', () => {
       profileHubModal.classList.remove('active');
       navLoginBtn.click();
+    });
+
+    openSettingsFromHubBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      profileHubModal.classList.remove('active');
+      updateSoundBtnUI();
+      settingsModal.classList.add('active');
     });
 
     function renderAvatarGrid() {
@@ -1378,10 +1398,8 @@
 
     // SETTINGS MODAL & AUDIO TOGGLES
     const settingsModal = document.getElementById('settingsModal');
-    const openSettingsBtn = document.getElementById('openSettingsBtn');
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
     const closeSettingsCtaBtn = document.getElementById('closeSettingsCtaBtn');
-    const soundToggleBtn = document.getElementById('soundToggleBtn');
     const toggleSfx = document.getElementById('toggleSfx');
     const toggleHaptic = document.getElementById('toggleHaptic');
     const toggleBgm = document.getElementById('toggleBgm');
@@ -1390,10 +1408,8 @@
 
     function updateSoundBtnUI() {
       if (audioManager.soundEnabled) {
-        soundToggleBtn.textContent = '🔊';
         toggleSfx.classList.add('active');
       } else {
-        soundToggleBtn.textContent = '🔇';
         toggleSfx.classList.remove('active');
       }
       if (audioManager.hapticEnabled) toggleHaptic.classList.add('active');
@@ -1402,12 +1418,6 @@
       if (audioManager.bgmEnabled) toggleBgm.classList.add('active');
       else toggleBgm.classList.remove('active');
     }
-
-    soundToggleBtn.addEventListener('click', () => {
-      audioManager.playClick();
-      audioManager.setSound(!audioManager.soundEnabled);
-      updateSoundBtnUI();
-    });
 
     toggleSfx.addEventListener('click', () => {
       audioManager.playClick();
@@ -1425,12 +1435,6 @@
       audioManager.playClick();
       audioManager.setBgm(!audioManager.bgmEnabled);
       updateSoundBtnUI();
-    });
-
-    openSettingsBtn.addEventListener('click', () => {
-      audioManager.playClick();
-      updateSoundBtnUI();
-      settingsModal.classList.add('active');
     });
 
     closeSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
