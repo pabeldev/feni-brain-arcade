@@ -4,14 +4,14 @@ Official 100 Feni Villages Map & Evolving Chess Pieces Tic Tac Toe Android Game 
 
 ---
 
-### 📲 Click Here to Download Latest APK (v1.0.2):
-👉 **[Click Here to Download Latest APK (v1.0.2)](https://github.com/pabeldev/feni-brain-arcade/raw/main/TicTacToe-GenZ-Multiplayer-v1.0.2.apk)**
+### 📲 Click Here to Download Latest APK (v1.0.3):
+👉 **[Click Here to Download Latest APK (v1.0.3)](https://github.com/pabeldev/feni-brain-arcade/raw/main/TicTacToe-GenZ-Multiplayer-v1.0.3.apk)**
 
 ---
 
 ### 🛍️ All Releases & Releases Page:
 - 🚀 **[GitHub Releases Page](https://github.com/pabeldev/feni-brain-arcade/releases)**
-- ⚡ **[Direct Release v1.0.2 Download](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.2/TicTacToe-GenZ-Multiplayer-v1.0.2.apk)**
+- ⚡ **[Direct Release v1.0.3 Download](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.3/TicTacToe-GenZ-Multiplayer-v1.0.3.apk)**
 
 ---
 
@@ -21,3 +21,4 @@ Official 100 Feni Villages Map & Evolving Chess Pieces Tic Tac Toe Android Game 
 - 👑 **Unbeatable Minimax AI Engine**
 - 👤 **Player Profile Hub & Gameplay Metrics System**
 - ⚙️ **Web Audio API SFX & Ambient BGM Controls**
+- ⚡ **Ultra-Smooth Scaling Logo Animation**
