@@ -83,6 +83,51 @@
       z-index: 0;
     }
 
+    /* DYNAMIC 3D FLOATING GLASS CUBES & BUBBLES CONTAINER */
+    .bg-3d-elements {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      perspective: 800px;
+    }
+
+    .glass-cube-3d {
+      position: absolute;
+      background: rgba(157, 78, 221, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+      animation: cubeFloatScale 14s infinite ease-in-out alternate;
+    }
+
+    @keyframes cubeFloatScale {
+      0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(0.9); opacity: 0.3; }
+      50% { transform: translateY(-40px) rotateX(180deg) rotateY(90deg) scale(1.18); opacity: 0.7; }
+      100% { transform: translateY(-80px) rotateX(360deg) rotateY(180deg) scale(0.95); opacity: 0.4; }
+    }
+
+    /* FIREFLY / JONAKI POKA ATMOSPHERIC PARTICLES */
+    .firefly-particle {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #FFD700;
+      box-shadow: 0 0 14px #FFD700, 0 0 24px #FF9100;
+      pointer-events: none;
+      animation: fireflyGlowDrift 6s infinite ease-in-out alternate;
+    }
+
+    @keyframes fireflyGlowDrift {
+      0% { opacity: 0.1; transform: translate(0, 0) scale(0.6); }
+      30% { opacity: 1; transform: translate(15px, -25px) scale(1.3); }
+      60% { opacity: 0.3; transform: translate(-20px, -45px) scale(0.8); }
+      100% { opacity: 0.9; transform: translate(25px, -70px) scale(1.1); }
+    }
+
     .app-screen {
       width: 100%;
       max-width: 430px;
@@ -96,7 +141,7 @@
       position: absolute;
       top: 0; left: 50%;
       transform: translateX(-50%);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
     .app-screen.hidden {
@@ -104,6 +149,68 @@
       pointer-events: none;
       transform: translateX(-50%) scale(0.95);
     }
+
+    /* VIEW 0: WELCOME HERO INTERFACE (REFERENCE MATCHED) */
+    .welcome-container {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: space-between;
+      padding: 30px 16px 40px 16px; text-align: center;
+    }
+
+    .welcome-hero-art {
+      position: relative; width: 100%; max-width: 320px; aspect-ratio: 1 / 1;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 20px;
+    }
+
+    .welcome-chest-glow {
+      position: absolute; width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 107, 0, 0.45) 0%, rgba(157, 78, 221, 0) 70%);
+      animation: chestPulse 2.5s infinite alternate;
+    }
+    @keyframes chestPulse { 0% { transform: scale(0.85); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 1; } }
+
+    .welcome-hero-img {
+      width: 210px; height: 210px; object-fit: cover; border-radius: 36px;
+      border: 3.5px solid var(--gold-glowing);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px var(--gold-glow);
+      position: relative; z-index: 2;
+      animation: floatHero 3s infinite ease-in-out alternate;
+    }
+    @keyframes floatHero { 0% { transform: translateY(0px); } 100% { transform: translateY(-14px); } }
+
+    .welcome-floating-badge {
+      position: absolute; z-index: 3; background: rgba(10, 8, 25, 0.92);
+      border: 1.5px solid var(--purple-electric); border-radius: 20px;
+      padding: 6px 14px; font-size: 0.8rem; font-weight: 900; color: #FFF;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .welcome-floating-badge.top-right { top: 10px; right: -10px; border-color: var(--gold-glowing); color: var(--gold-glowing); }
+    .welcome-floating-badge.bottom-left { bottom: 10px; left: -10px; border-color: var(--cyan-vibrant); color: var(--cyan-vibrant); }
+
+    .welcome-title-group { display: flex; flex-direction: column; gap: 6px; }
+    .welcome-main-title {
+      font-size: 2.1rem; font-weight: 950; line-height: 1.15;
+      background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-glowing) 60%, #FF9100 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+    }
+
+    .welcome-sub-text {
+      font-size: 0.88rem; font-weight: 700; color: #B3A4D0; max-width: 320px; line-height: 1.4;
+    }
+
+    .start-app-btn {
+      width: 100%; max-width: 330px; height: 56px;
+      background: linear-gradient(135deg, #FF6B00 0%, #FF9100 50%, #FF3D00 100%);
+      border: none; border-radius: 28px; color: #FFF;
+      font-size: 1.15rem; font-weight: 950; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.55), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+      transition: transform 0.15s ease;
+    }
+    .start-app-btn:active { transform: scale(0.95); }
 
     /* TOP HEADER BAR WITH OFFICIAL GAME TITLE */
     .header-bar {
@@ -360,12 +467,13 @@
     .marker-svg { width: 68%; height: 68%; display: block; animation: pop3D 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     @keyframes pop3D { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
+    /* SIMPLIFIED RESTART BUTTON */
     .reset-btn {
       width: 100%; max-width: 340px; height: 50px;
       background: linear-gradient(135deg, var(--cyan-vibrant) 0%, #0077FF 100%);
       border: none; border-radius: 25px; color: #FFF;
-      font-size: 0.95rem; font-weight: 900; letter-spacing: 0.5px;
-      text-transform: uppercase; cursor: pointer;
+      font-size: 1rem; font-weight: 900; letter-spacing: 0.5px;
+      text-transform: capitalize; cursor: pointer;
       box-shadow: 0 8px 24px var(--cyan-glow);
     }
     .reset-btn:active { transform: scale(0.96); }
@@ -733,8 +841,32 @@
   <!-- BACKGROUND CYBER-NEON GRID PATTERN -->
   <div class="bg-grid"></div>
 
+  <!-- DYNAMIC 3D GLASS CUBES & FIREFLY PARTICLES (জোনাকি পোকা) CONTAINER -->
+  <div class="bg-3d-elements" id="bg3dElements"></div>
+
+  <!-- VIEW 0: WELCOME HERO INTERFACE (REFERENCE MATCHED) -->
+  <div class="app-screen" id="welcomeScreen">
+    <div class="welcome-container">
+      <div class="welcome-hero-art">
+        <div class="welcome-chest-glow"></div>
+        <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
+        <div class="welcome-floating-badge top-right">🔥 100 Villages</div>
+        <div class="welcome-floating-badge bottom-left">👑 Unbeatable AI</div>
+      </div>
+
+      <div class="welcome-title-group">
+        <h1 class="welcome-main-title">TIC TAC TOE<br>NOT FOR BEGINNERS</h1>
+        <p class="welcome-sub-text">
+          Explore 100 authentic Feni villages, collect daily streak rewards, and conquer the Minimax AI engine!
+        </p>
+      </div>
+
+      <button class="start-app-btn" id="startAppBtn">LET'S START 🚀</button>
+    </div>
+  </div>
+
   <!-- VIEW 1: MAP SCREEN -->
-  <div class="app-screen" id="mapScreen">
+  <div class="app-screen hidden" id="mapScreen">
     <div class="header-bar">
       <div class="brand-title">
         <img src="app-icon.jpg" alt="Logo" class="app-logo-img">
@@ -808,7 +940,7 @@
     </div>
 
     <div class="bottom-zone">
-      <button class="reset-btn" id="resetBtn">Restart Level Match</button>
+      <button class="reset-btn" id="resetBtn">Restart</button>
     </div>
   </div>
 
@@ -947,6 +1079,54 @@
   </div>
 
   <script>
+    // GENERATE DYNAMIC 3D GLASS CUBES & FIREFLY PARTICLES (জোনাকি পোকা)
+    function init3DBackgroundEffects() {
+      const bgContainer = document.getElementById('bg3dElements');
+      bgContainer.innerHTML = '';
+
+      // 1. Generate 3D Floating Glass Cubes / Orbs
+      for (let i = 0; i < 7; i++) {
+        const cube = document.createElement('div');
+        cube.className = 'glass-cube-3d';
+        const size = Math.floor(Math.random() * 50) + 30; // 30px to 80px
+        cube.style.width = size + 'px';
+        cube.style.height = size + 'px';
+        cube.style.left = Math.floor(Math.random() * 85) + '%';
+        cube.style.top = Math.floor(Math.random() * 85) + '%';
+        cube.style.animationDelay = (i * 1.8) + 's';
+        cube.style.animationDuration = (Math.floor(Math.random() * 8) + 10) + 's';
+        bgContainer.appendChild(cube);
+      }
+
+      // 2. Generate Fireflies (জোনাকি পোকা)
+      for (let i = 0; i < 16; i++) {
+        const firefly = document.createElement('div');
+        firefly.className = 'firefly-particle';
+        firefly.style.left = Math.floor(Math.random() * 92) + '%';
+        firefly.style.top = Math.floor(Math.random() * 92) + '%';
+        firefly.style.animationDelay = (Math.random() * 4) + 's';
+        firefly.style.animationDuration = (Math.random() * 5 + 4) + 's';
+
+        // Alternate firefly color between Golden Gold and Electric Cyan
+        if (i % 3 === 0) {
+          firefly.style.background = '#00F5FF';
+          firefly.style.boxShadow = '0 0 14px #00F5FF, 0 0 24px #9D4EDD';
+        }
+        bgContainer.appendChild(firefly);
+      }
+    }
+    init3DBackgroundEffects();
+
+    // WELCOME SCREEN TO MAP TRANSITION
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const startAppBtn = document.getElementById('startAppBtn');
+
+    startAppBtn.addEventListener('click', () => {
+      welcomeScreen.classList.add('hidden');
+      mapScreen.classList.remove('hidden');
+      renderMap();
+    });
+
     // EXACT STRUCTURED 100-VILLAGE FENI DATABASE IN CHRONOLOGICAL ORDER
     const FENI_100_VILLAGES = [
       "Char Modhuai (Baligaon)",
@@ -1036,7 +1216,6 @@
       const todayKey = getLocalDateKey();
 
       if (!lastPlayDateKey) {
-        // First match ever played
         lastPlayDateKey = todayKey;
         if (streakCount === 0) streakCount = 1;
         saveState();
@@ -1045,18 +1224,15 @@
       }
 
       if (lastPlayDateKey === todayKey) {
-        // Already played today within this 24-hour calendar day! No double counting!
         return;
       }
 
-      // Calculate days difference between last play date and today
       const lastDate = new Date(lastPlayDateKey);
       const currentDate = new Date(todayKey);
       const diffTime = Math.abs(currentDate - lastDate);
       const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
       if (diffDays === 1) {
-        // Exactly next day after 12:00 AM midnight!
         streakCount++;
         lastPlayDateKey = todayKey;
         saveState();
@@ -1066,7 +1242,6 @@
           setTimeout(() => { document.getElementById('claimModal').classList.add('active'); }, 600);
         }
       } else if (diffDays > 1) {
-        // Missed one or more days! Check freeze shield
         if (streakFreezeCount > 0) {
           streakFreezeCount--;
           streakCount++;
@@ -1209,7 +1384,6 @@
         mapContainer.appendChild(node);
       }
     }
-    renderMap();
 
     // PURCHASE IMMEDIATE NEXT LEVEL CONFIRMATION
     window.requestNextLevelPurchaseConfirm = function(nextLvl, villageName) {
@@ -1678,7 +1852,7 @@
 
     // STORE OPEN TRIGGERS
     [openStoreBtn, openStoreBtnFromGame, openStoreBtnFromDiamond, openStoreBtnFromGameDiamond].forEach(btn => {
-      if (btn) btn.addEventListener('click', () => storeModal.classList.add('active'));
+      if (btn) btn.addEventListener('click', () => storeModal.classList.active ? null : storeModal.classList.add('active'));
     });
 
     closeStoreBtn.addEventListener('click', () => storeModal.classList.remove('active'));
