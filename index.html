@@ -531,9 +531,9 @@
     }
     .cell:active:not(.taken) { transform: scale(0.92); }
 
-    .marker-symbol { animation: pop3D 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; font-weight: 950; }
-    .marker-player1 { color: #00F5FF; text-shadow: 0 0 18px rgba(0, 245, 255, 0.9), 0 0 35px rgba(0, 245, 255, 0.6); }
-    .marker-player2 { color: #FFD700; text-shadow: 0 0 18px rgba(255, 215, 0, 0.9), 0 0 35px rgba(255, 215, 0, 0.6); }
+    .marker-symbol { display: inline-block; animation: pop3D 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; font-weight: 950; line-height: 1; }
+    .marker-player1 { color: #00F5FF !important; text-shadow: 0 0 12px #00F5FF, 0 0 25px #00F5FF, 0 0 45px rgba(0, 245, 255, 0.9); filter: drop-shadow(0 0 10px #00F5FF); }
+    .marker-player2 { color: #FF1744 !important; text-shadow: 0 0 12px #FF1744, 0 0 25px #FF1744, 0 0 45px rgba(255, 23, 68, 0.9); filter: drop-shadow(0 0 10px #FF1744); }
     @keyframes pop3D { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
     .reset-btn {
@@ -1050,12 +1050,12 @@
 
     // PIECE EVOLUTION EVERY 5 LEVELS
     function getGutiTheme(level) {
-      if (level <= 5) return { pX: '❌', pO: '⭕', label: 'Classic Neon' };
-      if (level <= 10) return { pX: '♟️', pO: '♞', label: 'Pawns & Knights' };
+      if (level <= 5) return { pX: '✕', pO: '◯', label: 'Classic Neon' };
+      if (level <= 10) return { pX: '♟', pO: '♞', label: 'Pawns & Knights' };
       if (level <= 15) return { pX: '♜', pO: '♝', label: 'Rooks & Bishops' };
       if (level <= 20) return { pX: '♛', pO: '♚', label: 'Queens & Kings' };
-      if (level <= 25) return { pX: '👑', pO: '💎', label: 'Crowns & Diamonds' };
-      return { pX: '⚔️', pO: '🛡️', label: 'Crests & Shields' };
+      if (level <= 25) return { pX: '✦', pO: '✧', label: 'Stars & Diamonds' };
+      return { pX: '⚔', pO: '🛡', label: 'Crests & Shields' };
     }
 
     // GAME STATE & PERSISTENCE
@@ -1434,7 +1434,7 @@
       activePlayLevel = lvl;
       currentGutiTheme = getGutiTheme(lvl);
       document.getElementById('levelTitleBanner').textContent = `Level ${lvl}: ${FENI_100_VILLAGES[lvl - 1]}`;
-      document.getElementById('gutiThemeBadge').textContent = `Pieces: ${currentGutiTheme.pX} vs ${currentGutiTheme.pO}`;
+      document.getElementById('gutiThemeBadge').innerHTML = `Pieces: <span style="color: #00F5FF; text-shadow: 0 0 10px #00F5FF;">${currentGutiTheme.pX}</span> vs <span style="color: #FF1744; text-shadow: 0 0 10px #FF1744;">${currentGutiTheme.pO}</span>`;
 
       mapScreen.classList.add('hidden');
       gameScreen.classList.remove('hidden');
@@ -1455,9 +1455,9 @@
       currentPlayerTurn = 'X';
 
       if (currentMode === 'multi') {
-        document.getElementById('statusText').textContent = `Player 1 (${currentGutiTheme.pX}) Turn`;
+        document.getElementById('statusText').innerHTML = `Player 1 (<span style="color: #00F5FF; text-shadow: 0 0 8px #00F5FF;">${currentGutiTheme.pX}</span>) Turn`;
       } else {
-        document.getElementById('statusText').textContent = `Player (${currentGutiTheme.pX}) Turn`;
+        document.getElementById('statusText').innerHTML = `Player (<span style="color: #00F5FF; text-shadow: 0 0 8px #00F5FF;">${currentGutiTheme.pX}</span>) Turn`;
       }
 
       const boardEl = document.getElementById('board');
@@ -1487,7 +1487,8 @@
           isGameActive = false;
           audioManager.playVictory();
           const winnerName = (currentPlayerTurn === 'X') ? 'Player 1' : 'Player 2';
-          document.getElementById('statusText').textContent = `🎉 ${winnerName} (${activePiece}) Wins!`;
+          const winnerColor = (currentPlayerTurn === 'X') ? '#00F5FF' : '#FF1744';
+          document.getElementById('statusText').innerHTML = `🎉 ${winnerName} (<span style="color: ${winnerColor}; text-shadow: 0 0 8px ${winnerColor};">${activePiece}</span>) Wins!`;
           setTimeout(() => {
             alert(`🏆 ${winnerName} (${activePiece}) Wins the Match!`);
             resetMatchBoard();
@@ -1506,7 +1507,8 @@
         currentPlayerTurn = (currentPlayerTurn === 'X') ? 'O' : 'X';
         const nextPiece = (currentPlayerTurn === 'X') ? currentGutiTheme.pX : currentGutiTheme.pO;
         const playerLabel = (currentPlayerTurn === 'X') ? 'Player 1' : 'Player 2';
-        document.getElementById('statusText').textContent = `${playerLabel} (${nextPiece}) Turn`;
+        const playerColor = (currentPlayerTurn === 'X') ? '#00F5FF' : '#FF1744';
+        document.getElementById('statusText').innerHTML = `${playerLabel} (<span style="color: ${playerColor}; text-shadow: 0 0 8px ${playerColor};">${nextPiece}</span>) Turn`;
         return;
       }
 
@@ -1527,7 +1529,7 @@
       }
 
       // AI TURN EXECUTION
-      document.getElementById('statusText').textContent = `🤖 AI (${currentGutiTheme.pO}) Thinking...`;
+      document.getElementById('statusText').innerHTML = `🤖 AI (<span style="color: #FF1744; text-shadow: 0 0 8px #FF1744;">${currentGutiTheme.pO}</span>) Thinking...`;
       isGameActive = false;
 
       setTimeout(() => {
@@ -1553,7 +1555,7 @@
           if (checkWin3x3(gameState, currentGutiTheme.pO)) {
             totalLosses++;
             updateUI();
-            document.getElementById('statusText').textContent = `💔 AI (${currentGutiTheme.pO}) Wins!`;
+            document.getElementById('statusText').innerHTML = `💔 AI (<span style="color: #FF1744; text-shadow: 0 0 8px #FF1744;">${currentGutiTheme.pO}</span>) Wins!`;
             setTimeout(() => { alert('💔 AI Wins! Try again.'); resetMatchBoard(); }, 250);
             return;
           }
@@ -1565,7 +1567,7 @@
           }
 
           isGameActive = true;
-          document.getElementById('statusText').textContent = `Player (${currentGutiTheme.pX}) Turn`;
+          document.getElementById('statusText').innerHTML = `Player (<span style="color: #00F5FF; text-shadow: 0 0 8px #00F5FF;">${currentGutiTheme.pX}</span>) Turn`;
         }
       }, 350);
     }
