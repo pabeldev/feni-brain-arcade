@@ -1730,7 +1730,7 @@
     document.getElementById('continueVictoryBtn').addEventListener('click', () => {
       audioManager.playClick();
       document.getElementById('victoryModal').classList.remove('active');
-      document.getElementById('backToMapBtn').click();
+      resetMatchBoard();
     });
   </script>
 </body>
