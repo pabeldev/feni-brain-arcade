@@ -83,31 +83,28 @@
       z-index: 0;
     }
 
-    /* DYNAMIC 3D FLOATING GLASS CUBES & BUBBLES CONTAINER */
+    /* SOFT, EYE-CATCHING NEON AURORA GLASS BUBBLES CONTAINER */
     .bg-3d-elements {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       overflow: hidden;
       pointer-events: none;
       z-index: 0;
-      perspective: 800px;
     }
 
-    .glass-cube-3d {
+    .neon-aurora-bubble {
       position: absolute;
-      background: rgba(157, 78, 221, 0.08);
-      border: 1.5px solid rgba(255, 255, 255, 0.25);
-      border-radius: 18px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
-      animation: cubeFloatScale 14s infinite ease-in-out alternate;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(157, 78, 221, 0.22) 0%, rgba(0, 245, 255, 0.06) 65%, transparent 100%);
+      filter: blur(14px);
+      pointer-events: none;
+      animation: auroraFloat 16s infinite ease-in-out alternate;
     }
 
-    @keyframes cubeFloatScale {
-      0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(0.9); opacity: 0.3; }
-      50% { transform: translateY(-40px) rotateX(180deg) rotateY(90deg) scale(1.18); opacity: 0.7; }
-      100% { transform: translateY(-80px) rotateX(360deg) rotateY(180deg) scale(0.95); opacity: 0.4; }
+    @keyframes auroraFloat {
+      0% { transform: translateY(0px) scale(0.85); opacity: 0.4; }
+      50% { transform: translateY(-50px) scale(1.15); opacity: 0.75; }
+      100% { transform: translateY(-90px) scale(0.95); opacity: 0.45; }
     }
 
     /* FIREFLY / JONAKI POKA ATMOSPHERIC PARTICLES */
@@ -212,7 +209,7 @@
     }
     .start-app-btn:active { transform: scale(0.95); }
 
-    /* TOP HEADER BAR WITH OFFICIAL GAME TITLE */
+    /* TOP HEADER BAR WITH AVATAR, SETTINGS & MASTER SFX MUTEMODE */
     .header-bar {
       width: 100%;
       display: flex;
@@ -221,36 +218,47 @@
       background: var(--glass-card);
       border: 1.5px solid var(--glass-border);
       border-radius: var(--border-radius-md);
-      padding: 8px 12px;
+      padding: 8px 10px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px var(--glass-shine);
       backdrop-filter: blur(18px);
     }
 
-    .brand-title { display: flex; align-items: center; gap: 6px; }
-    .app-logo-img { width: 32px; height: 32px; border-radius: 9px; border: 1.5px solid var(--cyan-vibrant); object-fit: cover; box-shadow: 0 0 10px var(--cyan-glow); }
-    .game-name { font-size: 0.76rem; font-weight: 900; background: linear-gradient(135deg, #FFF, var(--cyan-vibrant)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .user-profile-trigger {
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+    }
+
+    .profile-avatar-bubble {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple-electric), #7B2CBF);
+      border: 1.5px solid var(--cyan-vibrant);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .profile-name-text {
+      font-size: 0.76rem; font-weight: 900; color: #FFF;
+      max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
 
     .header-stats { display: flex; align-items: center; gap: 4px; }
 
-    .google-play-btn {
-      background: rgba(15, 157, 88, 0.2);
-      border: 1.5px solid var(--google-green);
+    .header-action-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
-      padding: 3px 6px;
-      font-size: 0.72rem; font-weight: 900;
-      color: #57D9A3; cursor: pointer;
-      display: flex; align-items: center; gap: 2px;
-      box-shadow: 0 0 8px rgba(15, 157, 88, 0.3);
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; cursor: pointer; color: #FFF;
       transition: transform 0.15s ease;
     }
-    .google-play-btn:active { transform: scale(0.92); }
+    .header-action-btn:active { transform: scale(0.9); }
 
     .stat-badge {
       background: rgba(10, 8, 25, 0.85);
       border: 1.5px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
-      padding: 3px 7px;
-      font-size: 0.76rem; font-weight: 900;
+      padding: 3px 6px;
+      font-size: 0.74rem; font-weight: 900;
       display: flex; align-items: center; gap: 3px;
       cursor: pointer; color: #FFF;
       transition: transform 0.15s ease;
@@ -450,7 +458,6 @@
 
     .center-zone { width: 100%; display: flex; justify-content: center; align-items: center; margin: auto 0; perspective: 1000px; }
     
-    /* DYNAMIC RESPONSIVE CSS GRID BOARD */
     .board {
       width: 100%; max-width: clamp(280px, 85vw, 360px); aspect-ratio: 1 / 1;
       display: grid;
@@ -483,7 +490,6 @@
       padding: 10px 0;
     }
 
-    /* RESTART BUTTON PERFECT PADDING & DIMENSIONS FIX */
     .reset-btn {
       width: 100%; max-width: 320px; height: 52px;
       background: linear-gradient(135deg, var(--cyan-vibrant) 0%, #0077FF 100%);
@@ -497,7 +503,7 @@
     }
     .reset-btn:active { transform: scale(0.95); }
 
-    /* ULTIMATE 32-BIT MAXIMUM Z-INDEX & BACKDROP BLUR FOR ALL MODAL OVERLAYS */
+    /* ULTIMATE MAXIMUM Z-INDEX FOR MODALS */
     .modal-overlay {
       position: fixed !important;
       top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
@@ -514,18 +520,76 @@
 
     .modal-overlay.active { opacity: 1 !important; pointer-events: auto !important; }
 
-    /* FLOATING CONFIRMATION POPUP MODALS */
-    .confirm-card {
-      width: 88%; max-width: 350px; background: #FFFFFF;
-      border: 3px solid var(--gold-glowing); border-radius: 32px;
+    /* MODAL CARDS BASE */
+    .confirm-card, .victory-card, .store-card, .streak-modal-card, .profile-hub-card, .settings-modal-card, .auth-modal-card {
+      width: 90%; max-width: 380px; background: var(--modal-subtle-glow);
+      border: 2px solid #EFE6D5; border-radius: 34px;
       padding: 22px 18px; text-align: center;
       display: flex; flex-direction: column; align-items: center; gap: 12px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8); color: var(--text-dark-slate);
-      transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7); color: var(--text-dark-slate);
+      transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 2147483647 !important; position: relative !important;
+      max-height: 92vh; overflow-y: auto;
     }
 
-    .modal-overlay.active .confirm-card { transform: scale(1); }
+    .modal-overlay.active .confirm-card,
+    .modal-overlay.active .victory-card,
+    .modal-overlay.active .store-card,
+    .modal-overlay.active .streak-modal-card,
+    .modal-overlay.active .profile-hub-card,
+    .modal-overlay.active .settings-modal-card,
+    .modal-overlay.active .auth-modal-card { transform: scale(1); }
+
+    /* AUTH MODAL STYLING */
+    .auth-input-group { width: 100%; display: flex; flex-direction: column; gap: 10px; margin: 6px 0; }
+    .auth-input {
+      width: 100%; height: 46px; background: #F8F5EE;
+      border: 1.5px solid #D8CEBE; border-radius: 16px;
+      padding: 0 14px; font-size: 0.92rem; outline: none; color: var(--text-dark-slate); font-weight: 700;
+    }
+    .auth-input:focus { border-color: var(--purple-electric); box-shadow: 0 0 8px rgba(157, 78, 221, 0.3); }
+
+    /* PROFILE HUB STYLING */
+    .avatar-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%;
+    }
+    .avatar-select-bubble {
+      width: 100%; aspect-ratio: 1 / 1; border-radius: 50%;
+      background: #F4EFE4; border: 2px solid #E0D6C4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; cursor: pointer; transition: all 0.2s ease;
+    }
+    .avatar-select-bubble.selected {
+      border-color: var(--purple-electric); background: #EAE0F5;
+      box-shadow: 0 0 12px var(--purple-glow); transform: scale(1.08);
+    }
+
+    .stats-metrics-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%;
+    }
+    .metric-card {
+      background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 18px;
+      padding: 10px; text-align: center; display: flex; flex-direction: column; gap: 2px;
+    }
+    .metric-val { font-size: 1.1rem; font-weight: 950; color: var(--text-dark-slate); }
+    .metric-lbl { font-size: 0.68rem; font-weight: 800; color: var(--text-muted-slate); text-transform: uppercase; }
+
+    /* SETTINGS TOGGLE ITEM */
+    .setting-toggle-row {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      background: #FFFFFF; border: 1.5px solid #E5DCCF; border-radius: 18px; padding: 10px 14px;
+    }
+    .toggle-switch {
+      width: 48px; height: 26px; background: #CBD5E1; border-radius: 14px;
+      position: relative; cursor: pointer; transition: background 0.3s ease;
+    }
+    .toggle-switch.active { background: var(--purple-electric); }
+    .toggle-knob {
+      width: 20px; height: 20px; background: #FFF; border-radius: 50%;
+      position: absolute; top: 3px; left: 3px; transition: transform 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.active .toggle-knob { transform: translateX(22px); }
 
     .confirm-title { font-size: 1.4rem; font-weight: 950; color: var(--orange-accent); letter-spacing: 0.5px; }
     .confirm-body { font-size: 0.88rem; font-weight: 700; color: var(--text-dark-slate); line-height: 1.3; }
@@ -545,47 +609,13 @@
     }
     .btn-yes:active, .btn-cancel:active { transform: scale(0.94); }
 
-    /* DYNAMIC MODE-SPECIFIC VICTORY CELEBRATION MODALS */
-    .victory-card {
-      width: 90%; max-width: 380px; background: #FFFFFF;
-      border: 3px solid var(--gold-glowing); border-radius: 36px;
-      padding: 24px 18px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      box-shadow: 0 25px 60px rgba(255, 215, 0, 0.35); color: var(--text-dark-slate);
-      transform: scale(0.85); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative !important; overflow: hidden; z-index: 2147483647 !important;
-    }
-
-    .modal-overlay.active .victory-card { transform: scale(1); }
-
-    .victory-icon-hero {
-      font-size: 3.8rem; line-height: 1;
-      animation: victoryIconBounce 1.2s infinite alternate;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25));
-    }
+    .victory-icon-hero { font-size: 3.8rem; line-height: 1; animation: victoryIconBounce 1.2s infinite alternate; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25)); }
     @keyframes victoryIconBounce { 0% { transform: scale(1) translateY(0); } 100% { transform: scale(1.15) translateY(-8px); } }
 
-    .victory-title-text {
-      font-size: 1.6rem; font-weight: 950; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-
-    .victory-title-text.easy {
-      background: linear-gradient(135deg, #00E676, #00C853);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 10px rgba(0, 230, 118, 0.4));
-    }
-
-    .victory-title-text.hard {
-      background: linear-gradient(135deg, #FFD700, #FF007F);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.6));
-    }
-
-    .victory-title-text.multi {
-      background: linear-gradient(135deg, #00F5FF, #0077FF);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.4));
-    }
+    .victory-title-text { font-size: 1.6rem; font-weight: 950; text-transform: uppercase; letter-spacing: 0.5px; }
+    .victory-title-text.easy { background: linear-gradient(135deg, #00E676, #00C853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .victory-title-text.hard { background: linear-gradient(135deg, #FFD700, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .victory-title-text.multi { background: linear-gradient(135deg, #00F5FF, #0077FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
     .victory-reward-badge {
       background: #FFF8E1; border: 2px solid var(--gold-glowing);
@@ -597,267 +627,51 @@
     }
     @keyframes coinPulse { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
 
-    /* ON-DEMAND COIN & DIAMOND STORE MODAL */
-    .store-card {
-      width: 92%; max-width: 390px; background: var(--modal-subtle-glow);
-      border: 2px solid #EFE6D5; border-radius: 36px;
-      padding: 22px 18px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      color: var(--text-dark-slate); z-index: 2147483647 !important; position: relative !important;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-      transform: translateY(100px) scale(0.85); transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
+    .store-header-bar { width: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .store-balance-banner { width: 100%; background: #FFF8E1; border: 1.5px solid var(--gold-glowing); border-radius: 16px; padding: 8px; font-size: 0.88rem; font-weight: 900; color: #D84315; display: flex; justify-content: space-around; align-items: center; }
+    .store-item { width: 100%; background: #FFFFFF; border: 1.5px solid #E5DCCF; border-radius: 20px; padding: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04); }
+    .store-buy-btn { background: var(--red-cta); border: none; border-radius: 14px; padding: 8px 14px; color: #FFF; font-size: 0.82rem; font-weight: 900; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3); }
 
-    .modal-overlay.active .store-card { transform: translateY(0) scale(1); }
-
-    .store-header-bar {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-    }
-
-    .store-balance-banner {
-      width: 100%; background: #FFF8E1; border: 1.5px solid var(--gold-glowing);
-      border-radius: 16px; padding: 8px; font-size: 0.88rem; font-weight: 900; color: #D84315;
-      display: flex; justify-content: space-around; align-items: center;
-    }
-
-    .store-item {
-      width: 100%; background: #FFFFFF; border: 1.5px solid #E5DCCF;
-      border-radius: 20px; padding: 12px; display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-    }
-
-    .store-buy-btn {
-      background: var(--red-cta); border: none; border-radius: 14px;
-      padding: 8px 14px; color: #FFF; font-size: 0.82rem; font-weight: 900; cursor: pointer;
-      box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
-    }
-    .store-buy-btn:active { transform: scale(0.93); }
-
-    /* STREAK MODAL CARD */
-    .streak-modal-card {
-      width: 92%; max-width: 395px;
-      background: var(--modal-subtle-glow);
-      border: 2px solid #EFE6D5; border-radius: 36px;
-      padding: 20px 16px 24px 16px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 14px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35); z-index: 2147483647 !important; position: relative !important;
-      transform: scale(0.85); transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      max-height: 92vh; overflow-y: auto; color: var(--text-dark-slate);
-    }
-
-    .modal-overlay.active .streak-modal-card { transform: scale(1); }
-
-    .streak-modal-topbar {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-    }
-
-    .topbar-left, .topbar-right { display: flex; align-items: center; gap: 8px; }
-
-    .icon-btn {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: #FFFFFF; border: 1.5px solid #E6DCD0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; cursor: pointer; color: var(--text-dark-slate);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .freeze-pill {
-      background: var(--ice-bg); border: 1.5px solid #00E5FF;
-      border-radius: 18px; padding: 4px 12px;
-      font-size: 0.82rem; font-weight: 900; color: #0097A7;
-      display: flex; align-items: center; gap: 4px;
-    }
-
-    .streak-hero {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-    }
-
-    .fire-flame-icon {
-      font-size: 3.2rem;
-      animation: flamePulse 1.2s infinite alternate;
-      filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.4));
-    }
-
+    .icon-btn { width: 36px; height: 36px; border-radius: 50%; background: #FFFFFF; border: 1.5px solid #E6DCD0; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--text-dark-slate); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+    .freeze-pill { background: var(--ice-bg); border: 1.5px solid #00E5FF; border-radius: 18px; padding: 4px 12px; font-size: 0.82rem; font-weight: 900; color: #0097A7; display: flex; align-items: center; gap: 4px; }
+    .streak-hero { display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .fire-flame-icon { font-size: 3.2rem; animation: flamePulse 1.2s infinite alternate; filter: drop-shadow(0 0 10px rgba(255, 107, 0, 0.4)); }
     @keyframes flamePulse { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+    .streak-num-big { font-size: 3.4rem; font-weight: 950; color: var(--orange-accent); line-height: 1; }
+    .streak-label-big { font-size: 1.3rem; font-weight: 900; color: var(--text-dark-slate); text-align: left; line-height: 1.1; }
+    .midnight-tracker-badge { background: #FFF3E0; border: 1.5px solid #FFE0B2; border-radius: 16px; padding: 6px 12px; font-size: 0.74rem; font-weight: 800; color: #E65100; width: 100%; text-align: center; }
 
-    .streak-num-big {
-      font-size: 3.4rem; font-weight: 950; color: var(--orange-accent);
-      line-height: 1;
-    }
-
-    .streak-label-big {
-      font-size: 1.3rem; font-weight: 900; color: var(--text-dark-slate);
-      text-align: left; line-height: 1.1;
-    }
-
-    .midnight-tracker-badge {
-      background: #FFF3E0; border: 1.5px solid #FFE0B2;
-      border-radius: 16px; padding: 6px 12px;
-      font-size: 0.74rem; font-weight: 800; color: #E65100;
-      width: 100%; text-align: center;
-    }
-
-    /* 3D CAROUSEL SLIDER */
-    .carousel-view-container {
-      width: 100%;
-      perspective: 1000px;
-      position: relative;
-      margin: 4px 0;
-      overflow: hidden;
-      padding: 10px 0;
-    }
-
-    .carousel-track {
-      display: flex;
-      align-items: center;
-      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-      width: 100%;
-    }
-
-    .week-slide-card {
-      min-width: 100%;
-      background: #FFFFFF;
-      border: 2px solid var(--orange-soft-border);
-      border-radius: 24px;
-      padding: 14px 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 0.9);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transform-style: preserve-3d;
-      transition: transform 0.4s ease, opacity 0.4s ease, border-color 0.4s ease;
-      transform: scale(0.88) translateZ(-40px);
-      opacity: 0.5;
-    }
-
-    .week-slide-card.active-running {
-      transform: translateZ(30px) scale(1.02);
-      opacity: 1;
-      border-color: var(--orange-accent);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(255, 107, 0, 0.18);
-    }
-
-    .slide-header {
-      display: flex; justify-content: space-between; align-items: center;
-    }
+    .carousel-view-container { width: 100%; perspective: 1000px; position: relative; margin: 4px 0; overflow: hidden; padding: 10px 0; }
+    .carousel-track { display: flex; align-items: center; transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); width: 100%; }
+    .week-slide-card { min-width: 100%; background: #FFFFFF; border: 2px solid var(--orange-soft-border); border-radius: 24px; padding: 14px 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; gap: 10px; transform-style: preserve-3d; transition: all 0.4s ease; transform: scale(0.88) translateZ(-40px); opacity: 0.5; }
+    .week-slide-card.active-running { transform: translateZ(30px) scale(1.02); opacity: 1; border-color: var(--orange-accent); }
+    .slide-header { display: flex; justify-content: space-between; align-items: center; }
     .slide-title { font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate); text-transform: uppercase; letter-spacing: 0.5px; }
     .slide-status-tag { font-size: 0.68rem; font-weight: 800; background: rgba(255,107,0,0.12); color: var(--orange-accent); padding: 3px 8px; border-radius: 10px; }
-
-    .days-grid {
-      display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
-    }
-
+    .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
     .day-cell { display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .day-name { font-size: 0.68rem; font-weight: 800; color: var(--text-muted-slate); }
+    .day-node { width: 34px; height: 34px; border-radius: 50%; background: #F4EFE4; border: 1.5px solid #E0D6C4; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 900; color: var(--text-muted-slate); }
+    .day-node.active-check { background: var(--orange-accent); border-color: var(--orange-accent); color: #FFF; }
+    .day-node.fire-glow { background: linear-gradient(135deg, #FF7043, #FF5722); border-color: #FFF; color: #FFF; }
 
-    .day-node {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: #F4EFE4; border: 1.5px solid #E0D6C4;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; font-weight: 900; color: var(--text-muted-slate);
-    }
+    .carousel-nav-dots { display: flex; justify-content: center; gap: 6px; margin-top: 8px; }
+    .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #D6CBB8; transition: all 0.3s ease; cursor: pointer; }
+    .nav-dot.active { width: 20px; border-radius: 10px; background: var(--orange-accent); }
 
-    .day-node.active-check {
-      background: var(--orange-accent); border-color: var(--orange-accent);
-      color: #FFF; box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
-    }
+    .badges-section { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+    .section-title { font-size: 0.85rem; font-weight: 900; color: var(--text-dark-slate); text-align: left; text-transform: uppercase; letter-spacing: 0.5px; }
+    .badges-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .badge-frame-3d { width: 100%; aspect-ratio: 1 / 1; background: linear-gradient(145deg, #FFD700 0%, #FFA000 50%, #FF6F00 100%); border: 2.5px solid #FFF8E1; border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(255, 160, 0, 0.4); position: relative; overflow: hidden; color: #FFF; font-weight: 950; transition: all 0.3s ease; }
+    .badge-frame-3d.locked { background: linear-gradient(145deg, #475569 0%, #334155 100%); border-color: #64748B; filter: opacity(0.7); }
+    .badge-frame-3d.locked::after { content: '🔒'; position: absolute; font-size: 1.2rem; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-    .day-node.fire-glow {
-      background: linear-gradient(135deg, #FF7043, #FF5722);
-      border-color: #FFF; color: #FFF;
-      box-shadow: 0 0 12px var(--orange-accent);
-    }
-
-    .carousel-nav-dots {
-      display: flex; justify-content: center; gap: 6px; margin-top: 8px;
-    }
-    .nav-dot {
-      width: 8px; height: 8px; border-radius: 50%; background: #D6CBB8;
-      transition: all 0.3s ease; cursor: pointer;
-    }
-    .nav-dot.active {
-      width: 20px; border-radius: 10px; background: var(--orange-accent);
-    }
-
-    /* GLOSSY 3D MILESTONE BADGES SYSTEM */
-    .badges-section {
-      width: 100%; display: flex; flex-direction: column; gap: 8px;
-    }
-
-    .section-title {
-      font-size: 0.85rem; font-weight: 900; color: var(--text-dark-slate);
-      text-align: left; text-transform: uppercase; letter-spacing: 0.5px;
-    }
-
-    .badges-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-    }
-
-    .badge-frame-3d {
-      width: 100%; aspect-ratio: 1 / 1;
-      background: linear-gradient(145deg, #FFD700 0%, #FFA000 50%, #FF6F00 100%);
-      border: 2.5px solid #FFF8E1; border-radius: 22px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      box-shadow: 0 8px 18px rgba(255, 160, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.8);
-      position: relative; overflow: hidden; color: #FFF; font-weight: 950;
-      transition: all 0.3s ease;
-    }
-
-    .badge-frame-3d.locked {
-      background: linear-gradient(145deg, #475569 0%, #334155 100%);
-      border-color: #64748B;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.2);
-      filter: opacity(0.7);
-    }
-
-    .badge-frame-3d.locked .badge-reward-preview {
-      filter: blur(1.2px); opacity: 0.6;
-    }
-
-    .badge-frame-3d.locked::after {
-      content: '🔒';
-      position: absolute; font-size: 1.2rem;
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
-    }
-
-    .badge-frame-3d.unlocked {
-      animation: badgeGlowPulse 1.2s infinite alternate;
-    }
-
-    @keyframes badgeGlowPulse {
-      0% { transform: scale(1); box-shadow: 0 6px 16px rgba(255, 160, 0, 0.4); }
-      100% { transform: scale(1.06); box-shadow: 0 10px 24px rgba(255, 160, 0, 0.7); }
-    }
-
-    .badge-reward-preview { font-size: 0.75rem; text-align: center; }
-
-    .primary-cta-btn {
-      width: 100%; height: 50px;
-      background: var(--red-cta);
-      border: none; border-radius: 25px; color: #FFF;
-      font-size: 1rem; font-weight: 900; letter-spacing: 0.5px;
-      cursor: pointer; box-shadow: 0 8px 22px rgba(255, 82, 82, 0.4);
-      transition: transform 0.15s ease;
-    }
+    .primary-cta-btn { width: 100%; height: 50px; background: var(--red-cta); border: none; border-radius: 25px; color: #FFF; font-size: 1rem; font-weight: 900; letter-spacing: 0.5px; cursor: pointer; box-shadow: 0 8px 22px rgba(255, 82, 82, 0.4); transition: transform 0.15s ease; }
     .primary-cta-btn:active { transform: scale(0.96); }
 
-    /* DAY 100 BDT 1000 CLAIM MODAL */
-    .claim-card {
-      width: 90%; max-width: 380px; background: #FFFFFF;
-      border: 2px solid #2ECC71; border-radius: 32px;
-      padding: 22px 18px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); color: var(--text-dark-slate);
-      z-index: 2147483647 !important; position: relative !important;
-    }
-
+    .claim-card { width: 90%; max-width: 380px; background: #FFFFFF; border: 2px solid #2ECC71; border-radius: 32px; padding: 22px 18px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--text-dark-slate); }
     .claim-form { width: 100%; display: flex; flex-direction: column; gap: 10px; }
-    .claim-input {
-      width: 100%; height: 44px; background: #F8F5EE;
-      border: 1.5px solid #D8CEBE; border-radius: 14px;
-      padding: 0 14px; font-size: 0.9rem; outline: none; color: var(--text-dark-slate);
-    }
+    .claim-input { width: 100%; height: 44px; background: #F8F5EE; border: 1.5px solid #D8CEBE; border-radius: 14px; padding: 0 14px; font-size: 0.9rem; outline: none; color: var(--text-dark-slate); }
   </style>
 </head>
 <body>
@@ -865,7 +679,7 @@
   <!-- BACKGROUND CYBER-NEON GRID PATTERN -->
   <div class="bg-grid"></div>
 
-  <!-- DYNAMIC 3D GLASS CUBES & FIREFLY PARTICLES (জোনাকি পোকা) CONTAINER -->
+  <!-- SOFT NEON AURORA GLASS BUBBLES & FIREFLY PARTICLES (জোনাকি পোকা) CONTAINER -->
   <div class="bg-3d-elements" id="bg3dElements"></div>
 
   <!-- VIEW 0: WELCOME HERO INTERFACE -->
@@ -892,11 +706,15 @@
   <!-- VIEW 1: MAP SCREEN -->
   <div class="app-screen hidden" id="mapScreen">
     <div class="header-bar">
-      <div class="brand-title">
-        <img src="app-icon.jpg" alt="Logo" class="app-logo-img">
-        <span class="game-name">Tic Tac Toe- Not for Beginners</span>
+      <!-- USER AVATAR & PROFILE HUB TRIGGER -->
+      <div class="user-profile-trigger" id="openProfileHubBtn">
+        <div class="profile-avatar-bubble" id="headerAvatarBubble">🤖</div>
+        <span class="profile-name-text" id="headerProfileName">Player</span>
       </div>
+
       <div class="header-stats">
+        <button class="header-action-btn" id="soundToggleBtn" title="Sound Mute/Unmute">🔊</button>
+        <button class="header-action-btn" id="openSettingsBtn" title="Settings">⚙️</button>
         <button class="google-play-btn" id="googlePlayBtn">🎮 <span id="googlePlayText">Sign In</span></button>
         <div class="stat-badge streak" id="openStreakBtn">🔥 <span id="streakCount">4</span>d</div>
         <div class="stat-badge coins" id="openStoreBtn">🪙 <span id="coinCount">0</span></div>
@@ -912,7 +730,7 @@
     </div>
   </div>
 
-  <!-- VIEW 2: CLEAN GAMEPLAY SCREEN WITH DYNAMIC BOARD SCALING -->
+  <!-- VIEW 2: CLEAN GAMEPLAY SCREEN -->
   <div class="app-screen hidden" id="gameScreen">
     <div class="game-header">
       <button class="back-btn" id="backToMapBtn">◀ Map</button>
@@ -951,7 +769,7 @@
       </div>
     </div>
 
-    <!-- DYNAMIC 3D CYBER BOARD (SCALES 3x3, 6x6, 12x12) -->
+    <!-- DYNAMIC 3D CYBER BOARD -->
     <div class="center-zone">
       <div class="board" id="board"></div>
     </div>
@@ -962,6 +780,107 @@
   </div>
 
   <!-- ALL MODAL OVERLAYS AT BODY ROOT LEVEL FOR MAXIMUM STACKING CONTEXT PRIORITY -->
+
+  <!-- AUTHENTICATION (PHONE & USERNAME) MODAL -->
+  <div class="modal-overlay" id="authModal">
+    <div class="auth-modal-card">
+      <div style="font-size: 2.2rem;">👤 🚀</div>
+      <div style="font-size: 1.3rem; font-weight: 950; color: var(--purple-electric);">PLAYER AUTHENTICATION</div>
+      <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted-slate);">
+        Enter your details to save progress, level rankings, and currency across devices!
+      </div>
+      <div class="auth-input-group">
+        <input type="tel" class="auth-input" id="authPhoneInput" placeholder="Phone Number (e.g. +8801615288259)">
+        <input type="text" class="auth-input" id="authUsernameInput" placeholder="Player Username (e.g. FeniMaster)">
+      </div>
+      <button class="primary-cta-btn" id="authSaveBtn">Save & Play 🚀</button>
+      <button class="back-btn" id="authGuestBtn" style="width: 100%; margin-top: 4px;">Play as Guest 👤</button>
+    </div>
+  </div>
+
+  <!-- PLAYER PROFILE HUB & METRICS TRACKER MODAL -->
+  <div class="modal-overlay" id="profileHubModal">
+    <div class="profile-hub-card">
+      <div class="store-header-bar">
+        <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-electric);">👤 PLAYER PROFILE HUB</div>
+        <button class="icon-btn" id="closeProfileHubBtn">✕</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; width: 100%; background: #F8F5EE; border-radius: 20px; padding: 10px; border: 1.5px solid #E6DCD0;">
+        <div class="profile-avatar-bubble" id="hubAvatarBubble" style="width: 48px; height: 48px; font-size: 1.6rem;">🤖</div>
+        <div style="text-align: left; flex: 1;">
+          <input type="text" id="hubUsernameInput" style="font-size: 1rem; font-weight: 950; color: var(--text-dark-slate); border: none; background: transparent; outline: none; width: 100%;" value="Player">
+          <div style="font-size: 0.74rem; font-weight: 800; color: var(--text-muted-slate);" id="hubPhoneText">+880 (Guest Account)</div>
+        </div>
+      </div>
+
+      <!-- AVATAR SELECTION -->
+      <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Choose Avatar:</div>
+      <div class="avatar-grid" id="avatarGrid"></div>
+
+      <!-- REAL-TIME TIME TRACKER & METRICS -->
+      <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Gameplay Metrics:</div>
+      <div class="stats-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val" id="metricPlaytimeVal">0 mins</div>
+          <div class="metric-lbl">⏳ Total Playtime</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val" id="metricWinRateVal">0.0%</div>
+          <div class="metric-lbl">🏆 Win Rate</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val" id="metricMatchesVal">0</div>
+          <div class="metric-lbl">⚔️ Total Matches</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val" id="metricWinsVal">0</div>
+          <div class="metric-lbl">👑 Total Victories</div>
+        </div>
+      </div>
+
+      <button class="primary-cta-btn" id="saveProfileHubBtn">Save Profile</button>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="settings-modal-card">
+      <div class="store-header-bar">
+        <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-electric);">⚙️ GAME SETTINGS</div>
+        <button class="icon-btn" id="closeSettingsBtn">✕</button>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; font-size: 0.9rem;">Sound Effects (SFX) 🔊</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted-slate);">Synthesized Web Audio Tones</div>
+        </div>
+        <div class="toggle-switch active" id="toggleSfx"><div class="toggle-knob"></div></div>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; font-size: 0.9rem;">Haptic Vibration 📳</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted-slate);">Device Feedback on moves</div>
+        </div>
+        <div class="toggle-switch active" id="toggleHaptic"><div class="toggle-knob"></div></div>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; font-size: 0.9rem;">Ambient BGM 🎵</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted-slate);">Synthesized Background Synth</div>
+        </div>
+        <div class="toggle-switch" id="toggleBgm"><div class="toggle-knob"></div></div>
+      </div>
+
+      <button class="back-btn" id="editAccountBtn" style="width: 100%;">Edit Profile & Avatars 👤</button>
+      <button class="back-btn" id="switchAccountBtn" style="width: 100%; border-color: #FF5252; color: #FF5252;">Switch Account / Log Out 🚪</button>
+
+      <button class="primary-cta-btn" id="closeSettingsCtaBtn">Done</button>
+    </div>
+  </div>
 
   <!-- FLOATING CONFIRMATION POPUP MODAL -->
   <div class="modal-overlay" id="confirmModal">
@@ -1098,24 +1017,156 @@
   </div>
 
   <script>
-    // GENERATE DYNAMIC 3D GLASS CUBES & FIREFLY PARTICLES (জোনাকি পোকা)
+    // WEB AUDIO API SYNTHESIZER ENGINE (ZERO DEPENDENCIES)
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.soundEnabled = localStorage.getItem('feniSoundEnabled') !== 'false';
+        this.hapticEnabled = localStorage.getItem('feniHapticEnabled') !== 'false';
+        this.bgmEnabled = localStorage.getItem('feniBgmEnabled') === 'true';
+        this.bgmOsc = null;
+        this.bgmGain = null;
+      }
+
+      initCtx() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playClick() {
+        if (this.hapticEnabled && navigator.vibrate) {
+          try { navigator.vibrate(20); } catch(e){}
+        }
+        if (!this.soundEnabled) return;
+        this.initCtx();
+        if (!this.ctx) return;
+
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.05);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.05);
+        } catch(e){}
+      }
+
+      playVictory() {
+        if (!this.soundEnabled) return;
+        this.initCtx();
+        if (!this.ctx) return;
+
+        try {
+          const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.12);
+            gain.gain.setValueAtTime(0.25, this.ctx.currentTime + idx * 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + idx * 0.12 + 0.3);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + idx * 0.12);
+            osc.stop(this.ctx.currentTime + idx * 0.12 + 0.3);
+          });
+        } catch(e){}
+      }
+
+      playDefeat() {
+        if (!this.soundEnabled) return;
+        this.initCtx();
+        if (!this.ctx) return;
+
+        try {
+          const notes = [164.81, 130.81]; // E3, C3
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.18);
+            gain.gain.setValueAtTime(0.18, this.ctx.currentTime + idx * 0.18);
+            gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + idx * 0.18 + 0.35);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + idx * 0.18);
+            osc.stop(this.ctx.currentTime + idx * 0.18 + 0.35);
+          });
+        } catch(e){}
+      }
+
+      setSound(enabled) {
+        this.soundEnabled = enabled;
+        localStorage.setItem('feniSoundEnabled', enabled.toString());
+      }
+
+      setHaptic(enabled) {
+        this.hapticEnabled = enabled;
+        localStorage.setItem('feniHapticEnabled', enabled.toString());
+      }
+
+      setBgm(enabled) {
+        this.bgmEnabled = enabled;
+        localStorage.setItem('feniBgmEnabled', enabled.toString());
+        if (enabled) this.startBgm();
+        else this.stopBgm();
+      }
+
+      startBgm() {
+        if (!this.bgmEnabled) return;
+        this.initCtx();
+        if (!this.ctx || this.bgmOsc) return;
+
+        try {
+          this.bgmOsc = this.ctx.createOscillator();
+          this.bgmGain = this.ctx.createGain();
+          this.bgmOsc.type = 'sine';
+          this.bgmOsc.frequency.setValueAtTime(110, this.ctx.currentTime); // Low A2 ambient tone
+          this.bgmGain.gain.setValueAtTime(0.03, this.ctx.currentTime);
+          this.bgmOsc.connect(this.bgmGain);
+          this.bgmGain.connect(this.ctx.destination);
+          this.bgmOsc.start();
+        } catch(e){}
+      }
+
+      stopBgm() {
+        if (this.bgmOsc) {
+          try { this.bgmOsc.stop(); } catch(e){}
+          this.bgmOsc = null;
+        }
+      }
+    }
+    const audioManager = new SoundEngine();
+
+    // GENERATE SOFT NEON AURORA GLASS BUBBLES & FIREFLY PARTICLES
     function init3DBackgroundEffects() {
       const bgContainer = document.getElementById('bg3dElements');
       bgContainer.innerHTML = '';
 
-      for (let i = 0; i < 7; i++) {
-        const cube = document.createElement('div');
-        cube.className = 'glass-cube-3d';
-        const size = Math.floor(Math.random() * 50) + 30;
-        cube.style.width = size + 'px';
-        cube.style.height = size + 'px';
-        cube.style.left = Math.floor(Math.random() * 85) + '%';
-        cube.style.top = Math.floor(Math.random() * 85) + '%';
-        cube.style.animationDelay = (i * 1.8) + 's';
-        cube.style.animationDuration = (Math.floor(Math.random() * 8) + 10) + 's';
-        bgContainer.appendChild(cube);
+      // Soft Aurora Glass Bubbles (Eye-pleasing replacing 3D Cubes)
+      for (let i = 0; i < 6; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'neon-aurora-bubble';
+        const size = Math.floor(Math.random() * 80) + 70;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = Math.floor(Math.random() * 85) + '%';
+        bubble.style.top = Math.floor(Math.random() * 85) + '%';
+        bubble.style.animationDelay = (i * 2.2) + 's';
+        bubble.style.animationDuration = (Math.floor(Math.random() * 6) + 12) + 's';
+        bgContainer.appendChild(bubble);
       }
 
+      // Fireflies (জোনাকি পোকা)
       for (let i = 0; i < 16; i++) {
         const firefly = document.createElement('div');
         firefly.className = 'firefly-particle';
@@ -1133,14 +1184,225 @@
     }
     init3DBackgroundEffects();
 
+    // REAL-TIME GAMEPLAY TIME TRACKER & MATCH STATS
+    let totalPlaytimeSeconds = parseInt(localStorage.getItem('feniPlaytimeSecs') || '0');
+    let totalMatchesPlayed = parseInt(localStorage.getItem('feniMatches') || '0');
+    let totalWins = parseInt(localStorage.getItem('feniWins') || '0');
+    let totalLosses = parseInt(localStorage.getItem('feniLosses') || '0');
+    let playtimeTimer = null;
+
+    function startPlaytimeTracker() {
+      if (playtimeTimer) clearInterval(playtimeTimer);
+      playtimeTimer = setInterval(() => {
+        totalPlaytimeSeconds++;
+        if (totalPlaytimeSeconds % 5 === 0) {
+          localStorage.setItem('feniPlaytimeSecs', totalPlaytimeSeconds.toString());
+        }
+        updateProfilePlaytimeUI();
+      }, 1000);
+    }
+    startPlaytimeTracker();
+
+    function formatPlaytime(totalSecs) {
+      const hrs = Math.floor(totalSecs / 3600);
+      const mins = Math.floor((totalSecs % 3600) / 60);
+      const secs = totalSecs % 60;
+      if (hrs > 0) return `${hrs} hrs ${mins} mins`;
+      if (mins > 0) return `${mins} mins ${secs} secs`;
+      return `${secs} secs`;
+    }
+
+    function updateProfilePlaytimeUI() {
+      document.getElementById('metricPlaytimeVal').textContent = formatPlaytime(totalPlaytimeSeconds);
+    }
+
     // WELCOME SCREEN TO MAP TRANSITION
     const welcomeScreen = document.getElementById('welcomeScreen');
     const startAppBtn = document.getElementById('startAppBtn');
 
     startAppBtn.addEventListener('click', () => {
+      audioManager.playClick();
       welcomeScreen.classList.add('hidden');
       mapScreen.classList.remove('hidden');
       renderMap();
+
+      // Check if user authenticated, else prompt Auth Modal
+      if (!localStorage.getItem('feniPhone') && !localStorage.getItem('feniIsGuest')) {
+        authModal.classList.add('active');
+      }
+    });
+
+    // PHONE & USERNAME AUTHENTICATION ENGINE
+    let playerPhone = localStorage.getItem('feniPhone') || '';
+    let playerUsername = localStorage.getItem('feniUsername') || 'Player';
+    let playerAvatar = localStorage.getItem('feniAvatar') || '🤖';
+    let isGuestUser = localStorage.getItem('feniIsGuest') === 'true';
+
+    const AVATAR_OPTIONS = ['🤖', '👑', '⚔️', '🦊', '🐯', '👽', '🦸‍♂️', '🐲'];
+
+    const authModal = document.getElementById('authModal');
+    const authPhoneInput = document.getElementById('authPhoneInput');
+    const authUsernameInput = document.getElementById('authUsernameInput');
+    const authSaveBtn = document.getElementById('authSaveBtn');
+    const authGuestBtn = document.getElementById('authGuestBtn');
+
+    function syncProfileHeaderUI() {
+      document.getElementById('headerProfileName').textContent = playerUsername;
+      document.getElementById('headerAvatarBubble').textContent = playerAvatar;
+      document.getElementById('hubUsernameInput').value = playerUsername;
+      document.getElementById('hubAvatarBubble').textContent = playerAvatar;
+      document.getElementById('hubPhoneText').textContent = isGuestUser ? '+880 (Guest Account)' : playerPhone;
+
+      document.getElementById('metricMatchesVal').textContent = totalMatchesPlayed;
+      document.getElementById('metricWinsVal').textContent = totalWins;
+      const winRate = totalMatchesPlayed > 0 ? ((totalWins / totalMatchesPlayed) * 100).toFixed(1) : '0.0';
+      document.getElementById('metricWinRateVal').textContent = winRate + '%';
+      updateProfilePlaytimeUI();
+    }
+
+    authSaveBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      const phone = authPhoneInput.value.trim();
+      const uname = authUsernameInput.value.trim();
+
+      if (!phone || !uname) {
+        alert('Please enter both your Phone Number and Username!');
+        return;
+      }
+
+      playerPhone = phone;
+      playerUsername = uname;
+      isGuestUser = false;
+      localStorage.setItem('feniPhone', playerPhone);
+      localStorage.setItem('feniUsername', playerUsername);
+      localStorage.setItem('feniIsGuest', 'false');
+
+      syncProfileHeaderUI();
+      authModal.classList.remove('active');
+      alert(`🎉 Welcome ${playerUsername}! Credentials saved successfully.`);
+    });
+
+    authGuestBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      playerUsername = 'Guest_' + Math.floor(Math.random() * 900 + 100);
+      isGuestUser = true;
+      localStorage.setItem('feniUsername', playerUsername);
+      localStorage.setItem('feniIsGuest', 'true');
+
+      syncProfileHeaderUI();
+      authModal.classList.remove('active');
+    });
+
+    // PROFILE HUB & AVATARS SELECTION
+    const profileHubModal = document.getElementById('profileHubModal');
+    const openProfileHubBtn = document.getElementById('openProfileHubBtn');
+    const closeProfileHubBtn = document.getElementById('closeProfileHubBtn');
+    const saveProfileHubBtn = document.getElementById('saveProfileHubBtn');
+    const avatarGrid = document.getElementById('avatarGrid');
+
+    function renderAvatarGrid() {
+      avatarGrid.innerHTML = '';
+      AVATAR_OPTIONS.forEach(av => {
+        const bubble = document.createElement('div');
+        bubble.className = 'avatar-select-bubble' + (av === playerAvatar ? ' selected' : '');
+        bubble.textContent = av;
+        bubble.addEventListener('click', () => {
+          audioManager.playClick();
+          playerAvatar = av;
+          localStorage.setItem('feniAvatar', playerAvatar);
+          renderAvatarGrid();
+        });
+        avatarGrid.appendChild(bubble);
+      });
+    }
+
+    openProfileHubBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      syncProfileHeaderUI();
+      renderAvatarGrid();
+      profileHubModal.classList.add('active');
+    });
+
+    closeProfileHubBtn.addEventListener('click', () => profileHubModal.classList.remove('active'));
+    saveProfileHubBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      const newUname = document.getElementById('hubUsernameInput').value.trim();
+      if (newUname) {
+        playerUsername = newUname;
+        localStorage.setItem('feniUsername', playerUsername);
+      }
+      syncProfileHeaderUI();
+      profileHubModal.classList.remove('active');
+    });
+
+    // SETTINGS MODAL & AUDIO TOGGLES
+    const settingsModal = document.getElementById('settingsModal');
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+    const closeSettingsCtaBtn = document.getElementById('closeSettingsCtaBtn');
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const toggleSfx = document.getElementById('toggleSfx');
+    const toggleHaptic = document.getElementById('toggleHaptic');
+    const toggleBgm = document.getElementById('toggleBgm');
+    const editAccountBtn = document.getElementById('editAccountBtn');
+    const switchAccountBtn = document.getElementById('switchAccountBtn');
+
+    function updateSoundBtnUI() {
+      if (audioManager.soundEnabled) {
+        soundToggleBtn.textContent = '🔊';
+        toggleSfx.classList.add('active');
+      } else {
+        soundToggleBtn.textContent = '🔇';
+        toggleSfx.classList.remove('active');
+      }
+      if (audioManager.hapticEnabled) toggleHaptic.classList.add('active');
+      else toggleHaptic.classList.remove('active');
+
+      if (audioManager.bgmEnabled) toggleBgm.classList.add('active');
+      else toggleBgm.classList.remove('active');
+    }
+
+    soundToggleBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      audioManager.setSound(!audioManager.soundEnabled);
+      updateSoundBtnUI();
+    });
+
+    toggleSfx.addEventListener('click', () => {
+      audioManager.playClick();
+      audioManager.setSound(!audioManager.soundEnabled);
+      updateSoundBtnUI();
+    });
+
+    toggleHaptic.addEventListener('click', () => {
+      audioManager.playClick();
+      audioManager.setHaptic(!audioManager.hapticEnabled);
+      updateSoundBtnUI();
+    });
+
+    toggleBgm.addEventListener('click', () => {
+      audioManager.playClick();
+      audioManager.setBgm(!audioManager.bgmEnabled);
+      updateSoundBtnUI();
+    });
+
+    openSettingsBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      updateSoundBtnUI();
+      settingsModal.classList.add('active');
+    });
+
+    closeSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
+    closeSettingsCtaBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
+
+    editAccountBtn.addEventListener('click', () => {
+      settingsModal.classList.remove('active');
+      openProfileHubBtn.click();
+    });
+
+    switchAccountBtn.addEventListener('click', () => {
+      settingsModal.classList.remove('active');
+      authModal.classList.add('active');
     });
 
     // EXACT STRUCTURED 100-VILLAGE FENI DATABASE IN CHRONOLOGICAL ORDER
@@ -1209,6 +1471,9 @@
       localStorage.setItem('feniFreeze', streakFreezeCount.toString());
       localStorage.setItem('feniLastPlayDateKey', lastPlayDateKey);
       localStorage.setItem('feniGoogleSignedIn', isGoogleSignedIn.toString());
+      localStorage.setItem('feniMatches', totalMatchesPlayed.toString());
+      localStorage.setItem('feniWins', totalWins.toString());
+      localStorage.setItem('feniLosses', totalLosses.toString());
     }
 
     // GOOGLE PLAY GAMES SIGN-IN ENGINE
@@ -1228,6 +1493,7 @@
     }
 
     googlePlayBtn.addEventListener('click', () => {
+      audioManager.playClick();
       if (!isGoogleSignedIn) {
         isGoogleSignedIn = true;
         saveState();
@@ -1321,6 +1587,7 @@
     const modeMultiBtn = document.getElementById('modeMultiBtn');
 
     function setMode(mode) {
+      audioManager.playClick();
       currentMode = mode;
       modeHardBtn.classList.remove('active');
       modeEasyBtn.classList.remove('active');
@@ -1362,6 +1629,7 @@
         trackerBadge.style.borderColor = "#FFE0B2";
       }
 
+      syncProfileHeaderUI();
       updateGooglePlayUI();
       saveState();
     }
@@ -1385,7 +1653,7 @@
             <div class="flame-circle-overlay">${i}</div>
             <span class="node-name-label">${villageName}</span>
           `;
-          node.addEventListener('click', () => startLevel(i));
+          node.addEventListener('click', () => { audioManager.playClick(); startLevel(i); });
         } else if (isImmediateNext) {
           node.className = 'map-flame-node next-purchasable';
           node.innerHTML = `
@@ -1395,6 +1663,7 @@
           `;
           node.addEventListener('click', (e) => {
             e.stopPropagation();
+            audioManager.playClick();
             requestNextLevelPurchaseConfirm(i, villageName);
           });
         } else {
@@ -1404,7 +1673,7 @@
             <div class="flame-circle-overlay">🔒</div>
             <span class="node-name-label">${villageName}</span>
           `;
-          node.addEventListener('click', () => alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first or purchase Level ${currentLevel + 1}.`));
+          node.addEventListener('click', () => { audioManager.playClick(); alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first or purchase Level ${currentLevel + 1}.`); });
         }
 
         mapContainer.appendChild(node);
@@ -1442,6 +1711,7 @@
 
     // WHATSAPP COIN PURCHASE DIRECT LINK (+880 1615-288259)
     window.openWhatsAppPurchase = function() {
+      audioManager.playClick();
       const message = encodeURIComponent("Hello! I want to buy coins for Tic Tac Toe- Not for Beginners game.");
       window.open(`https://wa.me/8801615288259?text=${message}`, '_blank');
     };
@@ -1460,6 +1730,7 @@
     }
 
     backToMapBtn.addEventListener('click', () => {
+      audioManager.playClick();
       gameScreen.classList.add('hidden');
       mapScreen.classList.remove('hidden');
       renderMap();
@@ -1527,6 +1798,7 @@
       const cellElements = document.querySelectorAll('.cell');
       if (gameState[index] !== '' || !isGameActive || isAiThinking) return;
 
+      audioManager.playClick();
       checkStreakOnMatchPlayed();
 
       makeMove(index, currentPlayer, cellElements);
@@ -1563,6 +1835,7 @@
 
         if (aiMove !== null) {
           makeMove(aiMove, PLAYER_O, cellElements);
+          audioManager.playClick();
         }
 
         const winResult = checkWinN(gameState, cfg.size, cfg.winLen);
@@ -1594,10 +1867,13 @@
     function handleMatchEnd(result) {
       isGameActive = false;
       isAiThinking = false;
+      totalMatchesPlayed++;
 
       if (result.winner === PLAYER_X || (currentMode === 'MULTI' && result.winner === PLAYER_O)) {
+        totalWins++;
         levelConsecutiveWins++;
         coins += 100;
+        audioManager.playVictory();
         updateHeaderUI();
         updateRuleOf5UI();
 
@@ -1638,18 +1914,22 @@
           saveState();
         }
       } else if (result.winner === PLAYER_O && currentMode !== 'MULTI') {
+        totalLosses++;
         levelConsecutiveWins = 0;
+        audioManager.playDefeat();
         updateRuleOf5UI();
         saveState();
         alert('💔 Defeat! Current level win progress reset to 0/5.');
         resetGame();
       } else {
+        saveState();
         alert('🤝 Match Draw!');
         resetGame();
       }
     }
 
     continueVictoryBtn.addEventListener('click', () => {
+      audioManager.playClick();
       victoryModal.classList.remove('active');
       if (levelConsecutiveWins === 0 && currentLevel > activePlayLevel) {
         alert(`🎉 CONGRATULATIONS! You completed Level ${activePlayLevel}! Next village unlocked!`);
@@ -1659,11 +1939,13 @@
       }
     });
 
-    resetBtn.addEventListener('click', resetGame);
+    resetBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      resetGame();
+    });
 
-    // GENERAL N-IN-A-ROW WIN CHECKER ACROSS VARIABLE BOARD SIZES (3x3, 6x6, 12x12)
+    // GENERAL N-IN-A-ROW WIN CHECKER
     function checkWinN(board, size, winLen) {
-      // Horizontal
       for (let r = 0; r < size; r++) {
         for (let c = 0; c <= size - winLen; c++) {
           let first = board[r * size + c];
@@ -1676,7 +1958,6 @@
         }
       }
 
-      // Vertical
       for (let c = 0; c < size; c++) {
         for (let r = 0; r <= size - winLen; r++) {
           let first = board[r * size + c];
@@ -1689,7 +1970,6 @@
         }
       }
 
-      // Diagonal Down-Right (\)
       for (let r = 0; r <= size - winLen; r++) {
         for (let c = 0; c <= size - winLen; c++) {
           let first = board[r * size + c];
@@ -1702,7 +1982,6 @@
         }
       }
 
-      // Diagonal Up-Right (/)
       for (let r = winLen - 1; r < size; r++) {
         for (let c = 0; c <= size - winLen; c++) {
           let first = board[r * size + c];
@@ -1746,7 +2025,6 @@
       }
       if (emptyIndices.length === 0) return null;
 
-      // 1. Check if AI can win in 1 move
       for (let idx of emptyIndices) {
         board[idx] = symbol;
         if (checkWinN(board, size, winLen)) {
@@ -1756,7 +2034,6 @@
         board[idx] = '';
       }
 
-      // 2. Check if Player can win in 1 move and BLOCK
       for (let idx of emptyIndices) {
         board[idx] = opp;
         if (checkWinN(board, size, winLen)) {
@@ -1766,7 +2043,6 @@
         board[idx] = '';
       }
 
-      // 3. Prefer moves near center or existing moves
       const center = Math.floor(size / 2);
       emptyIndices.sort((a, b) => {
         let rA = Math.floor(a / size), cA = a % size;
@@ -1833,11 +2109,13 @@
     }
 
     confirmCancelBtn.onclick = function() {
+      audioManager.playClick();
       confirmModal.classList.remove('active');
       pendingConfirmAction = null;
     };
 
     confirmYesBtn.onclick = function() {
+      audioManager.playClick();
       confirmModal.classList.remove('active');
       if (typeof pendingConfirmAction === 'function') {
         const actionToRun = pendingConfirmAction;
@@ -1947,7 +2225,6 @@
       activeCarouselIndex = totalWeeks - 1;
       updateCarouselPosition();
 
-      // RENDER GLOSSY 3D MILESTONE BADGES WITH GHOSTED PREVIEW & PADLOCK
       const badgesGrid = document.getElementById('badgesGrid');
       badgesGrid.innerHTML = '';
       MILESTONE_CONFIG.forEach(cfg => {
@@ -1990,31 +2267,8 @@
       carouselTrack.style.transform = `translateX(-${activeCarouselIndex * 100}%)`;
     }
 
-    // TOUCH SWIPE MECHANICS
-    let touchStartX = 0;
-    let touchEndX = 0;
-    const container = document.getElementById('carouselContainer');
-
-    container.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    container.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-      const slidesCount = document.querySelectorAll('.week-slide-card').length;
-      if (touchEndX < touchStartX - 40 && activeCarouselIndex < slidesCount - 1) {
-        switchCarouselSlide(activeCarouselIndex + 1);
-      }
-      if (touchEndX > touchStartX + 40 && activeCarouselIndex > 0) {
-        switchCarouselSlide(activeCarouselIndex - 1);
-      }
-    }
-
     openStreakBtn.addEventListener('click', () => {
+      audioManager.playClick();
       render3DCarouselModal();
       streakModal.classList.add('active');
     });
@@ -2024,7 +2278,7 @@
 
     // STORE OPEN TRIGGERS
     [openStoreBtn, openStoreBtnFromGame, openStoreBtnFromDiamond, openStoreBtnFromGameDiamond].forEach(btn => {
-      if (btn) btn.addEventListener('click', () => storeModal.classList.add('active'));
+      if (btn) btn.addEventListener('click', () => { audioManager.playClick(); storeModal.classList.add('active'); });
     });
 
     closeStoreBtn.addEventListener('click', () => storeModal.classList.remove('active'));
@@ -2033,6 +2287,7 @@
     closeClaimBtn.addEventListener('click', () => claimModal.classList.remove('active'));
     window.handleClaimSubmit = function(e) {
       e.preventDefault();
+      audioManager.playClick();
       alert('✅ Claim Submitted! BDT 1000 will be transferred to your account within 24 hours.');
       claimModal.classList.remove('active');
     };
