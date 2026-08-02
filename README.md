@@ -4,13 +4,11 @@
 
 ---
 
-## 📲 DIRECT DOWNLOADS (ANDROID RELEASE)
+## 📲 DIRECT DOWNLOAD (ANDROID APK)
 
 [<img src="https://img.shields.org/badge/📲_DOWNLOAD_ANDROID_APK-DIRECT_INSTALL-0F9D58?style=for-the-badge&logo=android&logoColor=white" height="48" alt="Download Android APK">](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)
-[<img src="https://img.shields.org/badge/🛍️_DOWNLOAD_PLAY_STORE_AAB-PLAY_CONSOLE-4285F4?style=for-the-badge&logo=googleplay&logoColor=white" height="48" alt="Download Play Store AAB">](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.aab)
 
-- ⚡ **[Download TicTacToe-3D.apk (Direct Install v1.0.0)](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)**
-- 🛍️ **[Download TicTacToe-3D.aab (Google Play Console Release v1.0.0)](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.aab)**
+👉 **[Click Here to Download TicTacToe-3D.apk directly (v1.0.0)](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)**
 
 ---
 
@@ -59,12 +57,11 @@ Access at `http://localhost:9090/`.
 
 ---
 
-## 📦 Android Release Assets
+## 📦 Android Release
 
 - **Latest Tag:** `v1.0.0`
 - **Release Name:** Feni Brain Arcade - Initial Release
 - **Direct APK Asset:** [TicTacToe-3D.apk](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)
-- **Google Play AAB Asset:** [TicTacToe-3D.aab](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.aab)
 
 ---
 
