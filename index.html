@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tic Tac Toe- Not for Beginners (Feni Candy Crush Map Edition)</title>
+  <title>Tic Tac Toe- Not for Beginners (Feni Map v1.0.1 Edition)</title>
   <link rel="icon" type="image/jpeg" href="app-icon.jpg">
   <style>
     :root {
@@ -27,7 +27,6 @@
       --diamond-glow: rgba(0, 229, 255, 0.5);
 
       /* MODAL BASE */
-      --modal-white-base: #FFFFFF;
       --modal-subtle-glow: radial-gradient(circle at 50% 0%, rgba(157, 78, 221, 0.15) 0%, rgba(255, 255, 255, 0) 70%), #FFFFFF;
       --text-dark-slate: #1E293B;
       --text-muted-slate: #64748B;
@@ -65,10 +64,10 @@
 
     html { height: -webkit-fill-available; }
 
-    /* CYBER-NEON PARTICLES & BACKGROUND GRID */
+    /* CYBER-NEON BACKGROUND GRID */
     .bg-grid {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       background-size: 36px 36px;
       background-image: 
         linear-gradient(to right, rgba(157, 78, 221, 0.08) 1px, transparent 1px),
@@ -79,36 +78,40 @@
       z-index: 0;
     }
 
-    /* 3D NEON GLASS BUBBLES & FIREFLIES */
+    /* 3D NEON GLASS BUBBLES & JONAKI POKA (FIREFLIES) CONTAINER - FIXED BACKGROUND */
     .bg-3d-elements {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       overflow: hidden;
       pointer-events: none;
       z-index: 0;
     }
 
+    /* STABLE CONSTANT 20% OPACITY 3D BUBBLES */
     .neon-bubble-3d {
       position: absolute;
       border-radius: 50%;
       background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.35) 0%, rgba(0, 245, 255, 0.18) 35%, rgba(157, 78, 221, 0.08) 70%, transparent 100%);
-      border: 1px solid rgba(0, 245, 255, 0.22);
-      box-shadow: 0 6px 18px rgba(0, 245, 255, 0.12);
+      border: 1px solid rgba(0, 245, 255, 0.25);
+      box-shadow: 0 6px 18px rgba(0, 245, 255, 0.15);
       backdrop-filter: blur(8px);
-      opacity: 0.20;
+      -webkit-backdrop-filter: blur(8px);
+      opacity: 0.20; /* Constant 20% opacity */
       animation: neonBubbleFloat 12s infinite ease-in-out alternate;
     }
 
     @keyframes neonBubbleFloat {
       0% { transform: translateY(0px) scale(0.9); }
-      50% { transform: translateY(-45px) scale(1.1); }
-      100% { transform: translateY(-90px) scale(0.95); }
+      50% { transform: translateY(-50px) scale(1.1); }
+      100% { transform: translateY(-100px) scale(0.95); }
     }
 
+    /* JONAKI POKA (FIREFLY PARTICLES) */
     .firefly-particle {
       position: absolute;
       width: 6px; height: 6px; border-radius: 50%;
       background: #FFD700; box-shadow: 0 0 14px #FFD700, 0 0 24px #FF9100;
+      pointer-events: none;
       animation: fireflyGlow 6s infinite ease-in-out alternate;
     }
 
@@ -233,27 +236,49 @@
     /* CANVAS AND VECTOR SVG LAYER FOR S-CURVE ROAD & DECORATIONS */
     .map-svg-world {
       position: absolute; top: 0; left: 0;
-      width: 100%; height: 9100px;
+      width: 100%; height: 10200px;
       pointer-events: none; z-index: 1;
     }
 
     /* LEVEL NODE BUTTONS CONTAINER LAYER */
     .map-nodes-layer {
       position: absolute; top: 0; left: 0;
-      width: 100%; height: 9100px;
+      width: 100%; height: 10200px;
       z-index: 5;
     }
 
-    /* CIRCULAR LEVEL NODES */
-    .map-node-btn {
+    /* CIRCULAR LEVEL NODES WITH VILLAGE NAME BADGE */
+    .map-node-wrapper {
       position: absolute;
-      width: 58px; height: 58px; border-radius: 50%;
       transform: translate(-50%, -50%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 5;
+    }
+
+    .map-node-btn {
+      position: relative;
+      width: 58px; height: 58px; border-radius: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       box-shadow: 0 8px 20px rgba(0,0,0,0.7);
     }
-    .map-node-btn:active { transform: translate(-50%, -50%) scale(0.9); }
+    .map-node-btn:active { transform: scale(0.9); }
+
+    /* VILLAGE NAME LABEL TAG UNDER/BESIDE EACH NODE */
+    .node-village-name {
+      position: absolute; bottom: -20px;
+      font-size: 0.68rem; font-weight: 900; white-space: nowrap;
+      background: rgba(10, 8, 28, 0.92);
+      padding: 2px 8px; border-radius: 10px;
+      border: 1px solid var(--purple-electric); color: #FFF;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      pointer-events: none; z-index: 6;
+    }
+
+    .map-node-wrapper.current .node-village-name {
+      border-color: var(--gold-glowing); color: var(--gold-glowing);
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
 
     /* COMPLETED NODE */
     .map-node-btn.passed {
@@ -264,8 +289,8 @@
     }
 
     .node-stars-row {
-      position: absolute; bottom: -18px;
-      display: flex; gap: 2px; font-size: 0.68rem;
+      position: absolute; bottom: 2px;
+      display: flex; gap: 2px; font-size: 0.65rem;
     }
 
     /* CURRENT ACTIVE NODE WITH FLOATING AVATAR PIN & PULSING RING */
@@ -278,13 +303,13 @@
     }
 
     @keyframes currentPulse {
-      0% { box-shadow: 0 0 16px var(--gold-glowing); transform: translate(-50%, -50%) scale(1); }
-      100% { box-shadow: 0 0 32px var(--gold-glowing), 0 0 45px var(--pink-neon); transform: translate(-50%, -50%) scale(1.12); }
+      0% { box-shadow: 0 0 16px var(--gold-glowing); transform: scale(1); }
+      100% { box-shadow: 0 0 32px var(--gold-glowing), 0 0 45px var(--pink-neon); transform: scale(1.12); }
     }
 
     /* FLOATING PLAYER AVATAR BADGE PIN */
     .player-pin-avatar {
-      position: absolute; top: -46px; left: 50%;
+      position: absolute; top: -44px; left: 50%;
       transform: translateX(-50%);
       width: 40px; height: 40px; border-radius: 50%;
       background: linear-gradient(135deg, var(--pink-neon), var(--purple-electric));
@@ -311,16 +336,6 @@
       background: rgba(22, 16, 48, 0.8);
       border: 2px solid rgba(255,255,255,0.2);
       color: #64748B; font-size: 0.95rem; font-weight: 800;
-    }
-
-    /* NEON VILLAGE SIGNPOST DECORATION */
-    .map-signpost-tag {
-      position: absolute; transform: translateY(-50%);
-      background: rgba(14, 10, 36, 0.92);
-      border: 1.5px solid var(--gold-glowing); border-radius: 14px;
-      padding: 4px 10px; font-size: 0.7rem; font-weight: 900; color: #FFF;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 8px var(--gold-glow);
-      pointer-events: none; z-index: 4; white-space: nowrap;
     }
 
     /* ISOMETRIC CARTOON VILLAGE HUTS & VEGETATION PROPS */
@@ -446,7 +461,10 @@
 </head>
 <body>
 
+  <!-- FIXED BACKGROUND GRID -->
   <div class="bg-grid"></div>
+
+  <!-- FIXED BACKGROUND 3D NEON GLASS BUBBLES & JONAKI POKA (FIREFLIES) -->
   <div class="bg-3d-elements" id="bg3dElements"></div>
 
   <!-- VIEW 0: WELCOME HERO INTERFACE -->
@@ -486,7 +504,7 @@
 
     <!-- VERTICAL S-CURVE MAP VIEWPORT -->
     <div class="vertical-map-viewport" id="mapViewport">
-      <svg class="map-svg-world" id="mapSvgWorld" viewBox="0 0 380 9100"></svg>
+      <svg class="map-svg-world" id="mapSvgWorld" viewBox="0 0 380 10200"></svg>
       <div class="map-nodes-layer" id="mapNodesLayer"></div>
     </div>
 
@@ -672,6 +690,42 @@
     }
     const audioManager = new SoundEngine();
 
+    // GENERATE STABLE 20% OPACITY 3D NEON GLASS BUBBLES & JONAKI POKA (FIREFLIES) IN BACKGROUND
+    function init3DBackgroundEffects() {
+      const bgContainer = document.getElementById('bg3dElements');
+      bgContainer.innerHTML = '';
+
+      // Stable 20% Opacity 3D Neon Glass Bubbles
+      for (let i = 0; i < 10; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'neon-bubble-3d';
+        const size = Math.floor(Math.random() * 55) + 38;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = Math.floor(Math.random() * 85) + '%';
+        bubble.style.top = Math.floor(Math.random() * 85) + '%';
+        bubble.style.animationDelay = (i * 1.5) + 's';
+        bubble.style.animationDuration = (Math.floor(Math.random() * 6) + 11) + 's';
+        bgContainer.appendChild(bubble);
+      }
+
+      // Jonaki Poka (Firefly Particles)
+      for (let i = 0; i < 18; i++) {
+        const firefly = document.createElement('div');
+        firefly.className = 'firefly-particle';
+        firefly.style.left = Math.floor(Math.random() * 92) + '%';
+        firefly.style.top = Math.floor(Math.random() * 92) + '%';
+        firefly.style.animationDelay = (Math.random() * 4) + 's';
+        firefly.style.animationDuration = (Math.random() * 5 + 4) + 's';
+        if (i % 3 === 0) {
+          firefly.style.background = '#00F5FF';
+          firefly.style.boxShadow = '0 0 14px #00F5FF, 0 0 24px #9D4EDD';
+        }
+        bgContainer.appendChild(firefly);
+      }
+    }
+    init3DBackgroundEffects();
+
     // 100 FENI VILLAGES DATABASE
     const FENI_100_VILLAGES = [
       "Char Modhuai", "Baligaon", "Hakdi", "Maruar Char", "Betagaon", "Madhuai", "Char Hakdi", "Sundarpur", "Dhumsahadda", "Char Huzuri",
@@ -721,17 +775,14 @@
     updateUI();
 
     // S-CURVE PATH ARCHITECTURE ENGINE
-    // Total 100 levels from bottom (Level 1) to top (Level 100)
-    // Viewport width = 380px, center = 190px, height per node = 90px
-    const NODE_SPACING_Y = 90;
-    const START_OFFSET_Y = 100;
-    const TOTAL_HEIGHT = 100 * NODE_SPACING_Y + 200; // ~9200px
+    const NODE_SPACING_Y = 100;
+    const START_OFFSET_Y = 110;
+    const TOTAL_HEIGHT = 100 * NODE_SPACING_Y + 200; // 10,200px
     const CENTER_X = 190;
     const AMPLITUDE_X = 110;
     const FREQ = 0.22;
 
     function getNodeCoords(levelNum) {
-      // Level 1 at bottom (large Y), Level 100 at top (small Y)
       const index = levelNum - 1;
       const y = TOTAL_HEIGHT - (START_OFFSET_Y + index * NODE_SPACING_Y);
       const x = CENTER_X + AMPLITUDE_X * Math.sin(index * FREQ);
@@ -746,7 +797,6 @@
       mapSvgWorld.style.height = TOTAL_HEIGHT + 'px';
       mapNodesLayer.style.height = TOTAL_HEIGHT + 'px';
 
-      // BUILD SVG PATHS FOR S-CURVE ROAD & PARALLEL RIVER
       let roadPathD = '';
       let riverPathD = '';
 
@@ -785,6 +835,7 @@
 
       for (let i = 1; i <= 100; i++) {
         const { x, y } = getNodeCoords(i);
+        const villageName = FENI_100_VILLAGES[i - 1] || `Village ${i}`;
 
         // ENVIRONMENT PROPS SCATTERED ALONG MARGINS
         if (i % 3 === 0) {
@@ -797,21 +848,13 @@
           mapNodesLayer.appendChild(prop);
         }
 
-        // VILLAGE SIGNPOST EVERY 5TH LEVEL
-        if (i % 5 === 0 || i === 1) {
-          const sign = document.createElement('div');
-          sign.className = 'map-signpost-tag';
-          sign.style.left = (x > CENTER_X ? x - 110 : x + 42) + 'px';
-          sign.style.top = y + 'px';
-          sign.textContent = `📍 ${FENI_100_VILLAGES[i - 1]}`;
-          mapNodesLayer.appendChild(sign);
-        }
+        // CIRCULAR LEVEL NODE WRAPPER WITH ALWAYS VISIBLE VILLAGE NAME TAG
+        const wrapper = document.createElement('div');
+        wrapper.className = 'map-node-wrapper' + (i === currentLevel ? ' current' : '');
+        wrapper.style.left = x + 'px';
+        wrapper.style.top = y + 'px';
 
-        // CIRCULAR LEVEL NODE BUTTON
         const btn = document.createElement('div');
-        btn.style.left = x + 'px';
-        btn.style.top = y + 'px';
-
         const isPassed = i < currentLevel;
         const isCurrent = i === currentLevel;
 
@@ -836,7 +879,14 @@
           btn.addEventListener('click', () => alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first.`));
         }
 
-        mapNodesLayer.appendChild(btn);
+        // VILLAGE NAME TAG DISPLAYED CLEARLY UNDER EACH NODE
+        const nameTag = document.createElement('div');
+        nameTag.className = 'node-village-name';
+        nameTag.textContent = villageName;
+
+        wrapper.appendChild(btn);
+        wrapper.appendChild(nameTag);
+        mapNodesLayer.appendChild(wrapper);
       }
     }
 
@@ -845,7 +895,7 @@
       const activeNode = document.getElementById('currentActiveNode');
       const viewport = document.getElementById('mapViewport');
       if (activeNode && viewport) {
-        const nodeY = parseFloat(activeNode.style.top);
+        const nodeY = parseFloat(activeNode.parentElement.style.top);
         viewport.scrollTop = nodeY - (viewport.clientHeight / 2);
       }
     }
@@ -940,7 +990,6 @@
 
     // GAMEPLAY ENGINE INTEGRATION
     let activePlayLevel = 1;
-    let currentMode = 'HARD';
     let gameState = [];
     let isGameActive = true;
 
