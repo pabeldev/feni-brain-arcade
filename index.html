@@ -92,22 +92,39 @@
       perspective: 800px;
     }
 
-    /* VIBRANT 3D NEON GLASS BUBBLES */
+    /* SOFT 10-30% BRIGHTNESS 3D BUBBLES THAT DISSOLVE INTO THIN AIR */
     .neon-bubble-3d {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.85) 0%, rgba(0, 245, 255, 0.45) 30%, rgba(157, 78, 221, 0.25) 70%, rgba(10, 8, 25, 0.85) 100%);
-      border: 1.5px solid rgba(0, 245, 255, 0.6);
-      box-shadow: 0 10px 30px rgba(0, 245, 255, 0.35), inset 0 4px 10px rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      animation: neonBubbleFloat 12s infinite ease-in-out alternate;
+      background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.35) 0%, rgba(0, 245, 255, 0.18) 35%, rgba(157, 78, 221, 0.08) 70%, transparent 100%);
+      border: 1px solid rgba(0, 245, 255, 0.22);
+      box-shadow: 0 6px 18px rgba(0, 245, 255, 0.12), inset 0 2px 6px rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      animation: neonBubbleDissolveFloat 14s infinite ease-in-out;
     }
 
-    @keyframes neonBubbleFloat {
-      0% { transform: translateY(0px) scale(0.9); opacity: 0.5; }
-      50% { transform: translateY(-45px) scale(1.18); opacity: 0.85; filter: drop-shadow(0 0 16px var(--cyan-vibrant)); }
-      100% { transform: translateY(-85px) scale(0.95); opacity: 0.55; }
+    @keyframes neonBubbleDissolveFloat {
+      0% {
+        transform: translateY(0px) scale(0.85);
+        opacity: 0.10;
+        filter: blur(4px);
+      }
+      40% {
+        transform: translateY(-50px) scale(1.15);
+        opacity: 0.28; /* Peak 28% Brightness (Within 10-30% range) */
+        filter: blur(8px);
+      }
+      75% {
+        transform: translateY(-110px) scale(1.35);
+        opacity: 0.12;
+        filter: blur(16px);
+      }
+      100% {
+        transform: translateY(-160px) scale(1.5);
+        opacity: 0; /* Fully dissolved in air */
+        filter: blur(26px);
+      }
     }
 
     /* FIREFLY / JONAKI POKA ATMOSPHERIC PARTICLES */
@@ -1171,12 +1188,12 @@
     }
     const audioManager = new SoundEngine();
 
-    // GENERATE VIBRANT 3D NEON GLASS BUBBLES & FIREFLY PARTICLES (জোনAKI POKA)
+    // GENERATE SOFT 10-30% BRIGHTNESS DISSOLVING NEON BUBBLES & FIREFLIES
     function init3DBackgroundEffects() {
       const bgContainer = document.getElementById('bg3dElements');
       bgContainer.innerHTML = '';
 
-      // Vibrant 3D Neon Glass Bubbles
+      // Soft Dissolving 3D Neon Glass Bubbles (10-30% max brightness)
       for (let i = 0; i < 8; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'neon-bubble-3d';
@@ -1185,8 +1202,8 @@
         bubble.style.height = size + 'px';
         bubble.style.left = Math.floor(Math.random() * 85) + '%';
         bubble.style.top = Math.floor(Math.random() * 85) + '%';
-        bubble.style.animationDelay = (i * 1.5) + 's';
-        bubble.style.animationDuration = (Math.floor(Math.random() * 6) + 10) + 's';
+        bubble.style.animationDelay = (i * 1.6) + 's';
+        bubble.style.animationDuration = (Math.floor(Math.random() * 6) + 11) + 's';
         bgContainer.appendChild(bubble);
       }
 
