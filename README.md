@@ -4,11 +4,13 @@
 
 ---
 
-## 📲 DIRECT DOWNLOAD (ANDROID APK)
+## 📲 DIRECT DOWNLOADS (ANDROID RELEASE)
 
 [<img src="https://img.shields.org/badge/📲_DOWNLOAD_ANDROID_APK-DIRECT_INSTALL-0F9D58?style=for-the-badge&logo=android&logoColor=white" height="48" alt="Download Android APK">](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)
+[<img src="https://img.shields.org/badge/🛍️_DOWNLOAD_PLAY_STORE_AAB-PLAY_CONSOLE-4285F4?style=for-the-badge&logo=googleplay&logoColor=white" height="48" alt="Download Play Store AAB">](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.aab)
 
-👉 **[Click Here to Download TicTacToe-3D.apk directly (v1.0.0)](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)**
+- ⚡ **[Download TicTacToe-3D.apk (Direct Install v1.0.0)](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)**
+- 🛍️ **[Download TicTacToe-3D.aab (Google Play Console Release v1.0.0)](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.aab)**
 
 ---
 
@@ -30,7 +32,7 @@
   - Earn +10 Diamonds every 3 completed levels.
   - Swap Diamonds for Coins inside the store.
 - **🛒 Immediate Next Level Purchase:** Unlock the immediate next level for 1,000 Coins directly on map tap.
-- **💬 Floating Confirmation Popup Modals:** Glossy floating arcade popups before executing any currency transaction.
+- **💬 Floating Confirmation Popup Modals:** Glossy floating arcade popups with backdrop blur before executing any transaction.
 - **❄️ Retention & Streak System:** 14-day 3D Carousel Slider, Streak Freeze shields (`❄️`), and Day 100 BDT 1000 Mega Reward claim modal.
 - **🎮 Google Play Games Cloud Sync:** Optional cloud progress saving.
 
@@ -57,11 +59,12 @@ Access at `http://localhost:9090/`.
 
 ---
 
-## 📦 Android Release
+## 📦 Android Release Assets
 
 - **Latest Tag:** `v1.0.0`
 - **Release Name:** Feni Brain Arcade - Initial Release
 - **Direct APK Asset:** [TicTacToe-3D.apk](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.apk)
+- **Google Play AAB Asset:** [TicTacToe-3D.aab](https://github.com/pabeldev/feni-brain-arcade/releases/download/v1.0.0/TicTacToe-3D.aab)
 
 ---
 
