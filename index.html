@@ -534,6 +534,16 @@
     .marker-symbol { display: inline-block; animation: pop3D 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; font-size: 2.5rem; line-height: 1; }
     @keyframes pop3D { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
+    .game-stats-scoreboard {
+      display: flex; justify-content: space-around; align-items: center;
+      width: 100%; max-width: 320px; margin: 4px 0 6px 0;
+      background: rgba(18, 10, 42, 0.88); border: 1.5px solid rgba(255, 215, 0, 0.4);
+      border-radius: 16px; padding: 6px 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .stat-score-item { display: flex; flex-direction: column; align-items: center; }
+    .score-label { font-size: 0.68rem; font-weight: 800; color: #FFE066; }
+    .score-val { font-size: 0.98rem; font-weight: 950; color: #FFF; text-shadow: 0 0 6px rgba(255, 215, 0, 0.6); }
+
     .reset-btn {
       width: 100%; max-width: 320px; height: 52px;
       background: linear-gradient(135deg, var(--gold-glowing) 0%, #FF9100 100%);
@@ -719,6 +729,22 @@
       <div class="curr-pill coins">🪙 <span id="gameCoinCount">500</span></div>
     </div>
 
+    <!-- LIVE IN-GAME SCOREBOARD & WIN RECORD BAR -->
+    <div class="game-stats-scoreboard">
+      <div class="stat-score-item">
+        <span class="score-label">🏆 Total Wins</span>
+        <span class="score-val" id="gameWinsCount">0</span>
+      </div>
+      <div class="stat-score-item">
+        <span class="score-label">🎮 Matches Played</span>
+        <span class="score-val" id="gameTotalMatchesCount">0</span>
+      </div>
+      <div class="stat-score-item">
+        <span class="score-label">🔥 Win Streak</span>
+        <span class="score-val" id="gameStreakCount">0 / 5</span>
+      </div>
+    </div>
+
     <div class="mode-selector-bar">
       <div class="mode-tab active" id="modeHardBtn">🤖 AI Hard</div>
       <div class="mode-tab" id="modeEasyBtn">😊 AI Easy</div>
@@ -890,7 +916,11 @@
       <div style="font-size: 3.5rem;">🏆</div>
       <div style="font-size: 1.6rem; font-weight: 950; color: #00E676;">ROYAL VICTORY!</div>
       <div style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark-slate);">+100 Gold Coins Earned!</div>
-      <button class="primary-cta-btn" id="continueVictoryBtn">Continue</button>
+      <div style="width: 100%; background: #F8F5EE; border-radius: 14px; padding: 10px; border: 1.5px solid #E6DCD0; margin: 6px 0; text-align: center;">
+        <div style="font-size: 0.84rem; font-weight: 900; color: var(--text-dark-slate);">🏆 Total Victories: <span id="victoryModalWins" style="color: #2E7D32;">0</span></div>
+        <div style="font-size: 0.84rem; font-weight: 900; color: var(--text-dark-slate);">🔥 Level Win Streak: <span id="victoryModalStreak" style="color: #FF6B00;">0 / 5</span></div>
+      </div>
+      <button class="primary-cta-btn" id="continueVictoryBtn">Continue 🚀</button>
     </div>
   </div>
 
@@ -1095,6 +1125,22 @@
 
       document.getElementById('metricMatchesVal').textContent = totalMatchesPlayed;
       document.getElementById('metricWinsVal').textContent = totalWins;
+
+      const winsEl = document.getElementById('gameWinsCount');
+      if (winsEl) winsEl.textContent = totalWins;
+      
+      const matchesEl = document.getElementById('gameTotalMatchesCount');
+      if (matchesEl) matchesEl.textContent = totalMatchesPlayed;
+      
+      const streakEl = document.getElementById('gameStreakCount');
+      if (streakEl) streakEl.textContent = `${levelConsecutiveWins} / 5`;
+      
+      const vicWinsEl = document.getElementById('victoryModalWins');
+      if (vicWinsEl) vicWinsEl.textContent = totalWins;
+      
+      const vicStreakEl = document.getElementById('victoryModalStreak');
+      if (vicStreakEl) vicStreakEl.textContent = `${levelConsecutiveWins} / 5`;
+
       const winRateNum = totalMatchesPlayed > 0 ? ((totalWins / totalMatchesPlayed) * 100) : 0;
       document.getElementById('metricWinRateVal').textContent = winRateNum.toFixed(1) + '%';
       
