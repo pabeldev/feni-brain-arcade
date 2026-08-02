@@ -231,6 +231,7 @@
       padding: 8px 10px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px var(--glass-shine);
       backdrop-filter: blur(18px);
+      z-index: 10;
     }
 
     .user-profile-trigger {
@@ -256,7 +257,7 @@
       background: linear-gradient(135deg, var(--purple-electric), #7B2CBF);
       border: 1.5px solid #FFF; border-radius: 12px;
       padding: 4px 8px; font-size: 0.72rem; font-weight: 900;
-      color: #FFF; cursor: pointer; display: flex; align-items: center; gap: 2px;
+      color: #FFF; cursor: pointer; display: flex; align-items: gap: 2px;
       box-shadow: 0 0 8px var(--purple-glow);
     }
 
@@ -276,18 +277,68 @@
     .stat-badge.coins { border-color: var(--gold-glowing); color: var(--gold-glowing); box-shadow: 0 0 10px var(--gold-glow); }
     .stat-badge.diamonds { border-color: var(--diamond-blue); color: var(--diamond-blue); box-shadow: 0 0 10px var(--diamond-glow); }
 
-    /* VIEW 1: MAP SCREEN */
+    /* VIEW 1: CANDY CRUSH STYLE MAP SCREEN WITH SCENERY & ROAD */
     .map-container {
       width: 100%;
       flex: 1;
       overflow-y: auto;
       margin: 8px 0;
-      padding: 24px 10px 34px 10px;
+      padding: 24px 10px 40px 10px;
       display: flex;
       flex-direction: column-reverse;
       align-items: center;
-      gap: 32px;
+      gap: 36px;
       scroll-behavior: smooth;
+      position: relative;
+    }
+
+    /* CANDY CRUSH WINDING ROAD COBBLESTONE TRACK */
+    .map-container::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      width: 44px; height: 100%;
+      transform: translateX(-50%);
+      background-image: repeating-linear-gradient(
+        0deg,
+        rgba(255, 145, 0, 0.35) 0px,
+        rgba(255, 145, 0, 0.35) 12px,
+        transparent 12px,
+        transparent 24px
+      );
+      border-left: 3.5px dashed var(--gold-glowing);
+      border-right: 3.5px dashed var(--cyan-vibrant);
+      pointer-events: none;
+      z-index: 0;
+      filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.3));
+    }
+
+    /* MAP ROW WRAPPER FOR SCENERY & NODES */
+    .map-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* STATIC 2D CARTOON VILLAGE & KIDS DECORATION CARDS */
+    .side-decor-card {
+      width: 82px;
+      height: 96px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid var(--purple-electric);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 10px var(--purple-glow);
+      background: #100C28;
+      pointer-events: none;
+    }
+
+    .side-decor-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     /* CUSTOM 3D FLAME NODE STRUCTURE */
@@ -301,6 +352,7 @@
       justify-content: flex-end;
       cursor: pointer;
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 2;
     }
 
     .map-flame-node:active { transform: scale(0.92); }
@@ -382,12 +434,6 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       z-index: 3;
     }
-
-    /* ZIG-ZAG ALIGNMENT */
-    .map-flame-node:nth-child(4n+1) { align-self: flex-start; margin-left: 24px; }
-    .map-flame-node:nth-child(4n+2) { align-self: center; }
-    .map-flame-node:nth-child(4n+3) { align-self: flex-end; margin-right: 24px; }
-    .map-flame-node:nth-child(4n+0) { align-self: center; }
 
     /* VIEW 2: CLEAN GAMEPLAY SCREEN */
     .game-header {
@@ -700,7 +746,7 @@
     </div>
   </div>
 
-  <!-- VIEW 1: MAP SCREEN -->
+  <!-- VIEW 1: CANDY CRUSH STYLE MAP SCREEN WITH SCENERY & ROAD -->
   <div class="app-screen hidden" id="mapScreen">
     <div class="header-bar">
       <!-- USER AVATAR & PROFILE HUB TRIGGER -->
@@ -717,10 +763,10 @@
       </div>
     </div>
 
-    <!-- 100 VILLAGE SCROLLABLE MAP NODES -->
+    <!-- 100 VILLAGE SCROLLABLE MAP NODES WITH WINDING ROAD & 2D CARTOON SCENERY -->
     <div class="map-container" id="mapContainer"></div>
 
-    <div style="width: 100%; text-align: center; font-size: 0.78rem; color: #A090C0; font-weight: 700;">
+    <div style="width: 100%; text-align: center; font-size: 0.78rem; color: #A090C0; font-weight: 700; z-index: 10;">
       Win 5 consecutive matches per level or tap 🛒 1k to purchase next level!
     </div>
   </div>
@@ -1245,7 +1291,6 @@
 
     function updateProfilePlaytimeUI() {
       document.getElementById('metricPlaytimeVal').textContent = formatPlaytime(totalPlaytimeSeconds);
-      // Update Playtime Progress Bar (scaled relative to 1 hour = 3600s milestone)
       const playtimePercent = Math.min(100, Math.max(5, (totalPlaytimeSeconds / 3600) * 100));
       const playtimeBar = document.getElementById('metricPlaytimeBar');
       if (playtimeBar) playtimeBar.style.width = playtimePercent + '%';
@@ -1656,10 +1701,13 @@
     }
     updateHeaderUI();
 
-    // RENDER 100 MAP NODES
+    // RENDER CANDY CRUSH WINDING ROAD MAP WITH STATIC 2D CARTOON SCENERY
     function renderMap() {
       mapContainer.innerHTML = '';
       for (let i = 1; i <= 100; i++) {
+        const row = document.createElement('div');
+        row.className = 'map-row';
+
         const node = document.createElement('div');
         const isUnlocked = i <= currentLevel;
         const isCurrent = i === currentLevel;
@@ -1697,7 +1745,28 @@
           node.addEventListener('click', () => { audioManager.playClick(); alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first or purchase Level ${currentLevel + 1}.`); });
         }
 
-        mapContainer.appendChild(node);
+        // CREATE CANDY CRUSH ALTERNATING ZIG-ZAG ALIGNMENT AND 2D CARTOON SCENERY ON SIDES
+        const posIndex = i % 4;
+        const decorCardLeft = document.createElement('div');
+        decorCardLeft.className = 'side-decor-card';
+        decorCardLeft.innerHTML = `<img src="village_left.jpg" alt="Cartoon Village">`;
+
+        const decorCardRight = document.createElement('div');
+        decorCardRight.className = 'side-decor-card';
+        decorCardRight.innerHTML = `<img src="village_right.jpg" alt="Kids Playing">`;
+
+        if (posIndex === 1) { // Left-aligned node
+          row.appendChild(node);
+          row.appendChild(decorCardRight);
+        } else if (posIndex === 3) { // Right-aligned node
+          row.appendChild(decorCardLeft);
+          row.appendChild(node);
+        } else { // Center-aligned node
+          row.style.justifyContent = 'center';
+          row.appendChild(node);
+        }
+
+        mapContainer.appendChild(row);
       }
     }
 
