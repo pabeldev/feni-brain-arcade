@@ -145,31 +145,35 @@
       width: 100%; height: 100%;
       display: flex; flex-direction: column;
       align-items: center; justify-content: space-between;
-      padding: 30px 16px 40px 16px; text-align: center;
+      padding: 24px 16px 36px 16px; text-align: center;
     }
 
     .welcome-hero-art {
-      position: relative; width: 100%; max-width: 290px; aspect-ratio: 1 / 1;
+      position: relative; width: 100%; max-width: 280px; aspect-ratio: 1 / 1;
       display: flex; align-items: center; justify-content: center;
     }
 
     .welcome-hero-img {
-      width: 190px; height: 190px; object-fit: cover; border-radius: 36px;
+      width: 180px; height: 180px; object-fit: cover; border-radius: 36px;
       border: 4px solid var(--gold-glowing);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--gold-glow);
     }
 
-    /* HIGH-CONTRAST LUMINOUS LOGO PNG FILTER FOR DARK OBSIDIAN BACKGROUND */
-    .welcome-logo-png {
-      max-width: 250px; height: auto;
-      filter: brightness(0) invert(1) drop-shadow(0 0 16px var(--gold-glowing)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
-      margin: 12px 0 4px 0; display: block;
+    /* OFFICIAL LOGO DISPLAY CARD WITH ORIGINAL PNG LOGO */
+    .welcome-logo-card {
+      background: #FFFFFF;
+      border: 3.5px solid var(--gold-glowing);
+      border-radius: 22px;
+      padding: 10px 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--gold-glow);
+      margin: 12px 0 4px 0;
+      display: inline-block;
     }
 
-    .welcome-logo-subtitle-png {
-      max-width: 160px; height: auto;
-      filter: brightness(0) invert(1) drop-shadow(0 0 12px var(--cyan-vibrant));
-      margin-bottom: 8px; display: block;
+    .official-game-logo-img {
+      max-width: 220px;
+      height: auto;
+      display: block;
     }
 
     .start-app-btn {
@@ -520,11 +524,11 @@
         <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
       </div>
       <div>
-        <!-- HIGH-CONTRAST WHITE & GOLD GLOW LOGO IMAGE -->
-        <img src="logo_full.png" alt="Tic Tac Toe GenZ Multiplayer" class="welcome-logo-png">
-        <img src="logo_subtitle.png" alt="GenZ Multiplayer" class="welcome-logo-subtitle-png">
-        <h1 class="welcome-main-title">Tic Tac Toe: Multiplayer GenZ</h1>
-        <p style="font-size: 0.88rem; color: #FFE066; font-weight: 800; margin-top: 6px;">
+        <!-- OFFICIAL ORIGINAL LOGO CARD DISPLAY WITH EXACT PNG ARTWORK -->
+        <div class="welcome-logo-card">
+          <img src="game_logo.png" alt="Tic Tac Toe GenZ Logo" class="official-game-logo-img">
+        </div>
+        <p style="font-size: 0.88rem; color: #FFE066; font-weight: 800; margin-top: 8px;">
           Feni 100-Villages Royal Map & Evolving Chess Pieces!
         </p>
       </div>
