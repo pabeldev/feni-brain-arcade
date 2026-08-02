@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tic Tac Toe- Not for Beginners (Feni Royal Map v1.0.1)</title>
+  <title>Tic Tac Toe: Multiplayer GenZ</title>
   <link rel="icon" type="image/jpeg" href="app-icon.jpg">
   <style>
     :root {
-      /* ROYAL CYBER-NEON COLOR PALETTE */
+      /* ROYAL CYBER-NEON PALETTE */
       --bg-dark-obsidian: #090518;
       --bg-royal-gradient: radial-gradient(circle at 50% 15%, #250C3F 0%, #090518 85%);
-      --glass-card: rgba(30, 15, 60, 0.88);
+      --glass-card: rgba(30, 15, 60, 0.90);
       --glass-border: rgba(255, 215, 0, 0.45);
       --glass-shine: rgba(255, 255, 255, 0.18);
 
@@ -63,7 +63,7 @@
 
     html { height: -webkit-fill-available; }
 
-    /* CYBER-NEON BACKGROUND GRID */
+    /* BACKGROUND GRID */
     .bg-grid {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -131,6 +131,7 @@
       top: 0; left: 50%;
       transform: translateX(-50%);
       transition: opacity 0.35s ease, transform 0.35s ease;
+      overflow-x: hidden;
     }
 
     .app-screen.hidden {
@@ -144,73 +145,79 @@
       width: 100%; height: 100%;
       display: flex; flex-direction: column;
       align-items: center; justify-content: space-between;
-      padding: 40px 20px; text-align: center;
+      padding: 30px 16px 40px 16px; text-align: center;
     }
 
     .welcome-hero-art {
-      position: relative; width: 100%; max-width: 300px; aspect-ratio: 1 / 1;
+      position: relative; width: 100%; max-width: 290px; aspect-ratio: 1 / 1;
       display: flex; align-items: center; justify-content: center;
     }
 
     .welcome-hero-img {
-      width: 210px; height: 210px; object-fit: cover; border-radius: 38px;
+      width: 190px; height: 190px; object-fit: cover; border-radius: 36px;
       border: 4px solid var(--gold-glowing);
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--gold-glow);
     }
 
+    .welcome-logo-png {
+      max-width: 260px; height: auto;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.8)) drop-shadow(0 0 20px var(--gold-glow));
+      margin-top: 8px;
+    }
+
     .welcome-main-title {
-      font-size: 2.2rem; font-weight: 950; line-height: 1.15;
+      font-size: 1.8rem; font-weight: 950; line-height: 1.15;
       background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-glowing) 50%, #FF9100 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.5px; margin-top: 6px;
     }
 
     .start-app-btn {
-      width: 100%; max-width: 330px; height: 58px;
+      width: 100%; max-width: 320px; height: 56px;
       background: linear-gradient(135deg, #FF6B00 0%, #FF9100 50%, #FF3D00 100%);
-      border: none; border-radius: 29px; color: #FFF;
-      font-size: 1.2rem; font-weight: 950; letter-spacing: 1px;
+      border: none; border-radius: 28px; color: #FFF;
+      font-size: 1.15rem; font-weight: 950; letter-spacing: 1px;
       text-transform: uppercase; cursor: pointer;
       box-shadow: 0 10px 30px rgba(255, 107, 0, 0.6);
       transition: transform 0.15s ease;
     }
     .start-app-btn:active { transform: scale(0.95); }
 
-    /* VIEW 1: CANDY CRUSH VERTICAL WIDER S-CURVE ROAD MAP SCREEN */
+    /* VIEW 1: CANDY CRUSH VERTICAL MAP SCREEN (STRICTLY CONTAINED TO MOBILE) */
     .map-header-bar {
       position: absolute; top: 0; left: 0; width: 100%;
       display: flex; align-items: center; justify-content: space-between;
       background: var(--glass-card);
       border-bottom: 2px solid var(--glass-border);
-      padding: 10px 14px;
+      padding: 10px 12px;
       backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
       z-index: 20; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
     }
 
     .header-user-badge {
-      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
     }
 
     .header-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
+      width: 38px; height: 38px; border-radius: 50%;
       background: linear-gradient(135deg, var(--gold-glowing), #FF9100);
       border: 2px solid #FFF;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.25rem; box-shadow: 0 0 12px var(--gold-glow);
+      font-size: 1.2rem; box-shadow: 0 0 12px var(--gold-glow);
     }
 
     .header-info-group { display: flex; flex-direction: column; text-align: left; }
-    .header-username { font-size: 0.85rem; font-weight: 900; color: #FFF; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .header-village-tag { font-size: 0.7rem; font-weight: 800; color: var(--gold-glowing); }
+    .header-username { font-size: 0.8rem; font-weight: 900; color: #FFF; max-width: 85px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .header-village-tag { font-size: 0.68rem; font-weight: 800; color: var(--gold-glowing); }
 
-    .header-currencies { display: flex; align-items: center; gap: 6px; }
+    .header-currencies { display: flex; align-items: center; gap: 4px; }
 
     .curr-pill {
       background: rgba(10, 8, 25, 0.85);
       border: 1.5px solid rgba(255, 215, 0, 0.35);
-      border-radius: 14px; padding: 4px 8px;
-      font-size: 0.76rem; font-weight: 900;
-      display: flex; align-items: center; gap: 4px;
+      border-radius: 14px; padding: 4px 7px;
+      font-size: 0.72rem; font-weight: 900;
+      display: flex; align-items: center; gap: 3px;
       cursor: pointer; color: #FFF;
     }
     .curr-pill.coins { border-color: var(--gold-glowing); color: var(--gold-glowing); }
@@ -229,9 +236,10 @@
       position: relative;
       padding-top: 65px; padding-bottom: 75px;
       scroll-behavior: smooth;
+      box-sizing: border-box;
     }
 
-    /* SVG LAYER FOR WIDER COBBLESTONE ROAD & MOVING CARS */
+    /* SVG LAYER FOR S-CURVE ROAD & MOVING CARS */
     .map-svg-world {
       position: absolute; top: 0; left: 0;
       width: 100%; height: 10200px;
@@ -243,6 +251,7 @@
       position: absolute; top: 0; left: 0;
       width: 100%; height: 10200px;
       z-index: 5;
+      overflow-x: hidden;
     }
 
     /* ALTERNATING ROYAL VILLAGE STORE HUT NODES */
@@ -255,18 +264,18 @@
 
     .map-store-hut {
       position: relative;
-      width: 72px; height: 72px;
-      border-radius: 20px;
+      width: 66px; height: 66px;
+      border-radius: 18px;
       background: linear-gradient(145deg, #2D1B4E 0%, #150B28 100%);
-      border: 3px solid var(--gold-glowing);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.8), 0 0 14px var(--gold-glow);
+      border: 2.5px solid var(--gold-glowing);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8), 0 0 12px var(--gold-glow);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .map-store-hut:active { transform: scale(0.92); }
 
-    .store-roof-icon { font-size: 1.6rem; line-height: 1; margin-bottom: 2px; }
-    .store-serial-num { font-size: 0.95rem; font-weight: 950; color: #FFF; line-height: 1; }
+    .store-roof-icon { font-size: 1.5rem; line-height: 1; margin-bottom: 2px; }
+    .store-serial-num { font-size: 0.9rem; font-weight: 950; color: #FFF; line-height: 1; }
 
     /* STAR RATING BADGE (1, 2, OR 3 STARS) ABOVE STORE HUT */
     .store-stars-badge {
@@ -274,18 +283,19 @@
       transform: translateX(-50%);
       background: rgba(10, 5, 24, 0.94);
       border: 1.5px solid var(--gold-glowing); border-radius: 12px;
-      padding: 2px 6px; font-size: 0.68rem; white-space: nowrap;
+      padding: 2px 6px; font-size: 0.65rem; white-space: nowrap;
       box-shadow: 0 4px 10px rgba(0,0,0,0.6); z-index: 6;
     }
 
     /* VILLAGE NAME TAG UNDER STORE HUT */
     .store-village-name {
-      position: absolute; bottom: -20px;
-      font-size: 0.7rem; font-weight: 900; white-space: nowrap;
+      position: absolute; bottom: -18px;
+      font-size: 0.66rem; font-weight: 900; white-space: nowrap;
       background: rgba(15, 8, 35, 0.94);
-      padding: 2px 9px; border-radius: 10px;
+      padding: 2px 8px; border-radius: 10px;
       border: 1.5px solid var(--gold-glowing); color: #FFF;
       box-shadow: 0 4px 10px rgba(0,0,0,0.6); z-index: 6;
+      max-width: 110px; overflow: hidden; text-overflow: ellipsis;
     }
 
     /* CURRENT ACTIVE STORE HUT PULSE & FLOATING AVATAR PIN */
@@ -301,13 +311,13 @@
     }
 
     .player-pin-avatar {
-      position: absolute; top: -46px; left: 50%;
+      position: absolute; top: -44px; left: 50%;
       transform: translateX(-50%);
-      width: 42px; height: 42px; border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       background: linear-gradient(135deg, var(--gold-glowing), #FF9100);
       border: 2.5px solid #FFF;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; box-shadow: 0 8px 18px rgba(0,0,0,0.8), 0 0 14px var(--gold-glow);
+      font-size: 1.25rem; box-shadow: 0 8px 18px rgba(0,0,0,0.8), 0 0 14px var(--gold-glow);
       z-index: 10; animation: floatPin 2s infinite ease-in-out alternate;
     }
 
@@ -323,24 +333,17 @@
       100% { transform: translateX(-50%) translateY(-7px); }
     }
 
-    /* LOCKED STORE HUT */
-    .map-store-wrapper.locked .map-store-hut {
-      background: rgba(22, 16, 48, 0.8);
-      border-color: rgba(255,255,255,0.2); opacity: 0.6;
-    }
-
-    /* BACKGROUND FLOWER TREES, FRUIT TREES & PALMS BEHIND STORES */
+    /* COCONUT PALM TREES & FRUIT TREES BEHIND STORE HUTS */
     .tree-decor-prop {
       position: absolute; transform: translate(-50%, -50%);
-      font-size: 2.2rem; pointer-events: none; z-index: 3;
+      font-size: 2.1rem; pointer-events: none; z-index: 3;
       filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
     }
 
-    /* ANIMATED CAR DRIVING ON THE S-CURVE ROAD */
+    /* ANIMATED CAR DRIVING ON THE ROAD */
     .road-animated-car {
       position: absolute; transform: translate(-50%, -50%);
-      font-size: 1.4rem; pointer-events: none; z-index: 4;
-      transition: all 0.3s ease;
+      font-size: 1.3rem; pointer-events: none; z-index: 4;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
     }
 
@@ -367,16 +370,16 @@
     .game-header {
       width: 100%; display: flex; justify-content: space-between; align-items: center;
       background: var(--glass-card); border: 2px solid var(--glass-border);
-      border-radius: var(--border-radius-md); padding: 8px 14px; margin-top: 8px;
+      border-radius: var(--border-radius-md); padding: 8px 12px; margin-top: 8px;
     }
 
     .back-btn {
       background: rgba(255, 255, 255, 0.1); border: 1.5px solid var(--glass-border);
-      border-radius: 14px; color: #FFF; padding: 6px 14px; font-size: 0.85rem; font-weight: 800; cursor: pointer;
+      border-radius: 14px; color: #FFF; padding: 6px 12px; font-size: 0.82rem; font-weight: 800; cursor: pointer;
     }
 
-    .level-title-banner { font-size: 0.9rem; font-weight: 900; color: var(--gold-glowing); }
-    .guti-theme-badge { font-size: 0.74rem; font-weight: 900; background: rgba(255, 215, 0, 0.15); color: var(--gold-glowing); border: 1px solid var(--gold-glowing); padding: 2px 8px; border-radius: 10px; }
+    .level-title-banner { font-size: 0.88rem; font-weight: 900; color: var(--gold-glowing); }
+    .guti-theme-badge { font-size: 0.72rem; font-weight: 900; background: rgba(255, 215, 0, 0.15); color: var(--gold-glowing); border: 1px solid var(--gold-glowing); padding: 2px 8px; border-radius: 10px; }
 
     .mode-selector-bar {
       width: 92%; background: var(--glass-card); border: 1.5px solid var(--glass-border);
@@ -439,34 +442,67 @@
 
     .modal-card {
       width: 90%; max-width: 380px; background: var(--modal-subtle-glow);
-      border: 2.5px solid var(--gold-glowing); border-radius: 34px; padding: 22px 18px; text-align: center;
+      border: 2.5px solid var(--gold-glowing); border-radius: 34px; padding: 20px 16px; text-align: center;
       display: flex; flex-direction: column; align-items: center; gap: 12px;
       box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 30px var(--gold-glow); color: var(--text-dark-slate);
       transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-height: 92vh; overflow-y: auto;
     }
     .modal-overlay.active .modal-card { transform: scale(1); }
 
     .primary-cta-btn {
-      width: 100%; height: 50px; background: var(--green-cta);
-      border: none; border-radius: 25px; color: #FFF;
-      font-size: 1.05rem; font-weight: 950; letter-spacing: 0.5px;
+      width: 100%; height: 48px; background: var(--green-cta);
+      border: none; border-radius: 24px; color: #FFF;
+      font-size: 1rem; font-weight: 950; letter-spacing: 0.5px;
       cursor: pointer; box-shadow: 0 8px 22px rgba(0, 230, 118, 0.4);
     }
     .primary-cta-btn:active { transform: scale(0.96); }
 
     .secondary-cancel-btn {
-      width: 100%; height: 46px; background: var(--red-cta);
-      border: none; border-radius: 23px; color: #FFF;
-      font-size: 0.95rem; font-weight: 900; cursor: pointer;
+      width: 100%; height: 44px; background: var(--red-cta);
+      border: none; border-radius: 22px; color: #FFF;
+      font-size: 0.92rem; font-weight: 900; cursor: pointer;
       box-shadow: 0 6px 18px rgba(255, 82, 82, 0.4);
     }
 
     /* PRE-GAME MODAL SPECIFIC */
     .pregame-info-box {
       width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0;
-      border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+      border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 8px; text-align: left;
     }
-    .pregame-row { display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 800; }
+    .pregame-row { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; }
+
+    /* SETTINGS TOGGLE SWITCH */
+    .setting-toggle-row {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      background: #FFFFFF; border: 1.5px solid #E5DCCF; border-radius: 18px; padding: 10px 14px;
+    }
+    .toggle-switch {
+      width: 48px; height: 26px; background: #CBD5E1; border-radius: 14px;
+      position: relative; cursor: pointer; transition: background 0.3s ease;
+    }
+    .toggle-switch.active { background: var(--purple-royal); }
+    .toggle-knob {
+      width: 20px; height: 20px; background: #FFF; border-radius: 50%;
+      position: absolute; top: 3px; left: 3px; transition: transform 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.active .toggle-knob { transform: translateX(22px); }
+
+    /* AVATAR GRID */
+    .avatar-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%;
+    }
+    .avatar-select-bubble {
+      width: 100%; aspect-ratio: 1 / 1; border-radius: 50%;
+      background: #F4EFE4; border: 2px solid #E0D6C4;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; cursor: pointer; transition: all 0.2s ease;
+    }
+    .avatar-select-bubble.selected {
+      border-color: var(--purple-royal); background: #EAE0F5;
+      box-shadow: 0 0 12px var(--purple-glow); transform: scale(1.08);
+    }
   </style>
 </head>
 <body>
@@ -484,9 +520,10 @@
         <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
       </div>
       <div>
-        <h1 class="welcome-main-title">FENI MAP - 100 VILLAGES</h1>
-        <p style="font-size: 0.9rem; color: #FFE066; font-weight: 800; margin-top: 8px;">
-          Royal S-Curve Map & Evolving Chess Pieces!
+        <img src="logo_full.png" alt="Tic Tac Toe GenZ Multiplayer" class="welcome-logo-png">
+        <h1 class="welcome-main-title">Tic Tac Toe: Multiplayer GenZ</h1>
+        <p style="font-size: 0.88rem; color: #FFE066; font-weight: 800; margin-top: 6px;">
+          Feni 100-Villages Royal Map & Evolving Chess Pieces!
         </p>
       </div>
       <button class="start-app-btn" id="startAppBtn">LET'S START 🚀</button>
@@ -581,7 +618,7 @@
   <div class="modal-overlay" id="preGameModal">
     <div class="modal-card">
       <div style="font-size: 2.2rem;">⚔️ 🏰</div>
-      <div style="font-size: 1.4rem; font-weight: 950; color: var(--purple-royal);" id="preGameTitle">Level 1: Char Modhuai</div>
+      <div style="font-size: 1.35rem; font-weight: 950; color: var(--purple-royal);" id="preGameTitle">Level 1: Char Modhuai</div>
       <div class="pregame-info-box">
         <div class="pregame-row"><span>Grid Matrix:</span><span style="color: var(--gold-glowing);">3x3 Royal Grid</span></div>
         <div class="pregame-row"><span>Evolving Pieces:</span><span id="preGameGutiText" style="color: var(--cyan-vibrant);">Classic Neon</span></div>
@@ -592,27 +629,97 @@
     </div>
   </div>
 
-  <!-- PROFILE HUB MODAL -->
+  <!-- PLAYER PROFILE HUB & PROGRESS BAR METRICS SYSTEM MODAL -->
   <div class="modal-overlay" id="profileHubModal">
     <div class="modal-card">
       <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-royal);">👤 PLAYER PROFILE HUB</div>
-      <div style="display: flex; align-items: center; gap: 12px; width: 100%; background: #F8F5EE; border-radius: 20px; padding: 10px;">
+
+      <div style="display: flex; align-items: center; gap: 12px; width: 100%; background: #F8F5EE; border-radius: 20px; padding: 10px; border: 1.5px solid #E6DCD0;">
         <div class="header-avatar" id="hubAvatarBubble" style="width: 48px; height: 48px; font-size: 1.6rem;">👑</div>
         <div style="text-align: left; flex: 1;">
           <input type="text" id="hubUsernameInput" style="font-size: 1rem; font-weight: 950; color: var(--text-dark-slate); border: none; background: transparent; outline: none; width: 100%;" value="Guest Player">
           <div style="font-size: 0.74rem; font-weight: 800; color: var(--text-muted-slate);" id="hubPhoneText">+880 (Guest Account)</div>
         </div>
       </div>
+
+      <!-- AVATAR SELECTION -->
+      <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Choose Arcade Avatar:</div>
+      <div class="avatar-grid" id="avatarGrid"></div>
+
+      <!-- REAL-TIME TIME TRACKER & PROGRESS BARS METRICS SYSTEM -->
+      <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Gameplay Performance Metrics:</div>
+      <div class="stats-metrics-bars-container" style="width: 100%; display: flex; flex-direction: column; gap: 10px;">
+        
+        <!-- WIN RATE PROGRESS BAR -->
+        <div style="width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate);">
+            <span>🏆 Win Rate</span>
+            <span id="metricWinRateVal">0.0%</span>
+          </div>
+          <div style="width: 100%; height: 10px; background: #E2D9CC; border-radius: 5px; overflow: hidden;">
+            <div id="metricWinRateBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #00E676, #00C853); border-radius: 5px; transition: width 0.4s ease;"></div>
+          </div>
+        </div>
+
+        <!-- MATCHES & VICTORIES PROGRESS BAR -->
+        <div style="width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate);">
+            <span>👑 Victories / Matches</span>
+            <span><span id="metricWinsVal">0</span> / <span id="metricMatchesVal">0</span></span>
+          </div>
+          <div style="width: 100%; height: 10px; background: #E2D9CC; border-radius: 5px; overflow: hidden;">
+            <div id="metricWinsBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #9D4EDD, #00F5FF); border-radius: 5px; transition: width 0.4s ease;"></div>
+          </div>
+        </div>
+
+        <!-- PLAYTIME TRACKER BAR -->
+        <div style="width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 900; color: var(--text-dark-slate);">
+            <span>⏳ Total Playtime</span>
+            <span id="metricPlaytimeVal">0 mins</span>
+          </div>
+          <div style="width: 100%; height: 10px; background: #E2D9CC; border-radius: 5px; overflow: hidden;">
+            <div id="metricPlaytimeBar" style="width: 15%; height: 100%; background: linear-gradient(90deg, #FF6B00, #FFD700); border-radius: 5px; transition: width 0.4s ease;"></div>
+          </div>
+        </div>
+
+      </div>
+
       <button class="primary-cta-btn" id="saveProfileHubBtn">Save Profile</button>
+      <button class="back-btn" id="openSettingsFromHubBtn" style="width: 100%; border-color: var(--purple-royal); color: var(--purple-royal); font-weight: 900;">⚙️ Game Settings & Audio</button>
       <button class="secondary-cancel-btn" id="closeProfileHubBtn">Close</button>
     </div>
   </div>
 
-  <!-- SETTINGS MODAL -->
+  <!-- GAME SETTINGS MODAL -->
   <div class="modal-overlay" id="settingsModal">
     <div class="modal-card">
       <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-royal);">⚙️ GAME SETTINGS</div>
-      <div style="width: 100%; text-align: left; font-weight: 800; font-size: 0.9rem;">Web Audio API SFX: 🔊 Active</div>
+
+      <div class="setting-toggle-row">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; font-size: 0.9rem;">Sound Effects (SFX) 🔊</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted-slate);">Web Audio API Synthesizer</div>
+        </div>
+        <div class="toggle-switch active" id="toggleSfx"><div class="toggle-knob"></div></div>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; font-size: 0.9rem;">Haptic Vibration 📳</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted-slate);">Device Feedback on moves</div>
+        </div>
+        <div class="toggle-switch active" id="toggleHaptic"><div class="toggle-knob"></div></div>
+      </div>
+
+      <div class="setting-toggle-row">
+        <div style="text-align: left;">
+          <div style="font-weight: 900; font-size: 0.9rem;">Ambient BGM 🎵</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted-slate);">Background Synth Melody</div>
+        </div>
+        <div class="toggle-switch" id="toggleBgm"><div class="toggle-knob"></div></div>
+      </div>
+
       <button class="primary-cta-btn" id="closeSettingsCtaBtn">Done</button>
     </div>
   </div>
@@ -652,12 +759,16 @@
   </div>
 
   <script>
-    // WEB AUDIO API SYNTHESIZER ENGINE
+    // WEB AUDIO API SYNTHESIZER ENGINE WITH SFX & BGM CONTROL
     class SoundEngine {
       constructor() {
         this.ctx = null;
-        this.soundEnabled = true;
+        this.soundEnabled = localStorage.getItem('feniSoundEnabled') !== 'false';
+        this.hapticEnabled = localStorage.getItem('feniHapticEnabled') !== 'false';
+        this.bgmEnabled = localStorage.getItem('feniBgmEnabled') === 'true';
+        this.bgmOsc = null;
       }
+
       initCtx() {
         if (!this.ctx) {
           const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -665,7 +776,11 @@
         }
         if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
       }
+
       playClick() {
+        if (this.hapticEnabled && navigator.vibrate) {
+          try { navigator.vibrate(20); } catch(e){}
+        }
         if (!this.soundEnabled) return;
         this.initCtx();
         if (!this.ctx) return;
@@ -680,6 +795,7 @@
           osc.start(); osc.stop(this.ctx.currentTime + 0.05);
         } catch(e){}
       }
+
       playVictory() {
         if (!this.soundEnabled) return;
         this.initCtx();
@@ -697,6 +813,19 @@
             osc.stop(this.ctx.currentTime + idx * 0.12 + 0.3);
           });
         } catch(e){}
+      }
+
+      setSound(enabled) {
+        this.soundEnabled = enabled;
+        localStorage.setItem('feniSoundEnabled', enabled.toString());
+      }
+      setHaptic(enabled) {
+        this.hapticEnabled = enabled;
+        localStorage.setItem('feniHapticEnabled', enabled.toString());
+      }
+      setBgm(enabled) {
+        this.bgmEnabled = enabled;
+        localStorage.setItem('feniBgmEnabled', enabled.toString());
       }
     }
     const audioManager = new SoundEngine();
@@ -731,6 +860,42 @@
     }
     init3DBackgroundEffects();
 
+    // REAL-TIME PLAYTIME TRACKER & MATCH STATS METRICS
+    let totalPlaytimeSeconds = parseInt(localStorage.getItem('feniPlaytimeSecs') || '0');
+    let totalMatchesPlayed = parseInt(localStorage.getItem('feniMatches') || '0');
+    let totalWins = parseInt(localStorage.getItem('feniWins') || '0');
+    let totalLosses = parseInt(localStorage.getItem('feniLosses') || '0');
+    let playtimeTimer = null;
+
+    function startPlaytimeTracker() {
+      if (playtimeTimer) clearInterval(playtimeTimer);
+      playtimeTimer = setInterval(() => {
+        totalPlaytimeSeconds++;
+        if (totalPlaytimeSeconds % 5 === 0) {
+          localStorage.setItem('feniPlaytimeSecs', totalPlaytimeSeconds.toString());
+        }
+        updateProfilePlaytimeUI();
+      }, 1000);
+    }
+    startPlaytimeTracker();
+
+    function formatPlaytime(totalSecs) {
+      const hrs = Math.floor(totalSecs / 3600);
+      const mins = Math.floor((totalSecs % 3600) / 60);
+      const secs = totalSecs % 60;
+      if (hrs > 0) return `${hrs} hrs ${mins} mins`;
+      if (mins > 0) return `${mins} mins ${secs} secs`;
+      return `${secs} secs`;
+    }
+
+    function updateProfilePlaytimeUI() {
+      const ptVal = document.getElementById('metricPlaytimeVal');
+      if (ptVal) ptVal.textContent = formatPlaytime(totalPlaytimeSeconds);
+      const playtimePercent = Math.min(100, Math.max(5, (totalPlaytimeSeconds / 3600) * 100));
+      const playtimeBar = document.getElementById('metricPlaytimeBar');
+      if (playtimeBar) playtimeBar.style.width = playtimePercent + '%';
+    }
+
     // 100 FENI VILLAGES DATABASE
     const FENI_100_VILLAGES = [
       "Char Modhuai", "Baligaon", "Hakdi", "Maruar Char", "Betagaon", "Madhuai", "Char Hakdi", "Sundarpur", "Dhumsahadda", "Char Huzuri",
@@ -745,7 +910,7 @@
       "Fulgazi", "Munshirhat", "Dorbarpur", "Anandopur", "Amzadhat", "G.M. Hat", "North Basudebpur", "Kismat Ghaniyamora", "Balla", "Bandua"
     ];
 
-    // PIECE (GUTI) EVOLUTION SYSTEM EVERY 5 LEVELS
+    // PIECE EVOLUTION EVERY 5 LEVELS
     function getGutiTheme(level) {
       if (level <= 5) return { pX: '❌', pO: '⭕', label: 'Classic Cyber Neon' };
       if (level <= 10) return { pX: '♟️', pO: '♞', label: 'Chess Pawns & Knights' };
@@ -764,6 +929,8 @@
     let playerAvatar = localStorage.getItem('feniAvatar') || '👑';
     let levelConsecutiveWins = parseInt(localStorage.getItem('feniLevelWins') || '0');
 
+    const AVATAR_OPTIONS = ['👑', '🤖', '⚔️', '🦊', '🐯', '👽', '🦸‍♂️', '🐲'];
+
     function saveState() {
       localStorage.setItem('feniCurrentLevel', currentLevel.toString());
       localStorage.setItem('feniCoins', coins.toString());
@@ -772,6 +939,9 @@
       localStorage.setItem('feniUsername', playerUsername);
       localStorage.setItem('feniAvatar', playerAvatar);
       localStorage.setItem('feniLevelWins', levelConsecutiveWins.toString());
+      localStorage.setItem('feniMatches', totalMatchesPlayed.toString());
+      localStorage.setItem('feniWins', totalWins.toString());
+      localStorage.setItem('feniLosses', totalLosses.toString());
     }
 
     function updateUI() {
@@ -786,15 +956,30 @@
       document.getElementById('storeModalCoins').textContent = coins;
       document.getElementById('storeModalDiamonds').textContent = diamonds;
       document.getElementById('headerCurrentVillageTag').textContent = FENI_100_VILLAGES[currentLevel - 1] || 'Feni';
+
+      document.getElementById('metricMatchesVal').textContent = totalMatchesPlayed;
+      document.getElementById('metricWinsVal').textContent = totalWins;
+      const winRateNum = totalMatchesPlayed > 0 ? ((totalWins / totalMatchesPlayed) * 100) : 0;
+      document.getElementById('metricWinRateVal').textContent = winRateNum.toFixed(1) + '%';
+      
+      const winRateBar = document.getElementById('metricWinRateBar');
+      if (winRateBar) winRateBar.style.width = winRateNum + '%';
+
+      const winsBar = document.getElementById('metricWinsBar');
+      const winsPercent = totalMatchesPlayed > 0 ? Math.min(100, (totalWins / totalMatchesPlayed) * 100) : 0;
+      if (winsBar) winsBar.style.width = winsPercent + '%';
+
+      updateProfilePlaytimeUI();
+      saveState();
     }
     updateUI();
 
-    // WIDER S-CURVE ROAD ARCHITECTURE (ROAD WIDTH = 64px)
+    // MAP ROAD CENTERING ENGINE (AMPLITUDE = 75px FOR ZERO MOBILE OVERFLOW)
     const NODE_SPACING_Y = 110;
     const START_OFFSET_Y = 120;
     const TOTAL_HEIGHT = 100 * NODE_SPACING_Y + 240; // 11,240px
     const CENTER_X = 190;
-    const AMPLITUDE_X = 115;
+    const AMPLITUDE_X = 75; // Adjusted to 75px so map sits comfortably inside screen
     const FREQ = 0.22;
 
     function getNodeCoords(levelNum) {
@@ -828,16 +1013,15 @@
           </linearGradient>
         </defs>
 
-        <!-- WIDER S-CURVE ROAD (WIDTH 64px) -->
-        <path d="${roadPathD}" stroke="#120826" stroke-width="64" fill="none" stroke-linecap="round" />
-        <path d="${roadPathD}" stroke="url(#royalRoadGradient)" stroke-width="48" fill="none" stroke-linecap="round" filter="drop-shadow(0 0 16px rgba(255,215,0,0.5))" />
-        <path d="${roadPathD}" stroke="#FFF" stroke-width="5" fill="none" stroke-dasharray="12 16" stroke-linecap="round" />
+        <path d="${roadPathD}" stroke="#120826" stroke-width="58" fill="none" stroke-linecap="round" />
+        <path d="${roadPathD}" stroke="url(#royalRoadGradient)" stroke-width="44" fill="none" stroke-linecap="round" filter="drop-shadow(0 0 16px rgba(255,215,0,0.5))" />
+        <path d="${roadPathD}" stroke="#FFF" stroke-width="4" fill="none" stroke-dasharray="12 16" stroke-linecap="round" />
       `;
 
       mapNodesLayer.innerHTML = '';
 
-      // BACKGROUND TREES (FLOWER TREES 🌸, FRUIT TREES 🍎, PALMS 🌴)
-      const TREE_PROPS = ['🌸', '🍎', '🌴', '🍊', '🌺', '🌳'];
+      // COCONUT PALM TREES (🌴), COCONUT FRUIT TREES (🥥), & LEAFY TREES (🌳)
+      const TREE_PROPS = ['🌴', '🥥', '🌳', '🌸', '🌴', '🍊'];
 
       // ANIMATED CAR DRIVING ALONG ROAD BENDS
       for (let c = 5; c <= 95; c += 15) {
@@ -850,26 +1034,24 @@
         mapNodesLayer.appendChild(car);
       }
 
-      // ALTERNATING ROYAL VILLAGE STORE HUTS (1 Left, 2 Right, 3 Left, 4 Right...)
+      // ALTERNATING STORE HUT NODES
       for (let i = 1; i <= 100; i++) {
         const { x, y } = getNodeCoords(i);
         const villageName = FENI_100_VILLAGES[i - 1] || `Village ${i}`;
 
-        // TREE PROPS BEHIND STORE HUTS
+        // COCONUT / FRUIT TREE PROPS BEHIND STORE HUTS
         const treeProp = document.createElement('div');
         treeProp.className = 'tree-decor-prop';
-        const treeSide = (i % 2 === 1) ? -115 : 115;
+        const treeSide = (i % 2 === 1) ? -85 : 85;
         treeProp.style.left = (x + treeSide) + 'px';
         treeProp.style.top = y + 'px';
         treeProp.textContent = TREE_PROPS[i % TREE_PROPS.length];
         mapNodesLayer.appendChild(treeProp);
 
-        // ALTERNATING STORE HUT WRAPPER
         const wrapper = document.createElement('div');
         wrapper.className = 'map-store-wrapper' + (i === currentLevel ? ' current' : (i > currentLevel ? ' locked' : ''));
 
-        // Alternating Left / Right shift relative to road center
-        const hutOffset = (i % 2 === 1) ? -45 : 45;
+        const hutOffset = (i % 2 === 1) ? -36 : 36;
         wrapper.style.left = (x + hutOffset) + 'px';
         wrapper.style.top = y + 'px';
 
@@ -892,12 +1074,10 @@
           else alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first.`);
         });
 
-        // 1, 2, OR 3 GOLD STARS BADGE ABOVE STORE HUT
         const starsBadge = document.createElement('div');
         starsBadge.className = 'store-stars-badge';
         starsBadge.textContent = isPassed ? '⭐⭐⭐' : (isCurrent ? '⭐' : '🔒');
 
-        // VILLAGE NAME TAG UNDER STORE HUT
         const nameTag = document.createElement('div');
         nameTag.className = 'store-village-name';
         nameTag.textContent = villageName;
@@ -945,6 +1125,101 @@
       startLevelGame(selectedLevelToPlay);
     });
 
+    // PROFILE HUB & AVATARS SELECTION
+    const profileHubModal = document.getElementById('profileHubModal');
+    const openProfileHubBtn = document.getElementById('openProfileHubBtn');
+    const closeProfileHubBtn = document.getElementById('closeProfileHubBtn');
+    const saveProfileHubBtn = document.getElementById('saveProfileHubBtn');
+    const openSettingsFromHubBtn = document.getElementById('openSettingsFromHubBtn');
+    const avatarGrid = document.getElementById('avatarGrid');
+
+    function renderAvatarGrid() {
+      avatarGrid.innerHTML = '';
+      AVATAR_OPTIONS.forEach(av => {
+        const bubble = document.createElement('div');
+        bubble.className = 'avatar-select-bubble' + (av === playerAvatar ? ' selected' : '');
+        bubble.textContent = av;
+        bubble.addEventListener('click', () => {
+          audioManager.playClick();
+          playerAvatar = av;
+          localStorage.setItem('feniAvatar', playerAvatar);
+          renderAvatarGrid();
+        });
+        avatarGrid.appendChild(bubble);
+      });
+    }
+
+    openProfileHubBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      updateUI();
+      renderAvatarGrid();
+      profileHubModal.classList.add('active');
+    });
+
+    closeProfileHubBtn.addEventListener('click', () => profileHubModal.classList.remove('active'));
+    saveProfileHubBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      const newUname = document.getElementById('hubUsernameInput').value.trim();
+      if (newUname) {
+        playerUsername = newUname;
+        localStorage.setItem('feniUsername', playerUsername);
+      }
+      updateUI();
+      profileHubModal.classList.remove('active');
+    });
+
+    // GAME SETTINGS MODAL & AUDIO TOGGLES
+    const settingsModal = document.getElementById('settingsModal');
+    const openSettingsIconBtn = document.getElementById('openSettingsIconBtn');
+    const closeSettingsCtaBtn = document.getElementById('closeSettingsCtaBtn');
+    const toggleSfx = document.getElementById('toggleSfx');
+    const toggleHaptic = document.getElementById('toggleHaptic');
+    const toggleBgm = document.getElementById('toggleBgm');
+
+    function updateSoundBtnUI() {
+      if (audioManager.soundEnabled) toggleSfx.classList.add('active');
+      else toggleSfx.classList.remove('active');
+
+      if (audioManager.hapticEnabled) toggleHaptic.classList.add('active');
+      else toggleHaptic.classList.remove('active');
+
+      if (audioManager.bgmEnabled) toggleBgm.classList.add('active');
+      else toggleBgm.classList.remove('active');
+    }
+
+    openSettingsIconBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      updateSoundBtnUI();
+      settingsModal.classList.add('active');
+    });
+
+    openSettingsFromHubBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      profileHubModal.classList.remove('active');
+      updateSoundBtnUI();
+      settingsModal.classList.add('active');
+    });
+
+    toggleSfx.addEventListener('click', () => {
+      audioManager.playClick();
+      audioManager.setSound(!audioManager.soundEnabled);
+      updateSoundBtnUI();
+    });
+
+    toggleHaptic.addEventListener('click', () => {
+      audioManager.playClick();
+      audioManager.setHaptic(!audioManager.hapticEnabled);
+      updateSoundBtnUI();
+    });
+
+    toggleBgm.addEventListener('click', () => {
+      audioManager.playClick();
+      audioManager.setBgm(!audioManager.bgmEnabled);
+      updateSoundBtnUI();
+    });
+
+    closeSettingsCtaBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
+
     // NAVIGATION SYSTEM
     const welcomeScreen = document.getElementById('welcomeScreen');
     const mapScreen = document.getElementById('mapScreen');
@@ -976,33 +1251,14 @@
       document.getElementById('storeModal').classList.add('active');
     });
 
-    document.getElementById('openProfileHubBtn').addEventListener('click', () => {
-      audioManager.playClick();
-      document.getElementById('profileHubModal').classList.add('active');
-    });
-
-    document.getElementById('openSettingsIconBtn').addEventListener('click', () => {
-      audioManager.playClick();
-      document.getElementById('settingsModal').classList.add('active');
-    });
-
-    document.getElementById('closeProfileHubBtn').addEventListener('click', () => document.getElementById('profileHubModal').classList.remove('active'));
-    document.getElementById('closeSettingsCtaBtn').addEventListener('click', () => document.getElementById('settingsModal').classList.remove('active'));
     document.getElementById('closeStoreBtn').addEventListener('click', () => document.getElementById('storeModal').classList.remove('active'));
     document.getElementById('closeStreakBtn').addEventListener('click', () => document.getElementById('streakModal').classList.remove('active'));
     document.getElementById('openStoreBtnFromCoins').addEventListener('click', () => document.getElementById('storeModal').classList.add('active'));
     document.getElementById('openStoreBtnFromDiamonds').addEventListener('click', () => document.getElementById('storeModal').classList.add('active'));
 
-    document.getElementById('saveProfileHubBtn').addEventListener('click', () => {
-      audioManager.playClick();
-      playerUsername = document.getElementById('hubUsernameInput').value.trim() || 'Feni Player';
-      saveState(); updateUI();
-      document.getElementById('profileHubModal').classList.remove('active');
-    });
-
     window.openWhatsAppPurchase = function() {
       audioManager.playClick();
-      const message = encodeURIComponent("Hello! I want to buy coins for Tic Tac Toe- Not for Beginners game.");
+      const message = encodeURIComponent("Hello! I want to buy coins for Tic Tac Toe: Multiplayer GenZ game.");
       window.open(`https://wa.me/8801615288259?text=${message}`, '_blank');
     };
 
@@ -1052,6 +1308,7 @@
     function handleCellClick(idx) {
       if (gameState[idx] !== '' || !isGameActive) return;
       audioManager.playClick();
+      totalMatchesPlayed++;
       makeMove(idx, currentGutiTheme.pX);
 
       if (checkWin3x3(gameState, currentGutiTheme.pX)) {
@@ -1069,6 +1326,8 @@
           let aiIdx = empty[Math.floor(Math.random() * empty.length)];
           makeMove(aiIdx, currentGutiTheme.pO);
           if (checkWin3x3(gameState, currentGutiTheme.pO)) {
+            totalLosses++;
+            updateUI();
             alert('💔 Match Defeat!'); resetMatchBoard();
           }
         }
@@ -1093,6 +1352,7 @@
 
     function handleVictory() {
       isGameActive = false;
+      totalWins++;
       audioManager.playVictory();
       coins += 100;
       levelConsecutiveWins++;
@@ -1100,7 +1360,7 @@
         currentLevel++;
         levelConsecutiveWins = 0;
       }
-      saveState(); updateUI();
+      updateUI();
       document.getElementById('victoryModal').classList.add('active');
     }
 
