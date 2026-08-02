@@ -1549,14 +1549,7 @@
 
         if (checkWin3x3(gameState, activePiece)) {
           isGameActive = false;
-          audioManager.playVictory();
-          const winnerName = (currentPlayerTurn === 'X') ? 'Player 1' : 'Player 2';
-          const winnerColor = (currentPlayerTurn === 'X') ? '#00F5FF' : '#FF1744';
-          document.getElementById('statusText').innerHTML = `🎉 ${winnerName} (<span style="color: ${winnerColor}; text-shadow: 0 0 8px ${winnerColor};">${activePiece}</span>) Wins!`;
-          setTimeout(() => {
-            alert(`🏆 ${winnerName} (${activePiece}) Wins the Match!`);
-            resetMatchBoard();
-          }, 250);
+          handleVictory();
           return;
         }
 
@@ -1618,6 +1611,8 @@
 
           if (checkWin3x3(gameState, currentGutiTheme.pO)) {
             totalLosses++;
+            levelConsecutiveWins = 0;
+            updateStreakDotsUI();
             updateUI();
             document.getElementById('statusText').textContent = `💔 AI (${currentGutiTheme.pO}) Wins!`;
             setTimeout(() => { alert('💔 AI Wins! Try again.'); resetMatchBoard(); }, 250);
