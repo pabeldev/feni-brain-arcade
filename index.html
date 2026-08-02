@@ -159,14 +159,14 @@
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--gold-glow);
     }
 
-    /* MAIN TITLE LOGO PNG - USED DIRECTLY AS THE GAME NAME TITLE (NO WHITE BOX, 100% TRANSPARENT TEXT) */
+    /* MAIN TITLE LOGO PNG - PURE WHITE TEXT, NO GLOW, NO SHADOW, NO BACKGROUND */
     .main-title-logo-png {
       width: 100%;
       max-width: 280px;
       height: auto;
-      filter: drop-shadow(0 0 16px var(--gold-glowing)) drop-shadow(0 0 28px rgba(255, 215, 0, 0.8));
       margin: 16px 0 6px 0;
       display: block;
+      filter: none;
     }
 
     .start-app-btn {
@@ -517,7 +517,7 @@
         <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
       </div>
       <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <!-- GAME NAME LOGO PNG IMAGE DISPLAY (DIRECT REPLACEMENT FOR TITLE TEXT) -->
+        <!-- GAME NAME LOGO PNG IMAGE - PURE WHITE TEXT (#FFFFFF), NO GLOW, NO SHADOW -->
         <img id="mainTitleLogoImg" alt="Tic Tac Toe:GenZ Multiplayer" class="main-title-logo-png" src="logo_full.png">
         <p style="font-size: 0.88rem; color: #FFE066; font-weight: 800; margin-top: 4px;">
           Feni 100-Villages Royal Map & Evolving Chess Pieces!
@@ -756,7 +756,7 @@
   </div>
 
   <script>
-    // DYNAMIC CANVAS LOGO CLEANER & AUTO-CROPPER: STRIPS WHITE CANVAS AND TURNS TEXT TO GOLD
+    // DYNAMIC CANVAS LOGO PROCESSOR: STRIPS WHITE CANVAS AND TURNS TEXT TO PURE LUMINOUS WHITE (#FFFFFF) WITH ZERO GLOW
     function processTransparentLogo() {
       const img = new Image();
       img.crossOrigin = "Anonymous";
@@ -781,14 +781,14 @@
             const b = data[idx+2];
 
             // White canvas pixels -> 100% TRANSPARENT
-            if (r > 190 && g > 190 && b > 190) {
+            if (r > 185 && g > 185 && b > 185) {
               data[idx+3] = 0;
             } else {
-              // Black text pixels -> Turn to Luminous Gold (#FFD700)
-              data[idx] = 255;   // Red
-              data[idx+1] = 215; // Green
-              data[idx+2] = 0;   // Blue
-              data[idx+3] = 255; // Alpha
+              // Black text pixels -> Turn to PURE WHITE (#FFFFFF)
+              data[idx] = 255;   // Red = 255
+              data[idx+1] = 255; // Green = 255
+              data[idx+2] = 255; // Blue = 255
+              data[idx+3] = 255; // Alpha = 255
 
               if (x < minX) minX = x;
               if (x > maxX) maxX = x;
@@ -800,7 +800,7 @@
 
         ctx.putImageData(imgData, 0, 0);
 
-        // Crop tightly around bounding box of text
+        // Crop tightly around text bounding box
         if (maxX > minX && maxY > minY) {
           const cropW = maxX - minX + 1;
           const cropH = maxY - minY + 1;
