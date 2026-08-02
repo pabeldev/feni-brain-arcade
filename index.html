@@ -531,9 +531,9 @@
     }
     .cell:active:not(.taken) { transform: scale(0.92); }
 
-    .marker-symbol { display: inline-block; animation: pop3D 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; font-weight: 900; line-height: 1; font-size: 2.8rem; }
-    .marker-player1 { color: #00F5FF !important; text-shadow: 0 0 10px rgba(0, 245, 255, 0.7), 0 0 20px rgba(0, 245, 255, 0.4); }
-    .marker-player2 { color: #FFD700 !important; text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.4); }
+    .marker-symbol { display: inline-block; animation: pop3D 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; font-weight: 950; line-height: 1; font-size: 2.8rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+    .marker-player1 { color: #00F5FF !important; -webkit-text-fill-color: #00F5FF !important; text-shadow: 0 0 10px rgba(0, 245, 255, 0.7), 0 0 20px rgba(0, 245, 255, 0.4); }
+    .marker-player2 { color: #FFD700 !important; -webkit-text-fill-color: #FFD700 !important; text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.4); }
     @keyframes pop3D { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
     .reset-btn {
@@ -728,7 +728,7 @@
     </div>
 
     <div class="rule-of-5-bar">
-      <span style="font-size: 0.8rem; font-weight: 800; color: #FFF;">5 Win Streak:</span>
+      <span style="font-size: 0.8rem; font-weight: 800; color: #FFF;">5 Win Streak: <span id="winStreakNumText" style="color: #FFD700; font-weight: 950;">0 / 5</span></span>
       <div class="wins-dots">
         <div class="win-dot" id="dot0"></div>
         <div class="win-dot" id="dot1"></div>
@@ -1050,7 +1050,7 @@
 
     // PIECE EVOLUTION EVERY 5 LEVELS
     function getGutiTheme(level) {
-      if (level <= 5) return { pX: '✖', pO: '◯', label: 'Classic Neon' };
+      if (level <= 5) return { pX: 'X', pO: 'O', label: 'Classic Cyber Neon' };
       if (level <= 10) return { pX: '♟', pO: '♞', label: 'Pawns & Knights' };
       if (level <= 15) return { pX: '♜', pO: '♝', label: 'Rooks & Bishops' };
       if (level <= 20) return { pX: '♛', pO: '♚', label: 'Queens & Kings' };
@@ -1113,6 +1113,10 @@
     }
 
     function updateStreakDotsUI() {
+      const streakText = document.getElementById('winStreakNumText');
+      if (streakText) {
+        streakText.textContent = `${levelConsecutiveWins} / 5`;
+      }
       for (let i = 0; i < 5; i++) {
         const dot = document.getElementById(`dot${i}`);
         if (dot) {
@@ -1467,6 +1471,8 @@
       gameState = Array(9).fill('');
       isGameActive = true;
       currentPlayerTurn = 'X';
+
+      updateStreakDotsUI();
 
       if (currentMode === 'multi') {
         document.getElementById('statusText').innerHTML = `Player 1 (<span style="color: #00F5FF; text-shadow: 0 0 8px #00F5FF;">${currentGutiTheme.pX}</span>) Turn`;
