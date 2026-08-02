@@ -83,13 +83,32 @@
       z-index: 0;
     }
 
-    /* SOFT, EYE-CATCHING NEON AURORA GLASS BUBBLES CONTAINER */
+    /* DYNAMIC EYE-CATCHING 3D GLASS CUBES & BUBBLES CONTAINER */
     .bg-3d-elements {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       overflow: hidden;
       pointer-events: none;
       z-index: 0;
+      perspective: 900px;
+    }
+
+    /* HIGH-END EYE-CATCHING 3D GLASS CUBE STYLING */
+    .glass-cube-3d {
+      position: absolute;
+      background: linear-gradient(135deg, rgba(157, 78, 221, 0.18) 0%, rgba(0, 245, 255, 0.12) 100%);
+      border: 1.5px solid rgba(0, 245, 255, 0.45);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 245, 255, 0.25), inset 0 1px 3px rgba(255, 255, 255, 0.6);
+      animation: cubeFloatScale 14s infinite ease-in-out alternate;
+    }
+
+    @keyframes cubeFloatScale {
+      0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(0.9); opacity: 0.4; }
+      50% { transform: translateY(-45px) rotateX(180deg) rotateY(90deg) rotateZ(45deg) scale(1.18); opacity: 0.85; filter: drop-shadow(0 0 14px var(--cyan-vibrant)); }
+      100% { transform: translateY(-90px) rotateX(360deg) rotateY(180deg) rotateZ(90deg) scale(0.95); opacity: 0.5; }
     }
 
     .neon-aurora-bubble {
@@ -237,7 +256,7 @@
 
     .profile-name-text {
       font-size: 0.76rem; font-weight: 900; color: #FFF;
-      max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      max-width: 75px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 
     .header-stats { display: flex; align-items: center; gap: 4px; }
@@ -252,6 +271,14 @@
       transition: transform 0.15s ease;
     }
     .header-action-btn:active { transform: scale(0.9); }
+
+    .login-nav-pill {
+      background: linear-gradient(135deg, var(--purple-electric), #7B2CBF);
+      border: 1.5px solid #FFF; border-radius: 12px;
+      padding: 4px 8px; font-size: 0.72rem; font-weight: 900;
+      color: #FFF; cursor: pointer; display: flex; align-items: center; gap: 2px;
+      box-shadow: 0 0 8px var(--purple-glow);
+    }
 
     .stat-badge {
       background: rgba(10, 8, 25, 0.85);
@@ -679,7 +706,7 @@
   <!-- BACKGROUND CYBER-NEON GRID PATTERN -->
   <div class="bg-grid"></div>
 
-  <!-- SOFT NEON AURORA GLASS BUBBLES & FIREFLY PARTICLES (জোনাকি পোকা) CONTAINER -->
+  <!-- DYNAMIC 3D GLASS CUBES, AURORA BUBBLES & FIREFLY PARTICLES (জোনাকি পোকা) CONTAINER -->
   <div class="bg-3d-elements" id="bg3dElements"></div>
 
   <!-- VIEW 0: WELCOME HERO INTERFACE -->
@@ -709,10 +736,11 @@
       <!-- USER AVATAR & PROFILE HUB TRIGGER -->
       <div class="user-profile-trigger" id="openProfileHubBtn">
         <div class="profile-avatar-bubble" id="headerAvatarBubble">🤖</div>
-        <span class="profile-name-text" id="headerProfileName">Player</span>
+        <span class="profile-name-text" id="headerProfileName">Guest Player</span>
       </div>
 
       <div class="header-stats">
+        <button class="login-nav-pill" id="navLoginBtn">🔑 Log In</button>
         <button class="header-action-btn" id="soundToggleBtn" title="Sound Mute/Unmute">🔊</button>
         <button class="header-action-btn" id="openSettingsBtn" title="Settings">⚙️</button>
         <button class="google-play-btn" id="googlePlayBtn">🎮 <span id="googlePlayText">Sign In</span></button>
@@ -784,17 +812,17 @@
   <!-- AUTHENTICATION (PHONE & USERNAME) MODAL -->
   <div class="modal-overlay" id="authModal">
     <div class="auth-modal-card">
-      <div style="font-size: 2.2rem;">👤 🚀</div>
-      <div style="font-size: 1.3rem; font-weight: 950; color: var(--purple-electric);">PLAYER AUTHENTICATION</div>
+      <div style="font-size: 2.2rem;">🔑 🚀</div>
+      <div style="font-size: 1.3rem; font-weight: 950; color: var(--purple-electric);">SAVE YOUR PROGRESS</div>
       <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted-slate);">
-        Enter your details to save progress, level rankings, and currency across devices!
+        Enter your Phone & Username to backup coins, diamonds, and unlocked village levels!
       </div>
       <div class="auth-input-group">
         <input type="tel" class="auth-input" id="authPhoneInput" placeholder="Phone Number (e.g. +8801615288259)">
         <input type="text" class="auth-input" id="authUsernameInput" placeholder="Player Username (e.g. FeniMaster)">
       </div>
-      <button class="primary-cta-btn" id="authSaveBtn">Save & Play 🚀</button>
-      <button class="back-btn" id="authGuestBtn" style="width: 100%; margin-top: 4px;">Play as Guest 👤</button>
+      <button class="primary-cta-btn" id="authSaveBtn">Save & Link Account 🚀</button>
+      <button class="back-btn" id="authCloseBtn" style="width: 100%; margin-top: 4px;">Close / Continue Playing</button>
     </div>
   </div>
 
@@ -809,10 +837,15 @@
       <div style="display: flex; align-items: center; gap: 12px; width: 100%; background: #F8F5EE; border-radius: 20px; padding: 10px; border: 1.5px solid #E6DCD0;">
         <div class="profile-avatar-bubble" id="hubAvatarBubble" style="width: 48px; height: 48px; font-size: 1.6rem;">🤖</div>
         <div style="text-align: left; flex: 1;">
-          <input type="text" id="hubUsernameInput" style="font-size: 1rem; font-weight: 950; color: var(--text-dark-slate); border: none; background: transparent; outline: none; width: 100%;" value="Player">
+          <input type="text" id="hubUsernameInput" style="font-size: 1rem; font-weight: 950; color: var(--text-dark-slate); border: none; background: transparent; outline: none; width: 100%;" value="Guest Player">
           <div style="font-size: 0.74rem; font-weight: 800; color: var(--text-muted-slate);" id="hubPhoneText">+880 (Guest Account)</div>
         </div>
       </div>
+
+      <!-- IN-GAME LOGIN CTA INSIDE PROFILE HUB FOR GUESTS -->
+      <button class="back-btn" id="hubLoginActionBtn" style="width: 100%; border-color: var(--purple-electric); color: var(--purple-electric); display: none;">
+        🔑 Log In with Phone to Save Progress
+      </button>
 
       <!-- AVATAR SELECTION -->
       <div style="width: 100%; text-align: left; font-size: 0.78rem; font-weight: 900; color: var(--text-muted-slate); text-transform: uppercase;">Choose Avatar:</div>
@@ -876,7 +909,7 @@
       </div>
 
       <button class="back-btn" id="editAccountBtn" style="width: 100%;">Edit Profile & Avatars 👤</button>
-      <button class="back-btn" id="switchAccountBtn" style="width: 100%; border-color: #FF5252; color: #FF5252;">Switch Account / Log Out 🚪</button>
+      <button class="back-btn" id="switchAccountBtn" style="width: 100%; border-color: #FF5252; color: #FF5252;">Log In / Switch Account 🔑</button>
 
       <button class="primary-cta-btn" id="closeSettingsCtaBtn">Done</button>
     </div>
@@ -894,7 +927,7 @@
     </div>
   </div>
 
-  <!-- DYNAMIC MODE-SPECIFIC VICTORY CELEBRATION MODAL -->
+  <!-- DYNAMIC MODE-SPECIFIC VICTORY CELEBRATION MODAL WITH IN-GAME SAVE PROGRESS CTA -->
   <div class="modal-overlay" id="victoryModal">
     <div class="victory-card" id="victoryCard">
       <div class="victory-icon-hero" id="victoryIconHero">🏆</div>
@@ -905,6 +938,14 @@
       <div class="victory-reward-badge" id="victoryRewardBadge">
         <span>🪙</span> <span>+100 Coins</span>
       </div>
+
+      <!-- IN-GAME SAVE PROGRESS PROMPT FOR GUESTS ON VICTORY -->
+      <div id="victorySaveProgressBox" style="width: 100%; display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">
+        <button class="back-btn" id="victoryLoginBtn" style="border-color: var(--purple-electric); color: var(--purple-electric); width: 100%; font-size: 0.82rem;">
+          🔒 Log In to Save Progress & Rewards
+        </button>
+      </div>
+
       <button class="primary-cta-btn" id="continueVictoryBtn">Continue</button>
     </div>
   </div>
@@ -1130,7 +1171,7 @@
           this.bgmOsc = this.ctx.createOscillator();
           this.bgmGain = this.ctx.createGain();
           this.bgmOsc.type = 'sine';
-          this.bgmOsc.frequency.setValueAtTime(110, this.ctx.currentTime); // Low A2 ambient tone
+          this.bgmOsc.frequency.setValueAtTime(110, this.ctx.currentTime);
           this.bgmGain.gain.setValueAtTime(0.03, this.ctx.currentTime);
           this.bgmOsc.connect(this.bgmGain);
           this.bgmGain.connect(this.ctx.destination);
@@ -1147,13 +1188,27 @@
     }
     const audioManager = new SoundEngine();
 
-    // GENERATE SOFT NEON AURORA GLASS BUBBLES & FIREFLY PARTICLES
+    // GENERATE HIGH-END EYE-CATCHING 3D GLASS CUBES, AURORA BUBBLES & FIREFLY PARTICLES
     function init3DBackgroundEffects() {
       const bgContainer = document.getElementById('bg3dElements');
       bgContainer.innerHTML = '';
 
-      // Soft Aurora Glass Bubbles (Eye-pleasing replacing 3D Cubes)
-      for (let i = 0; i < 6; i++) {
+      // High-End 3D Glass Cubes
+      for (let i = 0; i < 7; i++) {
+        const cube = document.createElement('div');
+        cube.className = 'glass-cube-3d';
+        const size = Math.floor(Math.random() * 45) + 32;
+        cube.style.width = size + 'px';
+        cube.style.height = size + 'px';
+        cube.style.left = Math.floor(Math.random() * 85) + '%';
+        cube.style.top = Math.floor(Math.random() * 85) + '%';
+        cube.style.animationDelay = (i * 1.8) + 's';
+        cube.style.animationDuration = (Math.floor(Math.random() * 8) + 10) + 's';
+        bgContainer.appendChild(cube);
+      }
+
+      // Soft Aurora Glass Bubbles
+      for (let i = 0; i < 4; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'neon-aurora-bubble';
         const size = Math.floor(Math.random() * 80) + 70;
@@ -1216,7 +1271,7 @@
       document.getElementById('metricPlaytimeVal').textContent = formatPlaytime(totalPlaytimeSeconds);
     }
 
-    // WELCOME SCREEN TO MAP TRANSITION
+    // WELCOME SCREEN TO MAP TRANSITION (NO FORCED LOGIN ON START)
     const welcomeScreen = document.getElementById('welcomeScreen');
     const startAppBtn = document.getElementById('startAppBtn');
 
@@ -1225,18 +1280,13 @@
       welcomeScreen.classList.add('hidden');
       mapScreen.classList.remove('hidden');
       renderMap();
-
-      // Check if user authenticated, else prompt Auth Modal
-      if (!localStorage.getItem('feniPhone') && !localStorage.getItem('feniIsGuest')) {
-        authModal.classList.add('active');
-      }
     });
 
-    // PHONE & USERNAME AUTHENTICATION ENGINE
+    // PHONE & USERNAME AUTHENTICATION ENGINE (OPTIONAL / VOLUNTARY)
     let playerPhone = localStorage.getItem('feniPhone') || '';
-    let playerUsername = localStorage.getItem('feniUsername') || 'Player';
+    let playerUsername = localStorage.getItem('feniUsername') || 'Guest Player';
     let playerAvatar = localStorage.getItem('feniAvatar') || '🤖';
-    let isGuestUser = localStorage.getItem('feniIsGuest') === 'true';
+    let isGuestUser = !playerPhone;
 
     const AVATAR_OPTIONS = ['🤖', '👑', '⚔️', '🦊', '🐯', '👽', '🦸‍♂️', '🐲'];
 
@@ -1244,14 +1294,26 @@
     const authPhoneInput = document.getElementById('authPhoneInput');
     const authUsernameInput = document.getElementById('authUsernameInput');
     const authSaveBtn = document.getElementById('authSaveBtn');
-    const authGuestBtn = document.getElementById('authGuestBtn');
+    const authCloseBtn = document.getElementById('authCloseBtn');
+    const navLoginBtn = document.getElementById('navLoginBtn');
 
     function syncProfileHeaderUI() {
+      isGuestUser = !playerPhone;
+
       document.getElementById('headerProfileName').textContent = playerUsername;
       document.getElementById('headerAvatarBubble').textContent = playerAvatar;
       document.getElementById('hubUsernameInput').value = playerUsername;
       document.getElementById('hubAvatarBubble').textContent = playerAvatar;
       document.getElementById('hubPhoneText').textContent = isGuestUser ? '+880 (Guest Account)' : playerPhone;
+
+      const hubLoginActionBtn = document.getElementById('hubLoginActionBtn');
+      if (isGuestUser) {
+        navLoginBtn.style.display = 'flex';
+        if (hubLoginActionBtn) hubLoginActionBtn.style.display = 'block';
+      } else {
+        navLoginBtn.style.display = 'none';
+        if (hubLoginActionBtn) hubLoginActionBtn.style.display = 'none';
+      }
 
       document.getElementById('metricMatchesVal').textContent = totalMatchesPlayed;
       document.getElementById('metricWinsVal').textContent = totalWins;
@@ -1260,13 +1322,22 @@
       updateProfilePlaytimeUI();
     }
 
+    navLoginBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      authPhoneInput.value = playerPhone;
+      authUsernameInput.value = playerUsername === 'Guest Player' ? '' : playerUsername;
+      authModal.classList.add('active');
+    });
+
+    authCloseBtn.addEventListener('click', () => authModal.classList.remove('active'));
+
     authSaveBtn.addEventListener('click', () => {
       audioManager.playClick();
       const phone = authPhoneInput.value.trim();
-      const uname = authUsernameInput.value.trim();
+      const uname = authUsernameInput.value.trim() || 'Feni Player';
 
-      if (!phone || !uname) {
-        alert('Please enter both your Phone Number and Username!');
+      if (!phone) {
+        alert('Please enter your Phone Number to save progress!');
         return;
       }
 
@@ -1275,22 +1346,10 @@
       isGuestUser = false;
       localStorage.setItem('feniPhone', playerPhone);
       localStorage.setItem('feniUsername', playerUsername);
-      localStorage.setItem('feniIsGuest', 'false');
 
       syncProfileHeaderUI();
       authModal.classList.remove('active');
-      alert(`🎉 Welcome ${playerUsername}! Credentials saved successfully.`);
-    });
-
-    authGuestBtn.addEventListener('click', () => {
-      audioManager.playClick();
-      playerUsername = 'Guest_' + Math.floor(Math.random() * 900 + 100);
-      isGuestUser = true;
-      localStorage.setItem('feniUsername', playerUsername);
-      localStorage.setItem('feniIsGuest', 'true');
-
-      syncProfileHeaderUI();
-      authModal.classList.remove('active');
+      alert(`🎉 Welcome ${playerUsername}! Progress & Rewards saved to ${playerPhone}.`);
     });
 
     // PROFILE HUB & AVATARS SELECTION
@@ -1298,7 +1357,13 @@
     const openProfileHubBtn = document.getElementById('openProfileHubBtn');
     const closeProfileHubBtn = document.getElementById('closeProfileHubBtn');
     const saveProfileHubBtn = document.getElementById('saveProfileHubBtn');
+    const hubLoginActionBtn = document.getElementById('hubLoginActionBtn');
     const avatarGrid = document.getElementById('avatarGrid');
+
+    hubLoginActionBtn.addEventListener('click', () => {
+      profileHubModal.classList.remove('active');
+      navLoginBtn.click();
+    });
 
     function renderAvatarGrid() {
       avatarGrid.innerHTML = '';
@@ -1402,7 +1467,7 @@
 
     switchAccountBtn.addEventListener('click', () => {
       settingsModal.classList.remove('active');
-      authModal.classList.add('active');
+      navLoginBtn.click();
     });
 
     // EXACT STRUCTURED 100-VILLAGE FENI DATABASE IN CHRONOLOGICAL ORDER
@@ -1576,10 +1641,17 @@
     const claimModal = document.getElementById('claimModal');
     const closeClaimBtn = document.getElementById('closeClaimBtn');
     const victoryModal = document.getElementById('victoryModal');
+    const victorySaveProgressBox = document.getElementById('victorySaveProgressBox');
+    const victoryLoginBtn = document.getElementById('victoryLoginBtn');
     const continueVictoryBtn = document.getElementById('continueVictoryBtn');
     const confirmModal = document.getElementById('confirmModal');
     const confirmYesBtn = document.getElementById('confirmYesBtn');
     const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+
+    victoryLoginBtn.addEventListener('click', () => {
+      victoryModal.classList.remove('active');
+      navLoginBtn.click();
+    });
 
     // MODE SELECTOR BUTTONS
     const modeHardBtn = document.getElementById('modeHardBtn');
@@ -1898,6 +1970,12 @@
           titleText.textContent = `PLAYER ${result.winner === PLAYER_X ? '1' : '2'} WINS!`;
           titleText.classList.add('multi');
           subtext.textContent = 'Ultimate Bragging Rights Secured!';
+        }
+
+        if (isGuestUser) {
+          victorySaveProgressBox.style.display = 'flex';
+        } else {
+          victorySaveProgressBox.style.display = 'none';
         }
 
         victoryModal.classList.add('active');
