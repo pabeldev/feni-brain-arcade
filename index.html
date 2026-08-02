@@ -94,7 +94,7 @@
       box-shadow: 0 6px 18px rgba(255, 215, 0, 0.15);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      opacity: 0.20; /* Constant 20% opacity */
+      opacity: 0.20;
       animation: neonBubbleFloat 12s infinite ease-in-out alternate;
     }
 
@@ -159,17 +159,17 @@
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--gold-glow);
     }
 
+    /* HIGH-CONTRAST LUMINOUS LOGO PNG FILTER FOR DARK OBSIDIAN BACKGROUND */
     .welcome-logo-png {
-      max-width: 260px; height: auto;
-      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.8)) drop-shadow(0 0 20px var(--gold-glow));
-      margin-top: 8px;
+      max-width: 250px; height: auto;
+      filter: brightness(0) invert(1) drop-shadow(0 0 16px var(--gold-glowing)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+      margin: 12px 0 4px 0; display: block;
     }
 
-    .welcome-main-title {
-      font-size: 1.8rem; font-weight: 950; line-height: 1.15;
-      background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-glowing) 50%, #FF9100 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      letter-spacing: 0.5px; margin-top: 6px;
+    .welcome-logo-subtitle-png {
+      max-width: 160px; height: auto;
+      filter: brightness(0) invert(1) drop-shadow(0 0 12px var(--cyan-vibrant));
+      margin-bottom: 8px; display: block;
     }
 
     .start-app-btn {
@@ -183,7 +183,7 @@
     }
     .start-app-btn:active { transform: scale(0.95); }
 
-    /* VIEW 1: CANDY CRUSH VERTICAL MAP SCREEN (STRICTLY CONTAINED TO MOBILE) */
+    /* VIEW 1: CANDY CRUSH VERTICAL MAP SCREEN */
     .map-header-bar {
       position: absolute; top: 0; left: 0; width: 100%;
       display: flex; align-items: center; justify-content: space-between;
@@ -277,7 +277,7 @@
     .store-roof-icon { font-size: 1.5rem; line-height: 1; margin-bottom: 2px; }
     .store-serial-num { font-size: 0.9rem; font-weight: 950; color: #FFF; line-height: 1; }
 
-    /* STAR RATING BADGE (1, 2, OR 3 STARS) ABOVE STORE HUT */
+    /* STAR RATING BADGE ABOVE STORE HUT */
     .store-stars-badge {
       position: absolute; top: -16px; left: 50%;
       transform: translateX(-50%);
@@ -520,7 +520,9 @@
         <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
       </div>
       <div>
+        <!-- HIGH-CONTRAST WHITE & GOLD GLOW LOGO IMAGE -->
         <img src="logo_full.png" alt="Tic Tac Toe GenZ Multiplayer" class="welcome-logo-png">
+        <img src="logo_subtitle.png" alt="GenZ Multiplayer" class="welcome-logo-subtitle-png">
         <h1 class="welcome-main-title">Tic Tac Toe: Multiplayer GenZ</h1>
         <p style="font-size: 0.88rem; color: #FFE066; font-weight: 800; margin-top: 6px;">
           Feni 100-Villages Royal Map & Evolving Chess Pieces!
@@ -979,7 +981,7 @@
     const START_OFFSET_Y = 120;
     const TOTAL_HEIGHT = 100 * NODE_SPACING_Y + 240; // 11,240px
     const CENTER_X = 190;
-    const AMPLITUDE_X = 75; // Adjusted to 75px so map sits comfortably inside screen
+    const AMPLITUDE_X = 75;
     const FREQ = 0.22;
 
     function getNodeCoords(levelNum) {
