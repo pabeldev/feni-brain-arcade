@@ -3,36 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tic Tac Toe- Not for Beginners (Feni Map v1.0.1 Edition)</title>
+  <title>Tic Tac Toe- Not for Beginners (Feni Royal Map v1.0.1)</title>
   <link rel="icon" type="image/jpeg" href="app-icon.jpg">
   <style>
     :root {
-      /* CYBER-NEON COLOR PALETTE */
-      --bg-dark-obsidian: #0A051B;
-      --bg-cyber-gradient: radial-gradient(circle at 50% 15%, #190B38 0%, #0A051B 85%);
-      --glass-card: rgba(22, 14, 52, 0.88);
-      --glass-border: rgba(157, 78, 221, 0.4);
-      --glass-shine: rgba(255, 255, 255, 0.15);
+      /* ROYAL CYBER-NEON COLOR PALETTE */
+      --bg-dark-obsidian: #090518;
+      --bg-royal-gradient: radial-gradient(circle at 50% 15%, #250C3F 0%, #090518 85%);
+      --glass-card: rgba(30, 15, 60, 0.88);
+      --glass-border: rgba(255, 215, 0, 0.45);
+      --glass-shine: rgba(255, 255, 255, 0.18);
 
-      /* ACCENTS */
-      --purple-electric: #9D4EDD;
-      --purple-glow: rgba(157, 78, 221, 0.5);
+      /* ROYAL ACCENTS */
       --gold-glowing: #FFD700;
-      --gold-glow: rgba(255, 215, 0, 0.5);
-      --pink-neon: #FF2E93;
-      --pink-glow: rgba(255, 46, 147, 0.5);
+      --gold-royal: linear-gradient(135deg, #FFE066 0%, #FFB700 50%, #FFA000 100%);
+      --gold-glow: rgba(255, 215, 0, 0.55);
+      --purple-royal: #7B1FA2;
+      --purple-glow: rgba(157, 78, 221, 0.5);
+      --ruby-red: #FF1744;
+      --ruby-glow: rgba(255, 23, 68, 0.5);
       --cyan-vibrant: #00F5FF;
       --cyan-glow: rgba(0, 245, 255, 0.5);
-      --diamond-blue: #00E5FF;
-      --diamond-glow: rgba(0, 229, 255, 0.5);
+      --emerald-green: #00E676;
 
       /* MODAL BASE */
-      --modal-subtle-glow: radial-gradient(circle at 50% 0%, rgba(157, 78, 221, 0.15) 0%, rgba(255, 255, 255, 0) 70%), #FFFFFF;
+      --modal-subtle-glow: radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.18) 0%, rgba(255, 255, 255, 0) 70%), #FFFFFF;
       --text-dark-slate: #1E293B;
       --text-muted-slate: #64748B;
-      --orange-accent: #FF6B00;
-      --green-yes: linear-gradient(135deg, #00E676 0%, #00C853 100%);
       --red-cta: linear-gradient(135deg, #FF5252 0%, #FF1744 100%);
+      --green-cta: linear-gradient(135deg, #00E676 0%, #00C853 100%);
 
       --border-radius-lg: 32px;
       --border-radius-md: 20px;
@@ -49,7 +48,7 @@
 
     body {
       background: var(--bg-dark-obsidian);
-      background-image: var(--bg-cyber-gradient);
+      background-image: var(--bg-royal-gradient);
       color: #FFFFFF;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       min-height: 100vh;
@@ -70,15 +69,15 @@
       top: 0; left: 0; width: 100vw; height: 100vh;
       background-size: 36px 36px;
       background-image: 
-        linear-gradient(to right, rgba(157, 78, 221, 0.08) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(157, 78, 221, 0.08) 1px, transparent 1px);
+        linear-gradient(to right, rgba(255, 215, 0, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 215, 0, 0.06) 1px, transparent 1px);
       mask-image: radial-gradient(ellipse 85% 65% at 50% 30%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
       -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 30%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%);
       pointer-events: none;
       z-index: 0;
     }
 
-    /* 3D NEON GLASS BUBBLES & JONAKI POKA (FIREFLIES) CONTAINER - FIXED BACKGROUND */
+    /* FIXED BACKGROUND 3D NEON GLASS BUBBLES & JONAKI POKA */
     .bg-3d-elements {
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
@@ -87,13 +86,12 @@
       z-index: 0;
     }
 
-    /* STABLE CONSTANT 20% OPACITY 3D BUBBLES */
     .neon-bubble-3d {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.35) 0%, rgba(0, 245, 255, 0.18) 35%, rgba(157, 78, 221, 0.08) 70%, transparent 100%);
-      border: 1px solid rgba(0, 245, 255, 0.25);
-      box-shadow: 0 6px 18px rgba(0, 245, 255, 0.15);
+      background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.38) 0%, rgba(255, 215, 0, 0.18) 35%, rgba(157, 78, 221, 0.08) 70%, transparent 100%);
+      border: 1px solid rgba(255, 215, 0, 0.28);
+      box-shadow: 0 6px 18px rgba(255, 215, 0, 0.15);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       opacity: 0.20; /* Constant 20% opacity */
@@ -106,7 +104,6 @@
       100% { transform: translateY(-100px) scale(0.95); }
     }
 
-    /* JONAKI POKA (FIREFLY PARTICLES) */
     .firefly-particle {
       position: absolute;
       width: 6px; height: 6px; border-radius: 50%;
@@ -156,37 +153,38 @@
     }
 
     .welcome-hero-img {
-      width: 200px; height: 200px; object-fit: cover; border-radius: 36px;
-      border: 3.5px solid var(--gold-glowing);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px var(--gold-glow);
+      width: 210px; height: 210px; object-fit: cover; border-radius: 38px;
+      border: 4px solid var(--gold-glowing);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--gold-glow);
     }
 
     .welcome-main-title {
-      font-size: 2.1rem; font-weight: 950; line-height: 1.15;
-      background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-glowing) 60%, #FF9100 100%);
+      font-size: 2.2rem; font-weight: 950; line-height: 1.15;
+      background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-glowing) 50%, #FF9100 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
     }
 
     .start-app-btn {
-      width: 100%; max-width: 320px; height: 56px;
+      width: 100%; max-width: 330px; height: 58px;
       background: linear-gradient(135deg, #FF6B00 0%, #FF9100 50%, #FF3D00 100%);
-      border: none; border-radius: 28px; color: #FFF;
-      font-size: 1.15rem; font-weight: 950; letter-spacing: 1px;
+      border: none; border-radius: 29px; color: #FFF;
+      font-size: 1.2rem; font-weight: 950; letter-spacing: 1px;
       text-transform: uppercase; cursor: pointer;
-      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.55);
+      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.6);
       transition: transform 0.15s ease;
     }
     .start-app-btn:active { transform: scale(0.95); }
 
-    /* VIEW 1: CANDY CRUSH VERTICAL S-CURVE MAP SCREEN */
+    /* VIEW 1: CANDY CRUSH VERTICAL WIDER S-CURVE ROAD MAP SCREEN */
     .map-header-bar {
       position: absolute; top: 0; left: 0; width: 100%;
       display: flex; align-items: center; justify-content: space-between;
       background: var(--glass-card);
-      border-bottom: 1.5px solid var(--glass-border);
+      border-bottom: 2px solid var(--glass-border);
       padding: 10px 14px;
       backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      z-index: 20; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      z-index: 20; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
     }
 
     .header-user-badge {
@@ -194,24 +192,24 @@
     }
 
     .header-avatar {
-      width: 38px; height: 38px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple-electric), #7B2CBF);
-      border: 2px solid var(--cyan-vibrant);
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-glowing), #FF9100);
+      border: 2px solid #FFF;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; box-shadow: 0 0 10px var(--cyan-glow);
+      font-size: 1.25rem; box-shadow: 0 0 12px var(--gold-glow);
     }
 
     .header-info-group { display: flex; flex-direction: column; text-align: left; }
-    .header-username { font-size: 0.82rem; font-weight: 900; color: #FFF; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .header-village-tag { font-size: 0.68rem; font-weight: 800; color: var(--gold-glowing); }
+    .header-username { font-size: 0.85rem; font-weight: 900; color: #FFF; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .header-village-tag { font-size: 0.7rem; font-weight: 800; color: var(--gold-glowing); }
 
     .header-currencies { display: flex; align-items: center; gap: 6px; }
 
     .curr-pill {
       background: rgba(10, 8, 25, 0.85);
-      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border: 1.5px solid rgba(255, 215, 0, 0.35);
       border-radius: 14px; padding: 4px 8px;
-      font-size: 0.74rem; font-weight: 900;
+      font-size: 0.76rem; font-weight: 900;
       display: flex; align-items: center; gap: 4px;
       cursor: pointer; color: #FFF;
     }
@@ -220,7 +218,7 @@
 
     .settings-icon-btn {
       width: 34px; height: 34px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.1); border: 1px solid var(--glass-border);
       display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer;
     }
 
@@ -233,89 +231,83 @@
       scroll-behavior: smooth;
     }
 
-    /* CANVAS AND VECTOR SVG LAYER FOR S-CURVE ROAD & DECORATIONS */
+    /* SVG LAYER FOR WIDER COBBLESTONE ROAD & MOVING CARS */
     .map-svg-world {
       position: absolute; top: 0; left: 0;
       width: 100%; height: 10200px;
       pointer-events: none; z-index: 1;
     }
 
-    /* LEVEL NODE BUTTONS CONTAINER LAYER */
+    /* LEVEL STORE HUTS & TREES LAYER */
     .map-nodes-layer {
       position: absolute; top: 0; left: 0;
       width: 100%; height: 10200px;
       z-index: 5;
     }
 
-    /* CIRCULAR LEVEL NODES WITH VILLAGE NAME BADGE */
-    .map-node-wrapper {
+    /* ALTERNATING ROYAL VILLAGE STORE HUT NODES */
+    .map-store-wrapper {
       position: absolute;
       transform: translate(-50%, -50%);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       z-index: 5;
     }
 
-    .map-node-btn {
+    .map-store-hut {
       position: relative;
-      width: 58px; height: 58px; border-radius: 50%;
+      width: 72px; height: 72px;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #2D1B4E 0%, #150B28 100%);
+      border: 3px solid var(--gold-glowing);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.8), 0 0 14px var(--gold-glow);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.7);
     }
-    .map-node-btn:active { transform: scale(0.9); }
+    .map-store-hut:active { transform: scale(0.92); }
 
-    /* VILLAGE NAME LABEL TAG UNDER/BESIDE EACH NODE */
-    .node-village-name {
+    .store-roof-icon { font-size: 1.6rem; line-height: 1; margin-bottom: 2px; }
+    .store-serial-num { font-size: 0.95rem; font-weight: 950; color: #FFF; line-height: 1; }
+
+    /* STAR RATING BADGE (1, 2, OR 3 STARS) ABOVE STORE HUT */
+    .store-stars-badge {
+      position: absolute; top: -16px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 5, 24, 0.94);
+      border: 1.5px solid var(--gold-glowing); border-radius: 12px;
+      padding: 2px 6px; font-size: 0.68rem; white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6); z-index: 6;
+    }
+
+    /* VILLAGE NAME TAG UNDER STORE HUT */
+    .store-village-name {
       position: absolute; bottom: -20px;
-      font-size: 0.68rem; font-weight: 900; white-space: nowrap;
-      background: rgba(10, 8, 28, 0.92);
-      padding: 2px 8px; border-radius: 10px;
-      border: 1px solid var(--purple-electric); color: #FFF;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      pointer-events: none; z-index: 6;
+      font-size: 0.7rem; font-weight: 900; white-space: nowrap;
+      background: rgba(15, 8, 35, 0.94);
+      padding: 2px 9px; border-radius: 10px;
+      border: 1.5px solid var(--gold-glowing); color: #FFF;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6); z-index: 6;
     }
 
-    .map-node-wrapper.current .node-village-name {
-      border-color: var(--gold-glowing); color: var(--gold-glowing);
-      box-shadow: 0 0 10px var(--gold-glow);
-    }
-
-    /* COMPLETED NODE */
-    .map-node-btn.passed {
-      background: linear-gradient(135deg, var(--purple-electric), #6A040F);
-      border: 3px solid var(--cyan-vibrant);
-      box-shadow: 0 0 16px var(--cyan-glow), inset 0 2px 4px rgba(255,255,255,0.4);
-      color: #FFF; font-size: 1.1rem; font-weight: 950;
-    }
-
-    .node-stars-row {
-      position: absolute; bottom: 2px;
-      display: flex; gap: 2px; font-size: 0.65rem;
-    }
-
-    /* CURRENT ACTIVE NODE WITH FLOATING AVATAR PIN & PULSING RING */
-    .map-node-btn.current {
+    /* CURRENT ACTIVE STORE HUT PULSE & FLOATING AVATAR PIN */
+    .map-store-wrapper.current .map-store-hut {
       background: linear-gradient(135deg, #FF6B00, #FFD700);
-      border: 3.5px solid #FFF;
-      box-shadow: 0 0 26px var(--gold-glowing);
-      color: #FFF; font-size: 1.25rem; font-weight: 950;
+      border-color: #FFF; box-shadow: 0 0 28px var(--gold-glowing);
       animation: currentPulse 1.4s infinite alternate;
     }
 
     @keyframes currentPulse {
       0% { box-shadow: 0 0 16px var(--gold-glowing); transform: scale(1); }
-      100% { box-shadow: 0 0 32px var(--gold-glowing), 0 0 45px var(--pink-neon); transform: scale(1.12); }
+      100% { box-shadow: 0 0 32px var(--gold-glowing), 0 0 45px var(--pink-neon); transform: scale(1.1); }
     }
 
-    /* FLOATING PLAYER AVATAR BADGE PIN */
     .player-pin-avatar {
-      position: absolute; top: -44px; left: 50%;
+      position: absolute; top: -46px; left: 50%;
       transform: translateX(-50%);
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink-neon), var(--purple-electric));
-      border: 2.5px solid var(--gold-glowing);
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-glowing), #FF9100);
+      border: 2.5px solid #FFF;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.25rem; box-shadow: 0 8px 18px rgba(0,0,0,0.8), 0 0 12px var(--gold-glow);
+      font-size: 1.3rem; box-shadow: 0 8px 18px rgba(0,0,0,0.8), 0 0 14px var(--gold-glow);
       z-index: 10; animation: floatPin 2s infinite ease-in-out alternate;
     }
 
@@ -323,7 +315,7 @@
       content: ''; position: absolute; bottom: -8px; left: 50%;
       transform: translateX(-50%);
       border-left: 6px solid transparent; border-right: 6px solid transparent;
-      border-top: 8px solid var(--gold-glowing);
+      border-top: 8px solid #FFF;
     }
 
     @keyframes floatPin {
@@ -331,53 +323,60 @@
       100% { transform: translateX(-50%) translateY(-7px); }
     }
 
-    /* LOCKED NODE */
-    .map-node-btn.locked {
+    /* LOCKED STORE HUT */
+    .map-store-wrapper.locked .map-store-hut {
       background: rgba(22, 16, 48, 0.8);
-      border: 2px solid rgba(255,255,255,0.2);
-      color: #64748B; font-size: 0.95rem; font-weight: 800;
+      border-color: rgba(255,255,255,0.2); opacity: 0.6;
     }
 
-    /* ISOMETRIC CARTOON VILLAGE HUTS & VEGETATION PROPS */
-    .map-prop-icon {
+    /* BACKGROUND FLOWER TREES, FRUIT TREES & PALMS BEHIND STORES */
+    .tree-decor-prop {
       position: absolute; transform: translate(-50%, -50%);
-      font-size: 1.8rem; pointer-events: none; z-index: 2;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
+      font-size: 2.2rem; pointer-events: none; z-index: 3;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
+    }
+
+    /* ANIMATED CAR DRIVING ON THE S-CURVE ROAD */
+    .road-animated-car {
+      position: absolute; transform: translate(-50%, -50%);
+      font-size: 1.4rem; pointer-events: none; z-index: 4;
+      transition: all 0.3s ease;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
     }
 
     /* FIXED BOTTOM 3-TAB NAVIGATION BAR */
     .bottom-nav-bar {
       position: absolute; bottom: 0; left: 0; width: 100%; height: 65px;
       background: var(--glass-card);
-      border-top: 1.5px solid var(--glass-border);
+      border-top: 2px solid var(--glass-border);
       display: flex; align-items: center; justify-content: space-around;
       backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      z-index: 20; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6);
+      z-index: 20; box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.7);
     }
 
     .nav-tab-item {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 3px; cursor: pointer; color: #94A3B8; transition: all 0.2s ease;
     }
-    .nav-tab-item.active { color: var(--cyan-vibrant); transform: scale(1.08); }
+    .nav-tab-item.active { color: var(--gold-glowing); transform: scale(1.08); }
 
     .nav-tab-icon { font-size: 1.25rem; }
     .nav-tab-label { font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* VIEW 2: GAMEPLAY SCREEN */
+    /* VIEW 2: CLEAN 3x3 GAMEPLAY SCREEN */
     .game-header {
       width: 100%; display: flex; justify-content: space-between; align-items: center;
-      background: var(--glass-card); border: 1.5px solid var(--glass-border);
+      background: var(--glass-card); border: 2px solid var(--glass-border);
       border-radius: var(--border-radius-md); padding: 8px 14px; margin-top: 8px;
     }
 
     .back-btn {
-      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 14px; color: #FFF; padding: 6px 12px; font-size: 0.82rem; font-weight: 800; cursor: pointer;
+      background: rgba(255, 255, 255, 0.1); border: 1.5px solid var(--glass-border);
+      border-radius: 14px; color: #FFF; padding: 6px 14px; font-size: 0.85rem; font-weight: 800; cursor: pointer;
     }
 
-    .level-title-banner { font-size: 0.88rem; font-weight: 900; color: var(--gold-glowing); }
-    .grid-info-badge { font-size: 0.72rem; font-weight: 900; background: rgba(0, 245, 255, 0.15); color: var(--cyan-vibrant); border: 1px solid var(--cyan-vibrant); padding: 2px 8px; border-radius: 10px; }
+    .level-title-banner { font-size: 0.9rem; font-weight: 900; color: var(--gold-glowing); }
+    .guti-theme-badge { font-size: 0.74rem; font-weight: 900; background: rgba(255, 215, 0, 0.15); color: var(--gold-glowing); border: 1px solid var(--gold-glowing); padding: 2px 8px; border-radius: 10px; }
 
     .mode-selector-bar {
       width: 92%; background: var(--glass-card); border: 1.5px solid var(--glass-border);
@@ -387,7 +386,7 @@
       flex: 1; padding: 6px 4px; border-radius: 12px; font-size: 0.76rem; font-weight: 900; text-align: center;
       background: rgba(10, 8, 25, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); color: #A090C0; cursor: pointer;
     }
-    .mode-tab.active { background: linear-gradient(135deg, var(--purple-electric), #7B2CBF); border-color: #FFF; color: #FFF; box-shadow: 0 0 12px var(--purple-glow); }
+    .mode-tab.active { background: linear-gradient(135deg, var(--gold-glowing), #FF9100); border-color: #FFF; color: #FFF; box-shadow: 0 0 12px var(--gold-glow); }
 
     .rule-of-5-bar {
       width: 92%; background: var(--glass-card); border: 1.5px solid var(--glass-border);
@@ -395,31 +394,35 @@
     }
     .wins-dots { display: flex; gap: 8px; }
     .win-dot { width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); }
-    .win-dot.active { background: var(--cyan-vibrant); border-color: var(--cyan-vibrant); box-shadow: 0 0 12px var(--cyan-vibrant); }
+    .win-dot.active { background: var(--gold-glowing); border-color: var(--gold-glowing); box-shadow: 0 0 12px var(--gold-glowing); }
 
     .center-zone { width: 100%; display: flex; justify-content: center; align-items: center; margin: auto 0; perspective: 1000px; }
+    
+    /* STRICT 3x3 ROYAL BOARD */
     .board {
-      width: 100%; max-width: clamp(280px, 85vw, 360px); aspect-ratio: 1 / 1;
-      display: grid; background: rgba(14, 10, 36, 0.88); border-radius: 30px;
-      border: 2px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      width: 100%; max-width: 320px; aspect-ratio: 1 / 1;
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 10px; padding: 14px;
+      background: rgba(18, 10, 42, 0.92); border-radius: 30px;
+      border: 3px solid var(--gold-glowing); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px var(--gold-glow);
       transform: rotateX(4deg); transition: all 0.3s ease;
     }
 
     .cell {
-      background: rgba(24, 18, 56, 0.75); border: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-      position: relative; transition: transform 0.12s ease; overflow: hidden;
+      background: rgba(30, 20, 64, 0.85); border: 1.5px solid rgba(255, 215, 0, 0.25);
+      border-radius: 20px; display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; cursor: pointer; position: relative; transition: transform 0.12s ease; overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.15);
     }
     .cell:active:not(.taken) { transform: scale(0.92); }
 
-    .marker-svg { width: 72%; height: 72%; display: block; animation: pop3D 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .marker-symbol { animation: pop3D 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     @keyframes pop3D { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
     .reset-btn {
       width: 100%; max-width: 320px; height: 52px;
-      background: linear-gradient(135deg, var(--cyan-vibrant) 0%, #0077FF 100%);
-      border: none; border-radius: 26px; color: #FFF; font-size: 1.05rem; font-weight: 900;
-      cursor: pointer; box-shadow: 0 8px 24px var(--cyan-glow); margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--gold-glowing) 0%, #FF9100 100%);
+      border: none; border-radius: 26px; color: #FFF; font-size: 1.08rem; font-weight: 950;
+      cursor: pointer; box-shadow: 0 8px 24px var(--gold-glow); margin-bottom: 12px;
     }
 
     /* MODAL OVERLAYS AT BODY ROOT LEVEL */
@@ -427,7 +430,7 @@
       position: fixed !important;
       top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
       width: 100vw !important; height: 100vh !important;
-      background: rgba(4, 3, 14, 0.90) !important;
+      background: rgba(4, 3, 14, 0.92) !important;
       backdrop-filter: blur(18px) !important; -webkit-backdrop-filter: blur(18px) !important;
       display: flex !important; align-items: center !important; justify-content: center !important;
       z-index: 2147483647 !important; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
@@ -436,27 +439,34 @@
 
     .modal-card {
       width: 90%; max-width: 380px; background: var(--modal-subtle-glow);
-      border: 2px solid #EFE6D5; border-radius: 34px; padding: 22px 18px; text-align: center;
+      border: 2.5px solid var(--gold-glowing); border-radius: 34px; padding: 22px 18px; text-align: center;
       display: flex; flex-direction: column; align-items: center; gap: 12px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7); color: var(--text-dark-slate);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 30px var(--gold-glow); color: var(--text-dark-slate);
       transform: scale(0.85); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .modal-overlay.active .modal-card { transform: scale(1); }
 
     .primary-cta-btn {
-      width: 100%; height: 50px; background: var(--red-cta);
+      width: 100%; height: 50px; background: var(--green-cta);
       border: none; border-radius: 25px; color: #FFF;
-      font-size: 1rem; font-weight: 900; letter-spacing: 0.5px;
-      cursor: pointer; box-shadow: 0 8px 22px rgba(255, 82, 82, 0.4);
+      font-size: 1.05rem; font-weight: 950; letter-spacing: 0.5px;
+      cursor: pointer; box-shadow: 0 8px 22px rgba(0, 230, 118, 0.4);
     }
     .primary-cta-btn:active { transform: scale(0.96); }
+
+    .secondary-cancel-btn {
+      width: 100%; height: 46px; background: var(--red-cta);
+      border: none; border-radius: 23px; color: #FFF;
+      font-size: 0.95rem; font-weight: 900; cursor: pointer;
+      box-shadow: 0 6px 18px rgba(255, 82, 82, 0.4);
+    }
 
     /* PRE-GAME MODAL SPECIFIC */
     .pregame-info-box {
       width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0;
-      border-radius: 20px; padding: 12px; display: flex; flex-direction: column; gap: 8px; text-align: left;
+      border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 8px; text-align: left;
     }
-    .pregame-row { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; }
+    .pregame-row { display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 800; }
   </style>
 </head>
 <body>
@@ -464,7 +474,7 @@
   <!-- FIXED BACKGROUND GRID -->
   <div class="bg-grid"></div>
 
-  <!-- FIXED BACKGROUND 3D NEON GLASS BUBBLES & JONAKI POKA (FIREFLIES) -->
+  <!-- FIXED BACKGROUND 3D NEON GLASS BUBBLES & JONAKI POKA -->
   <div class="bg-3d-elements" id="bg3dElements"></div>
 
   <!-- VIEW 0: WELCOME HERO INTERFACE -->
@@ -475,20 +485,20 @@
       </div>
       <div>
         <h1 class="welcome-main-title">FENI MAP - 100 VILLAGES</h1>
-        <p style="font-size: 0.88rem; color: #B3A4D0; font-weight: 700; margin-top: 8px;">
-          Winding S-Curve Candy Crush Map for Cyber-Neon Tic Tac Toe!
+        <p style="font-size: 0.9rem; color: #FFE066; font-weight: 800; margin-top: 8px;">
+          Royal S-Curve Map & Evolving Chess Pieces!
         </p>
       </div>
       <button class="start-app-btn" id="startAppBtn">LET'S START 🚀</button>
     </div>
   </div>
 
-  <!-- VIEW 1: VERTICAL CANDY CRUSH S-CURVE MAP SCREEN -->
+  <!-- VIEW 1: CANDY CRUSH VERTICAL WIDER S-CURVE ROAD MAP SCREEN -->
   <div class="app-screen hidden" id="mapScreen">
     <!-- TOP FIXED GLASSBAR HEADER -->
     <div class="map-header-bar">
       <div class="header-user-badge" id="openProfileHubBtn">
-        <div class="header-avatar" id="headerAvatarBubble">🤖</div>
+        <div class="header-avatar" id="headerAvatarBubble">👑</div>
         <div class="header-info-group">
           <span class="header-username" id="headerProfileName">Guest Player</span>
           <span class="header-village-tag" id="headerCurrentVillageTag">Char Modhuai</span>
@@ -502,7 +512,7 @@
       </div>
     </div>
 
-    <!-- VERTICAL S-CURVE MAP VIEWPORT -->
+    <!-- VERTICAL WIDER S-CURVE MAP VIEWPORT -->
     <div class="vertical-map-viewport" id="mapViewport">
       <svg class="map-svg-world" id="mapSvgWorld" viewBox="0 0 380 10200"></svg>
       <div class="map-nodes-layer" id="mapNodesLayer"></div>
@@ -525,13 +535,13 @@
     </div>
   </div>
 
-  <!-- VIEW 2: GAMEPLAY SCREEN -->
+  <!-- VIEW 2: 3x3 GAMEPLAY SCREEN -->
   <div class="app-screen hidden" id="gameScreen">
     <div class="game-header">
       <button class="back-btn" id="backToMapBtn">◀ Map</button>
       <div style="text-align: center;">
         <div class="level-title-banner" id="levelTitleBanner">Level 1: Char Modhuai</div>
-        <span class="grid-info-badge" id="gridInfoBadge">Grid: 3x3 (Match 3)</span>
+        <span class="guti-theme-badge" id="gutiThemeBadge">Pieces: Classic Neon</span>
       </div>
       <div class="curr-pill coins">🪙 <span id="gameCoinCount">500</span></div>
     </div>
@@ -553,10 +563,11 @@
       </div>
     </div>
 
-    <div style="margin: 8px 0; background: rgba(22, 18, 48, 0.85); border: 1.5px solid var(--cyan-vibrant); padding: 6px 20px; border-radius: 20px; font-weight: 900; color: var(--cyan-vibrant);">
+    <div style="margin: 8px 0; background: rgba(22, 18, 48, 0.88); border: 1.5px solid var(--gold-glowing); padding: 6px 20px; border-radius: 20px; font-weight: 900; color: var(--gold-glowing);">
       <span id="statusText">Player (X) Turn</span>
     </div>
 
+    <!-- STRICT 3x3 ROYAL BOARD -->
     <div class="center-zone">
       <div class="board" id="board"></div>
     </div>
@@ -566,41 +577,41 @@
 
   <!-- MODALS -->
 
-  <!-- GLASSMORPHIC PRE-GAME MODAL -->
+  <!-- GLASSMORPHIC PRE-GAME MODAL WITH START MATCH & CANCEL BUTTON -->
   <div class="modal-overlay" id="preGameModal">
     <div class="modal-card">
-      <div style="font-size: 2.2rem;">⚔️ 🎯</div>
-      <div style="font-size: 1.4rem; font-weight: 950; color: var(--purple-electric);" id="preGameTitle">Level 1: Char Modhuai</div>
+      <div style="font-size: 2.2rem;">⚔️ 🏰</div>
+      <div style="font-size: 1.4rem; font-weight: 950; color: var(--purple-royal);" id="preGameTitle">Level 1: Char Modhuai</div>
       <div class="pregame-info-box">
-        <div class="pregame-row"><span>Grid Size:</span><span id="preGameGridText" style="color: var(--cyan-vibrant);">3x3 Matrix</span></div>
-        <div class="pregame-row"><span>Win Target:</span><span id="preGameWinTargetText" style="color: var(--gold-glowing);">Match 3 Symbols</span></div>
-        <div class="pregame-row"><span>Streak Requirement:</span><span>5 Consecutive Wins</span></div>
+        <div class="pregame-row"><span>Grid Matrix:</span><span style="color: var(--gold-glowing);">3x3 Royal Grid</span></div>
+        <div class="pregame-row"><span>Evolving Pieces:</span><span id="preGameGutiText" style="color: var(--cyan-vibrant);">Classic Neon</span></div>
+        <div class="pregame-row"><span>Win Target:</span><span style="color: var(--gold-glowing);">Match 3 Pieces</span></div>
       </div>
       <button class="primary-cta-btn" id="startMatchCtaBtn">START MATCH 🚀</button>
-      <button class="back-btn" id="closePreGameBtn" style="width: 100%;">Cancel</button>
+      <button class="secondary-cancel-btn" id="cancelPreGameBtn">CANCEL ❌</button>
     </div>
   </div>
 
   <!-- PROFILE HUB MODAL -->
   <div class="modal-overlay" id="profileHubModal">
     <div class="modal-card">
-      <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-electric);">👤 PLAYER PROFILE HUB</div>
+      <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-royal);">👤 PLAYER PROFILE HUB</div>
       <div style="display: flex; align-items: center; gap: 12px; width: 100%; background: #F8F5EE; border-radius: 20px; padding: 10px;">
-        <div class="header-avatar" id="hubAvatarBubble" style="width: 48px; height: 48px; font-size: 1.6rem;">🤖</div>
+        <div class="header-avatar" id="hubAvatarBubble" style="width: 48px; height: 48px; font-size: 1.6rem;">👑</div>
         <div style="text-align: left; flex: 1;">
           <input type="text" id="hubUsernameInput" style="font-size: 1rem; font-weight: 950; color: var(--text-dark-slate); border: none; background: transparent; outline: none; width: 100%;" value="Guest Player">
           <div style="font-size: 0.74rem; font-weight: 800; color: var(--text-muted-slate);" id="hubPhoneText">+880 (Guest Account)</div>
         </div>
       </div>
       <button class="primary-cta-btn" id="saveProfileHubBtn">Save Profile</button>
-      <button class="back-btn" id="closeProfileHubBtn" style="width: 100%;">Close</button>
+      <button class="secondary-cancel-btn" id="closeProfileHubBtn">Close</button>
     </div>
   </div>
 
   <!-- SETTINGS MODAL -->
   <div class="modal-overlay" id="settingsModal">
     <div class="modal-card">
-      <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-electric);">⚙️ GAME SETTINGS</div>
+      <div style="font-size: 1.2rem; font-weight: 950; color: var(--purple-royal);">⚙️ GAME SETTINGS</div>
       <div style="width: 100%; text-align: left; font-weight: 800; font-size: 0.9rem;">Web Audio API SFX: 🔊 Active</div>
       <button class="primary-cta-btn" id="closeSettingsCtaBtn">Done</button>
     </div>
@@ -609,14 +620,14 @@
   <!-- STORE MODAL -->
   <div class="modal-overlay" id="storeModal">
     <div class="modal-card">
-      <div style="font-size: 1.2rem; font-weight: 950; color: var(--orange-accent);">🛒 CURRENCY & UTILITIES STORE</div>
+      <div style="font-size: 1.2rem; font-weight: 950; color: var(--gold-glowing);">🛒 CURRENCY STORE</div>
       <div style="width: 100%; background: #FFF8E1; border-radius: 16px; padding: 8px; font-weight: 900; color: #D84315;">
         🪙 <span id="storeModalCoins">500</span> Coins | 💎 <span id="storeModalDiamonds">20</span> Diamonds
       </div>
       <div style="width: 100%; background: #E8F5E9; border-radius: 16px; padding: 10px; font-weight: 900; color: #2E7D32; cursor: pointer;" onclick="openWhatsAppPurchase()">
         💬 Buy Coins via WhatsApp (+880 1615-288259)
       </div>
-      <button class="primary-cta-btn" id="closeStoreBtn">Close Store</button>
+      <button class="secondary-cancel-btn" id="closeStoreBtn">Close Store</button>
     </div>
   </div>
 
@@ -624,7 +635,7 @@
   <div class="modal-overlay" id="streakModal">
     <div class="modal-card">
       <div style="font-size: 3rem;">🔥</div>
-      <div style="font-size: 1.5rem; font-weight: 950; color: var(--orange-accent);"><span id="streakNumModal">4</span> DAY STREAK</div>
+      <div style="font-size: 1.5rem; font-weight: 950; color: #FF6B00;"><span id="streakNumModal">4</span> DAY STREAK</div>
       <div style="font-size: 0.84rem; font-weight: 800; color: var(--text-muted-slate);">Daily Streak increments strictly 1 time per 24 hours after 12:00 AM Midnight.</div>
       <button class="primary-cta-btn" id="closeStreakBtn">Awesome 🔥</button>
     </div>
@@ -634,14 +645,14 @@
   <div class="modal-overlay" id="victoryModal">
     <div class="modal-card">
       <div style="font-size: 3.5rem;">🏆</div>
-      <div style="font-size: 1.6rem; font-weight: 950; color: #00E676;">MATCH VICTORY!</div>
+      <div style="font-size: 1.6rem; font-weight: 950; color: #00E676;">ROYAL VICTORY!</div>
       <div style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark-slate);">+100 Gold Coins Earned!</div>
       <button class="primary-cta-btn" id="continueVictoryBtn">Continue</button>
     </div>
   </div>
 
   <script>
-    // WEB AUDIO API ENGINE
+    // WEB AUDIO API SYNTHESIZER ENGINE
     class SoundEngine {
       constructor() {
         this.ctx = null;
@@ -690,12 +701,11 @@
     }
     const audioManager = new SoundEngine();
 
-    // GENERATE STABLE 20% OPACITY 3D NEON GLASS BUBBLES & JONAKI POKA (FIREFLIES) IN BACKGROUND
+    // 3D NEON GLASS BUBBLES & JONAKI POKA BACKGROUND EFFECTS
     function init3DBackgroundEffects() {
       const bgContainer = document.getElementById('bg3dElements');
       bgContainer.innerHTML = '';
 
-      // Stable 20% Opacity 3D Neon Glass Bubbles
       for (let i = 0; i < 10; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'neon-bubble-3d';
@@ -709,7 +719,6 @@
         bgContainer.appendChild(bubble);
       }
 
-      // Jonaki Poka (Firefly Particles)
       for (let i = 0; i < 18; i++) {
         const firefly = document.createElement('div');
         firefly.className = 'firefly-particle';
@@ -717,10 +726,6 @@
         firefly.style.top = Math.floor(Math.random() * 92) + '%';
         firefly.style.animationDelay = (Math.random() * 4) + 's';
         firefly.style.animationDuration = (Math.random() * 5 + 4) + 's';
-        if (i % 3 === 0) {
-          firefly.style.background = '#00F5FF';
-          firefly.style.boxShadow = '0 0 14px #00F5FF, 0 0 24px #9D4EDD';
-        }
         bgContainer.appendChild(firefly);
       }
     }
@@ -740,13 +745,23 @@
       "Fulgazi", "Munshirhat", "Dorbarpur", "Anandopur", "Amzadhat", "G.M. Hat", "North Basudebpur", "Kismat Ghaniyamora", "Balla", "Bandua"
     ];
 
+    // PIECE (GUTI) EVOLUTION SYSTEM EVERY 5 LEVELS
+    function getGutiTheme(level) {
+      if (level <= 5) return { pX: '❌', pO: '⭕', label: 'Classic Cyber Neon' };
+      if (level <= 10) return { pX: '♟️', pO: '♞', label: 'Chess Pawns & Knights' };
+      if (level <= 15) return { pX: '♜', pO: '♝', label: 'Chess Rooks & Bishops' };
+      if (level <= 20) return { pX: '♛', pO: '♚', label: 'Royal Queens & Kings' };
+      if (level <= 25) return { pX: '👑', pO: '💎', label: 'Gold Crowns & Diamonds' };
+      return { pX: '⚔️', pO: '🛡️', label: 'Mythic Crests & Shields' };
+    }
+
     // GAME STATE & PERSISTENCE
     let currentLevel = parseInt(localStorage.getItem('feniCurrentLevel') || '1');
     let coins = parseInt(localStorage.getItem('feniCoins') || '500');
     let diamonds = parseInt(localStorage.getItem('feniDiamonds') || '20');
     let streakCount = parseInt(localStorage.getItem('feniStreak') || '4');
     let playerUsername = localStorage.getItem('feniUsername') || 'Guest Player';
-    let playerAvatar = localStorage.getItem('feniAvatar') || '🤖';
+    let playerAvatar = localStorage.getItem('feniAvatar') || '👑';
     let levelConsecutiveWins = parseInt(localStorage.getItem('feniLevelWins') || '0');
 
     function saveState() {
@@ -774,12 +789,12 @@
     }
     updateUI();
 
-    // S-CURVE PATH ARCHITECTURE ENGINE
-    const NODE_SPACING_Y = 100;
-    const START_OFFSET_Y = 110;
-    const TOTAL_HEIGHT = 100 * NODE_SPACING_Y + 200; // 10,200px
+    // WIDER S-CURVE ROAD ARCHITECTURE (ROAD WIDTH = 64px)
+    const NODE_SPACING_Y = 110;
+    const START_OFFSET_Y = 120;
+    const TOTAL_HEIGHT = 100 * NODE_SPACING_Y + 240; // 11,240px
     const CENTER_X = 190;
-    const AMPLITUDE_X = 110;
+    const AMPLITUDE_X = 115;
     const FREQ = 0.22;
 
     function getNodeCoords(levelNum) {
@@ -798,129 +813,132 @@
       mapNodesLayer.style.height = TOTAL_HEIGHT + 'px';
 
       let roadPathD = '';
-      let riverPathD = '';
-
       for (let i = 1; i <= 100; i++) {
         const { x, y } = getNodeCoords(i);
-        if (i === 1) {
-          roadPathD += `M ${x} ${y}`;
-          riverPathD += `M ${x + 65} ${y}`;
-        } else {
-          roadPathD += ` L ${x} ${y}`;
-          riverPathD += ` L ${x + 65} ${y}`;
-        }
+        if (i === 1) roadPathD += `M ${x} ${y}`;
+        else roadPathD += ` L ${x} ${y}`;
       }
 
       mapSvgWorld.innerHTML = `
         <defs>
-          <linearGradient id="roadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#9D4EDD" />
-            <stop offset="50%" stop-color="#FF2E93" />
-            <stop offset="100%" stop-color="#00F5FF" />
+          <linearGradient id="royalRoadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD700" />
+            <stop offset="50%" stop-color="#FF9100" />
+            <stop offset="100%" stop-color="#9D4EDD" />
           </linearGradient>
         </defs>
 
-        <!-- PARALLEL NEON CYAN RIVER -->
-        <path d="${riverPathD}" stroke="#00E5FF" stroke-width="16" fill="none" opacity="0.35" stroke-linecap="round" />
-
-        <!-- S-CURVE GLOWING NEON ROAD -->
-        <path d="${roadPathD}" stroke="#1A0D38" stroke-width="48" fill="none" stroke-linecap="round" />
-        <path d="${roadPathD}" stroke="url(#roadGradient)" stroke-width="36" fill="none" stroke-linecap="round" filter="drop-shadow(0 0 12px rgba(255,46,147,0.6))" />
-        <path d="${roadPathD}" stroke="#00F5FF" stroke-width="4" fill="none" stroke-dasharray="10 14" stroke-linecap="round" />
+        <!-- WIDER S-CURVE ROAD (WIDTH 64px) -->
+        <path d="${roadPathD}" stroke="#120826" stroke-width="64" fill="none" stroke-linecap="round" />
+        <path d="${roadPathD}" stroke="url(#royalRoadGradient)" stroke-width="48" fill="none" stroke-linecap="round" filter="drop-shadow(0 0 16px rgba(255,215,0,0.5))" />
+        <path d="${roadPathD}" stroke="#FFF" stroke-width="5" fill="none" stroke-dasharray="12 16" stroke-linecap="round" />
       `;
 
       mapNodesLayer.innerHTML = '';
 
-      const PROPS_ICONS = ['🏡', '🌴', '🛖', '🎋', '🛶', '🏠'];
+      // BACKGROUND TREES (FLOWER TREES 🌸, FRUIT TREES 🍎, PALMS 🌴)
+      const TREE_PROPS = ['🌸', '🍎', '🌴', '🍊', '🌺', '🌳'];
 
+      // ANIMATED CAR DRIVING ALONG ROAD BENDS
+      for (let c = 5; c <= 95; c += 15) {
+        const { x, y } = getNodeCoords(c);
+        const car = document.createElement('div');
+        car.className = 'road-animated-car';
+        car.style.left = x + 'px';
+        car.style.top = y + 'px';
+        car.textContent = (c % 2 === 0) ? '🚗' : '🏎️';
+        mapNodesLayer.appendChild(car);
+      }
+
+      // ALTERNATING ROYAL VILLAGE STORE HUTS (1 Left, 2 Right, 3 Left, 4 Right...)
       for (let i = 1; i <= 100; i++) {
         const { x, y } = getNodeCoords(i);
         const villageName = FENI_100_VILLAGES[i - 1] || `Village ${i}`;
 
-        // ENVIRONMENT PROPS SCATTERED ALONG MARGINS
-        if (i % 3 === 0) {
-          const prop = document.createElement('div');
-          prop.className = 'map-prop-icon';
-          const sideOffset = (i % 2 === 0) ? -100 : 100;
-          prop.style.left = (x + sideOffset) + 'px';
-          prop.style.top = y + 'px';
-          prop.textContent = PROPS_ICONS[i % PROPS_ICONS.length];
-          mapNodesLayer.appendChild(prop);
-        }
+        // TREE PROPS BEHIND STORE HUTS
+        const treeProp = document.createElement('div');
+        treeProp.className = 'tree-decor-prop';
+        const treeSide = (i % 2 === 1) ? -115 : 115;
+        treeProp.style.left = (x + treeSide) + 'px';
+        treeProp.style.top = y + 'px';
+        treeProp.textContent = TREE_PROPS[i % TREE_PROPS.length];
+        mapNodesLayer.appendChild(treeProp);
 
-        // CIRCULAR LEVEL NODE WRAPPER WITH ALWAYS VISIBLE VILLAGE NAME TAG
+        // ALTERNATING STORE HUT WRAPPER
         const wrapper = document.createElement('div');
-        wrapper.className = 'map-node-wrapper' + (i === currentLevel ? ' current' : '');
-        wrapper.style.left = x + 'px';
+        wrapper.className = 'map-store-wrapper' + (i === currentLevel ? ' current' : (i > currentLevel ? ' locked' : ''));
+
+        // Alternating Left / Right shift relative to road center
+        const hutOffset = (i % 2 === 1) ? -45 : 45;
+        wrapper.style.left = (x + hutOffset) + 'px';
         wrapper.style.top = y + 'px';
 
-        const btn = document.createElement('div');
         const isPassed = i < currentLevel;
         const isCurrent = i === currentLevel;
 
-        if (isPassed) {
-          btn.className = 'map-node-btn passed';
-          btn.innerHTML = `
-            <span>${i}</span>
-            <div class="node-stars-row">⭐⭐</div>
-          `;
-          btn.addEventListener('click', () => openPreGameModal(i));
-        } else if (isCurrent) {
-          btn.className = 'map-node-btn current';
-          btn.id = 'currentActiveNode';
-          btn.innerHTML = `
-            <div class="player-pin-avatar">${playerAvatar}</div>
-            <span>${i}</span>
-          `;
-          btn.addEventListener('click', () => openPreGameModal(i));
-        } else {
-          btn.className = 'map-node-btn locked';
-          btn.innerHTML = `🔒`;
-          btn.addEventListener('click', () => alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first.`));
+        const hutBtn = document.createElement('div');
+        hutBtn.className = 'map-store-hut';
+        hutBtn.innerHTML = `
+          <div class="store-roof-icon">🏬</div>
+          <div class="store-serial-num">${i}</div>
+        `;
+
+        if (isCurrent) {
+          hutBtn.innerHTML += `<div class="player-pin-avatar">${playerAvatar}</div>`;
         }
 
-        // VILLAGE NAME TAG DISPLAYED CLEARLY UNDER EACH NODE
+        hutBtn.addEventListener('click', () => {
+          if (i <= currentLevel) openPreGameModal(i);
+          else alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first.`);
+        });
+
+        // 1, 2, OR 3 GOLD STARS BADGE ABOVE STORE HUT
+        const starsBadge = document.createElement('div');
+        starsBadge.className = 'store-stars-badge';
+        starsBadge.textContent = isPassed ? '⭐⭐⭐' : (isCurrent ? '⭐' : '🔒');
+
+        // VILLAGE NAME TAG UNDER STORE HUT
         const nameTag = document.createElement('div');
-        nameTag.className = 'node-village-name';
+        nameTag.className = 'store-village-name';
         nameTag.textContent = villageName;
 
-        wrapper.appendChild(btn);
+        wrapper.appendChild(starsBadge);
+        wrapper.appendChild(hutBtn);
         wrapper.appendChild(nameTag);
         mapNodesLayer.appendChild(wrapper);
       }
     }
 
-    // AUTO-SCROLL VIEWPORT TO CENTER ON CURRENT ACTIVE LEVEL NODE
     function scrollToActiveNode() {
-      const activeNode = document.getElementById('currentActiveNode');
+      const activeWrapper = document.querySelector('.map-store-wrapper.current');
       const viewport = document.getElementById('mapViewport');
-      if (activeNode && viewport) {
-        const nodeY = parseFloat(activeNode.parentElement.style.top);
+      if (activeWrapper && viewport) {
+        const nodeY = parseFloat(activeWrapper.style.top);
         viewport.scrollTop = nodeY - (viewport.clientHeight / 2);
       }
     }
 
-    // PRE-GAME MODAL & START MATCH FLOW
+    // PRE-GAME MODAL WITH START MATCH & CANCEL BUTTON
     let selectedLevelToPlay = 1;
     const preGameModal = document.getElementById('preGameModal');
+    const cancelPreGameBtn = document.getElementById('cancelPreGameBtn');
 
     function openPreGameModal(lvl) {
       audioManager.playClick();
       selectedLevelToPlay = lvl;
       const vName = FENI_100_VILLAGES[lvl - 1] || 'Feni Village';
+      const guti = getGutiTheme(lvl);
+
       document.getElementById('preGameTitle').textContent = `Level ${lvl}: ${vName}`;
-
-      let gridText = '3x3 Matrix';
-      let targetText = 'Match 3 Symbols';
-      if (lvl > 5 && lvl <= 10) { gridText = '6x6 Matrix'; targetText = 'Match 4 Symbols'; }
-      else if (lvl > 10) { gridText = '12x12 Matrix'; targetText = 'Match 5 Symbols'; }
-
-      document.getElementById('preGameGridText').textContent = gridText;
-      document.getElementById('preGameWinTargetText').textContent = targetText;
+      document.getElementById('preGameGutiText').textContent = `${guti.label} (${guti.pX} vs ${guti.pO})`;
       preGameModal.classList.add('active');
     }
 
-    document.getElementById('closePreGameBtn').addEventListener('click', () => preGameModal.classList.remove('active'));
+    cancelPreGameBtn.addEventListener('click', () => {
+      audioManager.playClick();
+      preGameModal.classList.remove('active');
+    });
+
     document.getElementById('startMatchCtaBtn').addEventListener('click', () => {
       audioManager.playClick();
       preGameModal.classList.remove('active');
@@ -988,14 +1006,18 @@
       window.open(`https://wa.me/8801615288259?text=${message}`, '_blank');
     };
 
-    // GAMEPLAY ENGINE INTEGRATION
+    // STRICT 3x3 GAMEPLAY ENGINE WITH EVOLVING PIECES
     let activePlayLevel = 1;
-    let gameState = [];
+    let gameState = Array(9).fill('');
     let isGameActive = true;
+    let currentGutiTheme = { pX: '❌', pO: '⭕' };
 
     function startLevelGame(lvl) {
       activePlayLevel = lvl;
+      currentGutiTheme = getGutiTheme(lvl);
       document.getElementById('levelTitleBanner').textContent = `Level ${lvl}: ${FENI_100_VILLAGES[lvl - 1]}`;
+      document.getElementById('gutiThemeBadge').textContent = `Pieces: ${currentGutiTheme.pX} vs ${currentGutiTheme.pO}`;
+
       mapScreen.classList.add('hidden');
       gameScreen.classList.remove('hidden');
       resetMatchBoard();
@@ -1010,75 +1032,63 @@
     });
 
     function resetMatchBoard() {
-      const size = activePlayLevel <= 5 ? 3 : (activePlayLevel <= 10 ? 6 : 12);
-      gameState = Array(size * size).fill('');
+      gameState = Array(9).fill('');
       isGameActive = true;
-      document.getElementById('statusText').textContent = 'Player (X) Turn';
+      document.getElementById('statusText').textContent = `Player (${currentGutiTheme.pX}) Turn`;
 
       const boardEl = document.getElementById('board');
-      boardEl.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-      boardEl.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-      boardEl.style.gap = size === 3 ? '10px' : (size === 6 ? '5px' : '2px');
-      boardEl.style.padding = size === 3 ? '14px' : '6px';
       boardEl.innerHTML = '';
 
-      for (let i = 0; i < size * size; i++) {
+      for (let i = 0; i < 9; i++) {
         const cell = document.createElement('div');
         cell.className = 'cell';
-        cell.style.borderRadius = size === 3 ? '18px' : '4px';
-        cell.addEventListener('click', () => handleCellClick(i, size));
+        cell.addEventListener('click', () => handleCellClick(i));
         boardEl.appendChild(cell);
       }
     }
 
     document.getElementById('resetBtn').addEventListener('click', () => { audioManager.playClick(); resetMatchBoard(); });
 
-    function handleCellClick(idx, size) {
+    function handleCellClick(idx) {
       if (gameState[idx] !== '' || !isGameActive) return;
       audioManager.playClick();
-      makeMove(idx, 'X', size);
+      makeMove(idx, currentGutiTheme.pX);
 
-      if (checkWin(gameState, size)) {
+      if (checkWin3x3(gameState, currentGutiTheme.pX)) {
         handleVictory();
         return;
       }
+      if (gameState.every(c => c !== '')) { alert('🤝 Match Draw!'); resetMatchBoard(); return; }
 
       // AI TURN
       setTimeout(() => {
         if (!isGameActive) return;
         let empty = [];
-        for (let i = 0; i < gameState.length; i++) if (gameState[i] === '') empty.push(i);
+        for (let i = 0; i < 9; i++) if (gameState[i] === '') empty.push(i);
         if (empty.length > 0) {
           let aiIdx = empty[Math.floor(Math.random() * empty.length)];
-          makeMove(aiIdx, 'O', size);
-          if (checkWin(gameState, size)) {
+          makeMove(aiIdx, currentGutiTheme.pO);
+          if (checkWin3x3(gameState, currentGutiTheme.pO)) {
             alert('💔 Match Defeat!'); resetMatchBoard();
           }
         }
       }, 300);
     }
 
-    function makeMove(idx, sym, size) {
+    function makeMove(idx, sym) {
       gameState[idx] = sym;
       const cell = document.querySelectorAll('.cell')[idx];
       cell.classList.add('taken');
-      cell.innerHTML = sym === 'X' ? 
-        `<svg class="marker-svg" viewBox="0 0 100 100"><path d="M22 22 L78 78 M78 22 L22 78" stroke="#00F5FF" stroke-width="16" stroke-linecap="round"/></svg>` : 
-        `<svg class="marker-svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#FF2E93" stroke-width="16" fill="none"/></svg>`;
+      cell.innerHTML = `<span class="marker-symbol">${sym}</span>`;
     }
 
-    function checkWin(b, size) {
-      const winLen = size === 3 ? 3 : (size === 6 ? 4 : 5);
-      for (let r = 0; r < size; r++) {
-        for (let c = 0; c <= size - winLen; c++) {
-          let first = b[r * size + c];
-          if (!first) continue;
-          let match = true;
-          for (let k = 1; k < winLen; k++) if (b[r * size + c + k] !== first) match = false;
-          if (match) return true;
-        }
-      }
-      return false;
+    function checkWin3x3(b, sym) {
+      const wins = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return wins.some(w => w.every(i => b[i] === sym));
     }
 
     function handleVictory() {
