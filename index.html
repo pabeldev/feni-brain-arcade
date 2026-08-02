@@ -370,7 +370,7 @@
     }
     .reset-btn:active { transform: scale(0.96); }
 
-    /* CRITICAL FIX: HIGHEST Z-INDEX & BACKDROP BLUR FOR ALL MODAL OVERLAYS */
+    /* HIGHEST Z-INDEX & BACKDROP BLUR FOR ALL MODAL OVERLAYS */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(5, 3, 15, 0.88);
@@ -502,7 +502,7 @@
     }
     .store-buy-btn:active { transform: scale(0.93); }
 
-    /* GLOSSY 3D MILESTONE BADGES */
+    /* STREAK MODAL CARD */
     .streak-modal-card {
       width: 92%; max-width: 395px;
       background: var(--modal-subtle-glow);
@@ -557,6 +557,13 @@
     .streak-label-big {
       font-size: 1.3rem; font-weight: 900; color: var(--text-dark-slate);
       text-align: left; line-height: 1.1;
+    }
+
+    .midnight-tracker-badge {
+      background: #FFF3E0; border: 1.5px solid #FFE0B2;
+      border-radius: 16px; padding: 6px 12px;
+      font-size: 0.74rem; font-weight: 800; color: #E65100;
+      width: 100%; text-align: center;
     }
 
     /* 3D CAROUSEL SLIDER */
@@ -902,6 +909,10 @@
         <div class="streak-label-big">Day<br>Streak!</div>
       </div>
 
+      <div class="midnight-tracker-badge" id="midnightTrackerBadge">
+        ⏳ Daily Streak Count: 1 count per 24 Hours (Resets after 12:00 AM Midnight)
+      </div>
+
       <!-- 3D CAROUSEL SLIDER ENGINE -->
       <div class="carousel-view-container" id="carouselContainer">
         <div class="carousel-track" id="carouselTrack"></div>
@@ -961,6 +972,14 @@
       { days: 1000, preview: '🏆 Legend' }
     ];
 
+    // HELPER: GET LOCAL YYYY-MM-DD DATE KEY FOR MIDNIGHT 24H TRACKING
+    function getLocalDateKey(d = new Date()) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
     // GAME MODES: 'HARD', 'EASY', 'MULTI'
     let currentMode = 'HARD';
 
@@ -971,8 +990,7 @@
     let diamonds = parseInt(localStorage.getItem('feniDiamonds') || '20');
     let streakCount = parseInt(localStorage.getItem('feniStreak') || '4');
     let streakFreezeCount = parseInt(localStorage.getItem('feniFreeze') || '3');
-    let lastPlayDate = localStorage.getItem('feniLastPlayDate') || new Date().toDateString();
-    let hasPlayedToday = localStorage.getItem('feniPlayedToday') === new Date().toDateString();
+    let lastPlayDateKey = localStorage.getItem('feniLastPlayDateKey') || '';
     let isGoogleSignedIn = localStorage.getItem('feniGoogleSignedIn') === 'true';
 
     function saveState() {
@@ -982,9 +1000,8 @@
       localStorage.setItem('feniDiamonds', diamonds.toString());
       localStorage.setItem('feniStreak', streakCount.toString());
       localStorage.setItem('feniFreeze', streakFreezeCount.toString());
-      localStorage.setItem('feniLastPlayDate', lastPlayDate);
+      localStorage.setItem('feniLastPlayDateKey', lastPlayDateKey);
       localStorage.setItem('feniGoogleSignedIn', isGoogleSignedIn.toString());
-      if (hasPlayedToday) localStorage.setItem('feniPlayedToday', new Date().toDateString());
     }
 
     // GOOGLE PLAY GAMES SIGN-IN ENGINE
@@ -1014,18 +1031,54 @@
       }
     });
 
-    // RETENTION & STREAK LOGIC
+    // STRICT 24-HOUR / MIDNIGHT LOCAL TIME STREAK TRACKER
     function checkStreakOnMatchPlayed() {
-      const today = new Date().toDateString();
-      if (!hasPlayedToday) {
-        hasPlayedToday = true;
+      const todayKey = getLocalDateKey();
+
+      if (!lastPlayDateKey) {
+        // First match ever played
+        lastPlayDateKey = todayKey;
+        if (streakCount === 0) streakCount = 1;
+        saveState();
+        updateHeaderUI();
+        return;
+      }
+
+      if (lastPlayDateKey === todayKey) {
+        // Already played today within this 24-hour calendar day! No double counting!
+        return;
+      }
+
+      // Calculate days difference between last play date and today
+      const lastDate = new Date(lastPlayDateKey);
+      const currentDate = new Date(todayKey);
+      const diffTime = Math.abs(currentDate - lastDate);
+      const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 1) {
+        // Exactly next day after 12:00 AM midnight!
         streakCount++;
-        lastPlayDate = today;
+        lastPlayDateKey = todayKey;
         saveState();
         updateHeaderUI();
 
         if (streakCount === 100) {
           setTimeout(() => { document.getElementById('claimModal').classList.add('active'); }, 600);
+        }
+      } else if (diffDays > 1) {
+        // Missed one or more days! Check freeze shield
+        if (streakFreezeCount > 0) {
+          streakFreezeCount--;
+          streakCount++;
+          lastPlayDateKey = todayKey;
+          saveState();
+          updateHeaderUI();
+          alert('🛡️ Streak Freeze Shield used! Your Day Streak was protected after missing a day!');
+        } else {
+          streakCount = 1;
+          lastPlayDateKey = todayKey;
+          saveState();
+          updateHeaderUI();
         }
       }
     }
@@ -1093,12 +1146,27 @@
       document.getElementById('storeModalDiamondBalance').textContent = diamonds;
       document.getElementById('modalFreezeCount').textContent = streakFreezeCount;
       document.getElementById('modalStreakNum').textContent = streakCount;
+
+      const todayKey = getLocalDateKey();
+      const trackerBadge = document.getElementById('midnightTrackerBadge');
+      if (lastPlayDateKey === todayKey) {
+        trackerBadge.textContent = "✅ Today's Streak Collected! (Next count resets after 12:00 AM Midnight)";
+        trackerBadge.style.background = "#E8F5E9";
+        trackerBadge.style.color = "#2E7D32";
+        trackerBadge.style.borderColor = "#A5D6A7";
+      } else {
+        trackerBadge.textContent = "🔥 Play a match today to count your daily streak! (Resets after 12:00 AM)";
+        trackerBadge.style.background = "#FFF3E0";
+        trackerBadge.style.color = "#E65100";
+        trackerBadge.style.borderColor = "#FFE0B2";
+      }
+
       updateGooglePlayUI();
       saveState();
     }
     updateHeaderUI();
 
-    // RENDER 100 MAP NODES (FIXED CLICK CLICK HANDLER SO IT NEVER AUTO-PURCHASES)
+    // RENDER 100 MAP NODES
     function renderMap() {
       mapContainer.innerHTML = '';
       for (let i = 1; i <= 100; i++) {
@@ -1124,7 +1192,6 @@
             <div class="flame-circle-overlay">🛒 1k</div>
             <span class="node-name-label">${villageName}</span>
           `;
-          // FIX: Tapping immediate next node ONLY opens confirmation dialog modal, NEVER auto-purchases!
           node.addEventListener('click', (e) => {
             e.stopPropagation();
             requestNextLevelPurchaseConfirm(i, villageName);
@@ -1144,7 +1211,7 @@
     }
     renderMap();
 
-    // PURCHASE IMMEDIATE NEXT LEVEL CONFIRMATION (ONLY EXECUTES WHEN USER PRESSES YES!)
+    // PURCHASE IMMEDIATE NEXT LEVEL CONFIRMATION
     window.requestNextLevelPurchaseConfirm = function(nextLvl, villageName) {
       if (coins < 1000) {
         alert(`Not enough coins! You need 1,000 Coins to purchase Level ${nextLvl} 🪙`);
@@ -1154,7 +1221,6 @@
         "UNLOCK NEXT LEVEL?",
         `Spend 1,000 Coins to purchase & unlock Level ${nextLvl}: ${villageName}?`,
         () => {
-          // THIS ACTION ONLY RUNS IF THE USER CLICKS "YES" IN THE POPUP!
           coins -= 1000;
           currentLevel = nextLvl;
           levelConsecutiveWins = 0;
