@@ -140,54 +140,153 @@
       transform: translateX(-50%) scale(0.95);
     }
 
-    /* VIEW 0: WELCOME HERO INTERFACE (VERSION 1.0.0 STYLE) */
+    /* VIEW 0: WELCOME HERO INTERFACE (EXACT SCREENSHOT UI MATCH) */
     .welcome-container {
-      width: 100%; height: 100%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: space-between;
-      padding: 28px 16px 40px 16px; text-align: center;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 36px 20px 48px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* HERO ART WRAPPER WITH FLOATING BADGE PILLS */
+    .welcome-hero-art-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 310px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .welcome-hero-art {
-      position: relative; width: 100%; max-width: 260px; aspect-ratio: 1 / 1;
-      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      width: 210px;
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* VERSION 1.0.0 3D FLOATING ANIMATION ON APP HERO ICON */
     .welcome-hero-img {
-      width: 180px; height: 180px; object-fit: cover; border-radius: 38px;
-      border: 4px solid var(--gold-glowing);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--gold-glow);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 42px;
+      border: 4px solid #FFD700;
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.65), 0 20px 50px rgba(0, 0, 0, 0.9);
       animation: heroFloat3D 3.2s infinite ease-in-out alternate;
     }
 
     @keyframes heroFloat3D {
-      0% { transform: translateY(0px) rotate(0deg) scale(1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 25px var(--gold-glow); }
-      50% { transform: translateY(-12px) rotate(2deg) scale(1.04); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 45px var(--gold-glow); }
-      100% { transform: translateY(0px) rotate(-1deg) scale(1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 25px var(--gold-glow); }
+      0% { transform: translateY(0px) rotate(0deg) scale(1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.5), 0 20px 50px rgba(0, 0, 0, 0.85); }
+      50% { transform: translateY(-10px) rotate(1.5deg) scale(1.03); box-shadow: 0 0 45px rgba(255, 215, 0, 0.75), 0 30px 60px rgba(0, 0, 0, 0.9); }
+      100% { transform: translateY(0px) rotate(-1deg) scale(1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.5), 0 20px 50px rgba(0, 0, 0, 0.85); }
     }
 
-    /* VERSION 1.0.0 TITLE TEXT: Tic Tac Toe: GenZ Multiplayer (NOT ALL CAPS, NO PNG) */
-    .welcome-title-text {
-      font-size: 1.65rem;
+    /* FLOATING BADGE PILLS */
+    .badge-pill {
+      position: absolute;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+      white-space: nowrap;
+    }
+
+    .badge-pill.top-right {
+      top: -12px;
+      right: 0px;
+      background: rgba(15, 10, 30, 0.92);
+      border: 1.8px solid #FFD700;
+      color: #FFD700;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.35);
+    }
+
+    .badge-pill.bottom-left {
+      bottom: -10px;
+      left: -5px;
+      background: rgba(15, 10, 30, 0.92);
+      border: 1.8px solid #00F5FF;
+      color: #00F5FF;
+      box-shadow: 0 0 15px rgba(0, 245, 255, 0.35);
+    }
+
+    /* TEXT AREA & TYPOGRAPHY */
+    .welcome-text-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin: 16px 0;
+    }
+
+    .hero-main-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .title-top {
+      font-size: 1.85rem;
       font-weight: 950;
-      color: #FFFFFF;
-      text-shadow: 0 4px 15px rgba(255, 215, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.25);
-      margin-top: 12px;
-      letter-spacing: -0.3px;
-      line-height: 1.25;
+      letter-spacing: 0.5px;
+      color: #FFD700;
+      text-shadow: 0 0 16px rgba(255, 215, 0, 0.4);
     }
 
-    .start-app-btn {
-      width: 100%; max-width: 320px; height: 56px;
-      background: linear-gradient(135deg, #FF6B00 0%, #FF9100 50%, #FF3D00 100%);
-      border: none; border-radius: 28px; color: #FFF;
-      font-size: 1.15rem; font-weight: 950; letter-spacing: 1px;
-      text-transform: uppercase; cursor: pointer;
-      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.6);
-      transition: transform 0.15s ease;
+    .title-bottom {
+      font-size: 1.85rem;
+      font-weight: 950;
+      letter-spacing: 0.5px;
+      background: linear-gradient(185deg, #FFF 0%, #FFD700 40%, #FFA000 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 20px rgba(255, 160, 0, 0.3);
     }
-    .start-app-btn:active { transform: scale(0.95); }
+
+    .hero-description-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #C4B5FD;
+      line-height: 1.45;
+      max-width: 320px;
+      opacity: 0.92;
+    }
+
+    /* START APP BUTTON MATCHING SCREENSHOT EXACTLY */
+    .start-app-btn {
+      width: 100%;
+      max-width: 330px;
+      height: 58px;
+      background: linear-gradient(135deg, #FF5500 0%, #FF8800 50%, #FF3300 100%);
+      border: none;
+      border-radius: 29px;
+      color: #FFFFFF;
+      font-size: 1.18rem;
+      font-weight: 950;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 35px rgba(255, 85, 0, 0.65), 0 0 20px rgba(255, 136, 0, 0.4);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .start-app-btn:active {
+      transform: scale(0.95);
+    }
 
     /* VIEW 1: CANDY CRUSH VERTICAL MAP SCREEN */
     .map-header-bar {
@@ -519,26 +618,43 @@
   <!-- FIXED BACKGROUND 3D NEON GLASS BUBBLES & JONAKI POKA -->
   <div class="bg-3d-elements" id="bg3dElements"></div>
 
-  <!-- VIEW 0: WELCOME HERO INTERFACE (VERSION 1.0.0 EXACT LAYOUT) -->
+  <!-- VIEW 0: WELCOME HERO INTERFACE (EXACT SCREENSHOT UI MATCH) -->
   <div class="app-screen" id="welcomeScreen">
     <div class="welcome-container">
-      <div class="welcome-hero-art">
-        <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
-      </div>
-      <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <!-- VERSION 1.0.0 CLEAN TEXT TITLE: Tic Tac Toe: GenZ Multiplayer (NOT ALL CAPS, NO PNG) -->
-        <h1 class="welcome-title-text">Tic Tac Toe: GenZ Multiplayer</h1>
-        
-        <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
-          <span style="font-size: 0.72rem; font-weight: 900; background: rgba(255, 215, 0, 0.15); color: #FFD700; border: 1px solid #FFD700; padding: 2px 10px; border-radius: 12px;">v1.0.1 Official</span>
-          <span style="font-size: 0.72rem; font-weight: 900; background: rgba(0, 245, 255, 0.15); color: #00F5FF; border: 1px solid #00F5FF; padding: 2px 10px; border-radius: 12px;">100 Feni Villages Map</span>
+      
+      <!-- HERO ART WITH FLOATING BADGES -->
+      <div class="welcome-hero-art-wrapper">
+        <!-- TOP-RIGHT BADGE -->
+        <div class="badge-pill top-right">
+          🔥 100 Villages
         </div>
+
+        <!-- CENTER HERO IMAGE CARD -->
+        <div class="welcome-hero-art">
+          <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
+        </div>
+
+        <!-- BOTTOM-LEFT BADGE -->
+        <div class="badge-pill bottom-left">
+          👑 Unbeatable AI
+        </div>
+      </div>
+
+      <!-- TITLE & SUBTITLE AREA -->
+      <div class="welcome-text-area">
+        <h1 class="hero-main-title">
+          <span class="title-top">Tic Tac Toe:</span>
+          <span class="title-bottom">GenZ Multiplayer</span>
+        </h1>
         
-        <p style="font-size: 0.84rem; color: #FFE066; font-weight: 800; margin-top: 8px; max-width: 320px; line-height: 1.4;">
-          Evolving Chess Pieces • Royal Gold Theme • 3x3 Classic Board
+        <p class="hero-description-text">
+          Explore 100 authentic Feni villages, scale from 3x3 to 12x12 boards, and conquer the Minimax AI engine!
         </p>
       </div>
+
+      <!-- BOTTOM CTA BUTTON -->
       <button class="start-app-btn" id="startAppBtn">LET'S START 🚀</button>
+
     </div>
   </div>
 
