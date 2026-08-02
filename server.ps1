@@ -1,35 +1,34 @@
-$port = 9090
 $listener = New-Object System.Net.HttpListener
-$listener.Prefixes.Add("http://localhost:$port/")
-try {
-    $listener.Start()
-    Write-Host "Server running at http://localhost:$port/"
-    $folder = $PSScriptRoot
+$listener.Prefixes.Add("http://localhost:9090/")
+$listener.Start()
+Write-Host "Server running at http://localhost:9090/"
 
-    while ($listener.IsListening) {
+while ($listener.IsListening) {
+    try {
         $context = $listener.GetContext()
-        $response = $context.Response
         $request = $context.Request
-        
+        $response = $context.Response
+
         $path = $request.Url.LocalPath
         if ($path -eq "/") { $path = "/index.html" }
-        $filePath = Join-Path $folder $path.TrimStart('/')
+        $localPath = Join-Path (Get-Location) $path.Substring(1)
 
-        if (Test-Path $filePath -PathType Leaf) {
-            $content = [System.IO.File]::ReadAllBytes($filePath)
-            if ($filePath.EndsWith(".html")) { $response.ContentType = "text/html; charset=utf-8" }
-            elseif ($filePath.EndsWith(".css")) { $response.ContentType = "text/css" }
-            elseif ($filePath.EndsWith(".js")) { $response.ContentType = "application/javascript" }
-            elseif ($filePath.EndsWith(".apk")) { $response.ContentType = "application/vnd.android.package-archive" }
-            $response.ContentLength64 = $content.Length
-            $response.OutputStream.Write($content, 0, $content.Length)
+        if (Test-Path $localPath) {
+            $bytes = [System.IO.File]::ReadAllBytes($localPath)
+            
+            if ($localPath.EndsWith(".html")) { $response.ContentType = "text/html; charset=utf-8" }
+            elseif ($localPath.EndsWith(".png")) { $response.ContentType = "image/png" }
+            elseif ($localPath.EndsWith(".jpg")) { $response.ContentType = "image/jpeg" }
+            elseif ($localPath.EndsWith(".js")) { $response.ContentType = "application/javascript" }
+            elseif ($localPath.EndsWith(".css")) { $response.ContentType = "text/css" }
+
+            $response.ContentLength64 = $bytes.Length
+            $response.OutputStream.Write($bytes, 0, $bytes.Length)
         } else {
             $response.StatusCode = 404
         }
-        $response.Close()
+        $response.OutputStream.Close()
+    } catch {
+        # Catch and continue listening
     }
-} catch {
-    Write-Error $_.Exception.Message
-} finally {
-    $listener.Stop()
 }
