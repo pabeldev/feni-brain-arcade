@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tic Tac Toe: Multiplayer GenZ</title>
+  <title>Tic Tac Toe:GenZ Multiplayer</title>
   <link rel="icon" type="image/jpeg" href="app-icon.jpg">
   <style>
     :root {
@@ -159,12 +159,12 @@
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px var(--gold-glow);
     }
 
-    /* MAIN TITLE LOGO PNG - PURE TRANSPARENT WITH NO BOX BACKGROUND */
+    /* MAIN TITLE LOGO PNG - USED DIRECTLY AS THE GAME NAME TITLE (NO WHITE BOX, 100% TRANSPARENT TEXT) */
     .main-title-logo-png {
       width: 100%;
-      max-width: 270px;
+      max-width: 280px;
       height: auto;
-      filter: drop-shadow(0 0 16px var(--gold-glowing)) drop-shadow(0 0 25px rgba(255, 215, 0, 0.7));
+      filter: drop-shadow(0 0 16px var(--gold-glowing)) drop-shadow(0 0 28px rgba(255, 215, 0, 0.8));
       margin: 16px 0 6px 0;
       display: block;
     }
@@ -517,8 +517,8 @@
         <img src="app-icon.jpg" alt="Game Hero" class="welcome-hero-img">
       </div>
       <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <!-- DYNAMICALLY DEDICATED CANVAS-CLEANED TRANSPARENT LOGO -->
-        <img id="mainTitleLogoImg" alt="Tic Tac Toe GenZ Logo" class="main-title-logo-png" src="logo_full.png">
+        <!-- GAME NAME LOGO PNG IMAGE DISPLAY (DIRECT REPLACEMENT FOR TITLE TEXT) -->
+        <img id="mainTitleLogoImg" alt="Tic Tac Toe:GenZ Multiplayer" class="main-title-logo-png" src="logo_full.png">
         <p style="font-size: 0.88rem; color: #FFE066; font-weight: 800; margin-top: 4px;">
           Feni 100-Villages Royal Map & Evolving Chess Pieces!
         </p>
@@ -569,7 +569,7 @@
     </div>
   </div>
 
-  <!-- VIEW 2: 3x3 GAMEPLAY SCREEN -->
+  <!-- VIEW 2: CLEAN 3x3 GAMEPLAY SCREEN -->
   <div class="app-screen hidden" id="gameScreen">
     <div class="game-header">
       <button class="back-btn" id="backToMapBtn">◀ Map</button>
@@ -756,43 +756,64 @@
   </div>
 
   <script>
-    // DYNAMIC CANVAS LOGO CLEANER: STRIPS WHITE CANVAS AND TURNS TEXT TO GOLD
+    // DYNAMIC CANVAS LOGO CLEANER & AUTO-CROPPER: STRIPS WHITE CANVAS AND TURNS TEXT TO GOLD
     function processTransparentLogo() {
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src = "logo_full.png";
       img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
+        const rawCanvas = document.createElement('canvas');
+        rawCanvas.width = img.width;
+        rawCanvas.height = img.height;
+        const ctx = rawCanvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
 
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const imgData = ctx.getImageData(0, 0, rawCanvas.width, rawCanvas.height);
         const data = imgData.data;
 
-        for (let i = 0; i < data.length; i += 4) {
-          const r = data[i];
-          const g = data[i+1];
-          const b = data[i+2];
+        let minX = rawCanvas.width, minY = rawCanvas.height, maxX = 0, maxY = 0;
 
-          // If pixel is white or near white (r > 195, g > 195, b > 195) -> 100% TRANSPARENT!
-          if (r > 195 && g > 195 && b > 195) {
-            data[i+3] = 0; // Alpha = 0
-          } else {
-            // Text pixel -> Turn to Luminous Gold (#FFD700)
-            data[i] = 255;   // Red
-            data[i+1] = 215; // Green
-            data[i+2] = 0;   // Blue
-            data[i+3] = 255; // Alpha
+        for (let y = 0; y < rawCanvas.height; y++) {
+          for (let x = 0; x < rawCanvas.width; x++) {
+            const idx = (y * rawCanvas.width + x) * 4;
+            const r = data[idx];
+            const g = data[idx+1];
+            const b = data[idx+2];
+
+            // White canvas pixels -> 100% TRANSPARENT
+            if (r > 190 && g > 190 && b > 190) {
+              data[idx+3] = 0;
+            } else {
+              // Black text pixels -> Turn to Luminous Gold (#FFD700)
+              data[idx] = 255;   // Red
+              data[idx+1] = 215; // Green
+              data[idx+2] = 0;   // Blue
+              data[idx+3] = 255; // Alpha
+
+              if (x < minX) minX = x;
+              if (x > maxX) maxX = x;
+              if (y < minY) minY = y;
+              if (y > maxY) maxY = y;
+            }
           }
         }
 
         ctx.putImageData(imgData, 0, 0);
-        const transparentLogoUrl = canvas.toDataURL('image/png');
-        const logoImgEl = document.getElementById('mainTitleLogoImg');
-        if (logoImgEl) {
-          logoImgEl.src = transparentLogoUrl;
+
+        // Crop tightly around bounding box of text
+        if (maxX > minX && maxY > minY) {
+          const cropW = maxX - minX + 1;
+          const cropH = maxY - minY + 1;
+
+          const cropCanvas = document.createElement('canvas');
+          cropCanvas.width = cropW;
+          cropCanvas.height = cropH;
+          const cropCtx = cropCanvas.getContext('2d');
+          cropCtx.drawImage(rawCanvas, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+
+          const finalUrl = cropCanvas.toDataURL('image/png');
+          const logoEl = document.getElementById('mainTitleLogoImg');
+          if (logoEl) logoEl.src = finalUrl;
         }
       };
     }
@@ -1297,7 +1318,7 @@
 
     window.openWhatsAppPurchase = function() {
       audioManager.playClick();
-      const message = encodeURIComponent("Hello! I want to buy coins for Tic Tac Toe: Multiplayer GenZ game.");
+      const message = encodeURIComponent("Hello! I want to buy coins for Tic Tac Toe:GenZ Multiplayer game.");
       window.open(`https://wa.me/8801615288259?text=${message}`, '_blank');
     };
 
