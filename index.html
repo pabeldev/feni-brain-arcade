@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Tic Tac Toe: GenZ Multiplayer</title>
   <link rel="icon" type="image/jpeg" href="app-icon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       /* ROYAL CYBER-NEON PALETTE */
@@ -46,11 +49,14 @@
       -webkit-user-select: none;
     }
 
+    body, button, input, select, textarea {
+      font-family: 'Fredoka', 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
     body {
       background: var(--bg-dark-obsidian);
       background-image: var(--bg-royal-gradient);
       color: #FFFFFF;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
       min-height: 100vh;
       min-height: -webkit-fill-available;
       display: flex;
@@ -573,14 +579,14 @@
     }
     .modal-overlay.active .modal-card { transform: scale(1); }
 
-    /* ROYAL 3D COIN SHOP MODAL (MATCHING REFERENCE UI) */
+    /* ROYAL 3D COIN SHOP MODAL (NEON ORANGE THEME) */
     .coin-shop-container {
       width: 95%; max-width: 400px;
-      background: linear-gradient(180deg, #093774 0%, #062350 100%);
-      border: 3.5px solid #1E6BE6; border-radius: 28px;
+      background: linear-gradient(180deg, #1F0A38 0%, #0E041F 100%);
+      border: 3.5px solid #FF8800; border-radius: 28px;
       padding: 16px 14px 20px 14px; text-align: center;
       display: flex; flex-direction: column; align-items: center; gap: 10px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), inset 0 2px 4px rgba(255,255,255,0.25);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 136, 0, 0.35);
       position: relative; overflow: hidden; transform: scale(0.85);
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       max-height: 94vh; overflow-y: auto;
@@ -593,28 +599,28 @@
     }
 
     .shop-currency-pill {
-      background: #041B3B; border: 2px solid #00D2FF; border-radius: 20px;
+      background: rgba(18, 10, 42, 0.9); border: 2px solid #FFD700; border-radius: 20px;
       padding: 4px 14px; font-size: 0.92rem; font-weight: 950; color: #FFF;
       display: flex; align-items: center; gap: 6px;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3), inset 0 2px 4px rgba(0,0,0,0.5);
     }
-    .shop-currency-pill.diamonds { border-color: #FF2E93; }
+    .shop-currency-pill.diamonds { border-color: #FF2E93; box-shadow: 0 0 10px rgba(255, 46, 147, 0.3); }
 
     .shop-ribbon-banner {
-      width: 82%; background: linear-gradient(180deg, #FFDF43 0%, #FFA800 100%);
-      border: 2px solid #FFF5B8; border-radius: 12px;
-      padding: 8px 0; color: #743400; font-size: 1.35rem; font-weight: 950;
+      width: 84%; background: linear-gradient(180deg, #FFD700 0%, #FF6B00 100%);
+      border: 2px solid #FFE57F; border-radius: 14px;
+      padding: 8px 0; color: #FFF; font-size: 1.38rem; font-weight: 950;
       text-transform: uppercase; letter-spacing: 1px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), inset 0 2px 2px #FFFFFF;
-      position: relative; text-shadow: 0 1px 0 #FFF5B8; margin-top: -4px;
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5), inset 0 2px 2px #FFFFFF;
+      position: relative; text-shadow: 0 2px 4px rgba(120, 40, 0, 0.8); margin-top: -4px;
     }
 
     .shop-close-x {
       position: absolute; top: 12px; right: 14px;
       width: 34px; height: 34px; border-radius: 50%;
-      background: #1856B2; border: 2px solid #5CA0FF; color: #FFF;
+      background: #2D1454; border: 2px solid #FF8800; color: #FFF;
       font-size: 1.1rem; font-weight: 900; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.1s ease;
+      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); transition: transform 0.1s ease;
       z-index: 10;
     }
     .shop-close-x:active { transform: scale(0.9); }
@@ -624,38 +630,39 @@
     }
 
     .shop-card {
-      background: linear-gradient(180deg, #3A9BE9 0%, #70C5FB 40%, #5BB7F5 100%);
-      border: 3px solid #2062C7; border-radius: 20px;
+      background: linear-gradient(180deg, #381666 0%, #210B42 100%);
+      border: 2.5px solid #FF6B00; border-radius: 20px;
       padding: 10px 8px 12px 8px; display: flex; flex-direction: column; align-items: center;
-      position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.35); overflow: hidden;
+      position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.5), 0 0 14px rgba(255, 107, 0, 0.2); overflow: hidden;
     }
 
     .shop-card-title {
-      font-size: 0.92rem; font-weight: 950; color: #FFF; text-transform: uppercase;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); margin-bottom: 2px;
+      font-size: 0.92rem; font-weight: 950; color: #FFE066; text-transform: uppercase;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); margin-bottom: 2px;
     }
 
     .shop-card-sub {
-      font-size: 0.65rem; font-weight: 900; color: #FFF8C5; text-transform: uppercase;
-      margin-top: -2px; margin-bottom: 4px; text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      font-size: 0.65rem; font-weight: 900; color: #FFAB40; text-transform: uppercase;
+      margin-top: -2px; margin-bottom: 4px; text-shadow: 0 1px 2px rgba(0,0,0,0.8);
     }
 
     .shop-art-box {
       width: 100%; height: 76px; display: flex; align-items: center; justify-content: center;
       position: relative; margin: 2px 0;
-      background: radial-gradient(circle, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 70%);
+      background: radial-gradient(circle, rgba(255,168,0,0.35) 0%, rgba(255,168,0,0) 70%);
     }
 
-    .shop-coin-img { font-size: 3rem; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4)); animation: floatCoin 3s ease-in-out infinite alternate; }
+    .shop-coin-img { font-size: 3rem; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6)); animation: floatCoin 3s ease-in-out infinite alternate; }
 
+    /* NEON ORANGE BUY BUTTON */
     .shop-buy-btn {
       width: 92%; height: 38px;
-      background: linear-gradient(180deg, #7BE800 0%, #469B00 100%);
-      border: 2px solid #A8FF3E; border-radius: 19px;
+      background: linear-gradient(180deg, #FF7700 0%, #FF3D00 100%);
+      border: 2px solid #FFAB40; border-radius: 19px;
       color: #FFF; font-size: 1.05rem; font-weight: 950;
-      cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.6);
+      cursor: pointer; box-shadow: 0 6px 16px rgba(255, 61, 0, 0.5), inset 0 2px 2px rgba(255,255,255,0.7);
       display: flex; align-items: center; justify-content: center;
-      text-shadow: 0 2px 3px rgba(0,0,0,0.5); transition: transform 0.1s ease;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.6); transition: transform 0.1s ease;
     }
     .shop-buy-btn:active { transform: scale(0.94); }
 
@@ -664,7 +671,7 @@
       background: linear-gradient(135deg, #FF1744, #D50000);
       border: 1.5px solid #FFF; border-radius: 10px;
       color: #FFF; font-size: 0.62rem; font-weight: 950; padding: 2px 6px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.4); text-transform: uppercase; transform: rotate(6deg);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5); text-transform: uppercase; transform: rotate(6deg);
     }
 
     .primary-cta-btn {
@@ -881,7 +888,48 @@
         <div class="pregame-row"><span>Win Target:</span><span style="color: var(--gold-glowing);">Match 3 Pieces</span></div>
       </div>
       <button class="primary-cta-btn" id="startMatchCtaBtn">START MATCH 🚀</button>
+      <button class="primary-cta-btn" id="openPassLevelModalFromPreGameBtn" style="background: linear-gradient(135deg, #FF9100, #FF3D00); box-shadow: 0 6px 16px rgba(255, 107, 0, 0.4); margin-top: 2px;">🪙 PASS LEVEL (1000 COINS)</button>
       <button class="secondary-cancel-btn" id="cancelPreGameBtn">CANCEL ❌</button>
+    </div>
+  </div>
+
+  <!-- 1000 COIN LEVEL PASS CONFIRMATION MODAL -->
+  <div class="modal-overlay" id="passLevelModal">
+    <div class="modal-card">
+      <div style="font-size: 3rem;">🪙 🏰</div>
+      <div style="font-size: 1.3rem; font-weight: 950; color: #FF6B00;">PASS LEVEL WITH COINS</div>
+      <div style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark-slate);">
+        Do you want to unlock <span style="color: #FF8800; font-weight: 950;" id="passLevelTargetName">Level 2</span> for 🪙 1000 Coins?
+      </div>
+      <div style="font-size: 0.78rem; font-weight: 800; color: #777;">Your Balance: 🪙 <span id="passModalCurrentCoins">500</span> Coins</div>
+      
+      <button class="primary-cta-btn" id="confirmPassLevelBtn" style="background: linear-gradient(135deg, #FF9100, #FF3D00); box-shadow: 0 6px 16px rgba(255, 107, 0, 0.4);">CONFIRM UNLOCK (🪙 1000)</button>
+      <button class="secondary-cancel-btn" id="cancelPassLevelBtn">CANCEL ❌</button>
+    </div>
+  </div>
+
+  <!-- PHONE NUMBER LOGIN MODAL -->
+  <div class="modal-overlay" id="phoneLoginModal">
+    <div class="modal-card">
+      <div style="font-size: 2.8rem;">📱 🔐</div>
+      <div style="font-size: 1.3rem; font-weight: 950; color: #FF6B00;">PHONE LOGIN / REGISTER</div>
+      <div style="font-size: 0.84rem; font-weight: 800; color: var(--text-muted-slate);">Enter your Bangladeshi phone number to save game progress & profile stats.</div>
+      
+      <div style="width: 100%; text-align: left; margin-top: 6px;">
+        <label style="font-size: 0.78rem; font-weight: 900; color: var(--text-dark-slate); text-transform: uppercase;">Phone Number (+880):</label>
+        <div style="display: flex; align-items: center; background: #F8F5EE; border: 2px solid #FF8800; border-radius: 16px; padding: 6px 12px; margin-top: 4px; gap: 8px;">
+          <span style="font-weight: 950; font-size: 1rem; color: #FF6B00;">🇧🇩 +880</span>
+          <input type="tel" id="loginPhoneInput" placeholder="01712345678" maxlength="11" style="flex: 1; border: none; background: transparent; outline: none; font-size: 1.05rem; font-weight: 950; color: var(--text-dark-slate);">
+        </div>
+      </div>
+
+      <div style="width: 100%; text-align: left; margin-top: 6px;">
+        <label style="font-size: 0.78rem; font-weight: 900; color: var(--text-dark-slate); text-transform: uppercase;">Player Name / Alias:</label>
+        <input type="text" id="loginUsernameInput" placeholder="e.g. Feni Champion" style="width: 100%; background: #F8F5EE; border: 1.5px solid #E6DCD0; border-radius: 14px; padding: 8px 12px; margin-top: 4px; outline: none; font-size: 0.95rem; font-weight: 900; color: var(--text-dark-slate);">
+      </div>
+
+      <button class="primary-cta-btn" id="submitPhoneLoginBtn" style="background: linear-gradient(135deg, #FF9100, #FF3D00); box-shadow: 0 6px 16px rgba(255, 107, 0, 0.4); margin-top: 8px;">LOG IN & SAVE 🚀</button>
+      <button class="secondary-cancel-btn" id="closePhoneLoginBtn">CANCEL ❌</button>
     </div>
   </div>
 
@@ -896,6 +944,7 @@
           <input type="text" id="hubUsernameInput" style="font-size: 1rem; font-weight: 950; color: var(--text-dark-slate); border: none; background: transparent; outline: none; width: 100%;" value="Guest Player">
           <div style="font-size: 0.74rem; font-weight: 800; color: var(--text-muted-slate);" id="hubPhoneText">+880 (Guest Account)</div>
         </div>
+        <button id="openPhoneLoginFromHubBtn" style="background: linear-gradient(135deg, #FF9100, #FF3D00); border: none; border-radius: 12px; color: #FFF; font-size: 0.72rem; font-weight: 950; padding: 6px 10px; cursor: pointer;">📱 LOGIN</button>
       </div>
 
       <!-- AVATAR SELECTION -->
@@ -1060,7 +1109,7 @@
         this.soundEnabled = localStorage.getItem('feniSoundEnabled') !== 'false';
         this.hapticEnabled = localStorage.getItem('feniHapticEnabled') !== 'false';
         this.bgmEnabled = localStorage.getItem('feniBgmEnabled') === 'true';
-        this.bgmOsc = null;
+        this.bgmInterval = null;
       }
 
       initCtx() {
@@ -1069,15 +1118,17 @@
           if (AudioCtx) this.ctx = new AudioCtx();
         }
         if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+        if (this.bgmEnabled && !this.bgmInterval) {
+          this.startBgmLoop();
+        }
       }
 
       playClick() {
         if (this.hapticEnabled && navigator.vibrate) {
           try { navigator.vibrate(20); } catch(e){}
         }
-        if (!this.soundEnabled) return;
         this.initCtx();
-        if (!this.ctx) return;
+        if (!this.soundEnabled || !this.ctx) return;
         try {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
@@ -1091,9 +1142,8 @@
       }
 
       playVictory() {
-        if (!this.soundEnabled) return;
         this.initCtx();
-        if (!this.ctx) return;
+        if (!this.soundEnabled || !this.ctx) return;
         try {
           [523.25, 659.25, 783.99].forEach((freq, idx) => {
             const osc = this.ctx.createOscillator();
@@ -1109,6 +1159,48 @@
         } catch(e){}
       }
 
+      startBgmLoop() {
+        if (!this.bgmEnabled) return;
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (!this.ctx) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        if (this.bgmInterval) return;
+
+        const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23, 329.63, 293.66];
+        let noteIdx = 0;
+
+        this.bgmInterval = setInterval(() => {
+          if (!this.bgmEnabled || !this.ctx) {
+            this.stopBgmLoop();
+            return;
+          }
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          try {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(notes[noteIdx % notes.length], this.ctx.currentTime);
+            gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.55);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(this.ctx.currentTime + 0.55);
+            noteIdx++;
+          } catch(e){}
+        }, 550);
+      }
+
+      stopBgmLoop() {
+        if (this.bgmInterval) {
+          clearInterval(this.bgmInterval);
+          this.bgmInterval = null;
+        }
+      }
+
       setSound(enabled) {
         this.soundEnabled = enabled;
         localStorage.setItem('feniSoundEnabled', enabled.toString());
@@ -1120,9 +1212,19 @@
       setBgm(enabled) {
         this.bgmEnabled = enabled;
         localStorage.setItem('feniBgmEnabled', enabled.toString());
+        if (enabled) {
+          this.startBgmLoop();
+        } else {
+          this.stopBgmLoop();
+        }
       }
     }
     const audioManager = new SoundEngine();
+
+    // GLOBAL USER INTERACTION LISTENER FOR BGM AUDIO CONTEXT UNLOCK
+    document.addEventListener('click', () => {
+      audioManager.initCtx();
+    }, { once: false });
 
     // 3D NEON GLASS BUBBLES & JONAKI POKA BACKGROUND EFFECTS
     function init3DBackgroundEffects() {
@@ -1221,6 +1323,7 @@
     let streakCount = parseInt(localStorage.getItem('feniStreak') || '4');
     let playerUsername = localStorage.getItem('feniUsername') || 'Guest Player';
     let playerAvatar = localStorage.getItem('feniAvatar') || '👑';
+    let playerPhone = localStorage.getItem('feniPhone') || '';
     let levelConsecutiveWins = parseInt(localStorage.getItem('feniLevelWins') || '0');
 
     const AVATAR_OPTIONS = ['👑', '🤖', '⚔️', '🦊', '🐯', '👽', '🦸‍♂️', '🐲'];
@@ -1232,6 +1335,7 @@
       localStorage.setItem('feniStreak', streakCount.toString());
       localStorage.setItem('feniUsername', playerUsername);
       localStorage.setItem('feniAvatar', playerAvatar);
+      localStorage.setItem('feniPhone', playerPhone);
       localStorage.setItem('feniLevelWins', levelConsecutiveWins.toString());
       localStorage.setItem('feniMatches', totalMatchesPlayed.toString());
       localStorage.setItem('feniWins', totalWins.toString());
@@ -1246,6 +1350,12 @@
       document.getElementById('headerAvatarBubble').textContent = playerAvatar;
       document.getElementById('hubAvatarBubble').textContent = playerAvatar;
       document.getElementById('hubUsernameInput').value = playerUsername;
+
+      const phoneTextEl = document.getElementById('hubPhoneText');
+      if (phoneTextEl) {
+        phoneTextEl.textContent = playerPhone ? `🇧🇩 +880 ${playerPhone}` : '+880 (Guest Account)';
+      }
+
       document.getElementById('streakNumModal').textContent = streakCount;
       document.getElementById('storeModalCoins').textContent = coins;
       document.getElementById('storeModalDiamonds').textContent = diamonds;
@@ -1398,8 +1508,14 @@
         }
 
         hutBtn.addEventListener('click', () => {
-          if (i <= currentLevel) openPreGameModal(i);
-          else alert(`🔒 Level ${i} is locked! Complete Level ${currentLevel} first.`);
+          if (i <= currentLevel) {
+            openPreGameModal(i);
+          } else if (i === currentLevel + 1) {
+            openPassLevelModal(i);
+          } else {
+            audioManager.playClick();
+            alert(`🔒 Level ${i} is locked! You can only pass the immediate next level (Level ${currentLevel + 1}) for 🪙 1000 Coins. Complete or pass Level ${currentLevel} first!`);
+          }
         });
 
         const starsBadge = document.createElement('div');
@@ -1438,8 +1554,76 @@
       const guti = getGutiTheme(lvl);
 
       document.getElementById('preGameTitle').textContent = `Level ${lvl}: ${vName}`;
-      document.getElementById('preGameGutiText').textContent = `${guti.label} (${guti.pX} vs ${guti.pO})`;
+      document.getElementById('preGameGutiText').textContent = guti.name;
+
+      if (openPassLevelModalFromPreGameBtn) {
+        if (lvl === currentLevel) {
+          openPassLevelModalFromPreGameBtn.style.display = 'block';
+        } else {
+          openPassLevelModalFromPreGameBtn.style.display = 'none';
+        }
+      }
+
       preGameModal.classList.add('active');
+    }
+
+    // 1000 COIN LEVEL PASS MODAL ENGINE
+    let targetPassLevel = 1;
+    const passLevelModal = document.getElementById('passLevelModal');
+    const confirmPassLevelBtn = document.getElementById('confirmPassLevelBtn');
+    const cancelPassLevelBtn = document.getElementById('cancelPassLevelBtn');
+    const openPassLevelModalFromPreGameBtn = document.getElementById('openPassLevelModalFromPreGameBtn');
+
+    function openPassLevelModal(targetLvl) {
+      audioManager.playClick();
+      targetPassLevel = targetLvl || (currentLevel + 1);
+      const targetName = FENI_100_VILLAGES[targetPassLevel - 1] || `Level ${targetPassLevel}`;
+      
+      document.getElementById('passLevelTargetName').textContent = `Level ${targetPassLevel}: ${targetName}`;
+      document.getElementById('passModalCurrentCoins').textContent = coins;
+      
+      preGameModal.classList.remove('active');
+      passLevelModal.classList.add('active');
+    }
+
+    if (openPassLevelModalFromPreGameBtn) {
+      openPassLevelModalFromPreGameBtn.addEventListener('click', () => {
+        openPassLevelModal(selectedLevelToPlay);
+      });
+    }
+
+    if (cancelPassLevelBtn) {
+      cancelPassLevelBtn.addEventListener('click', () => {
+        audioManager.playClick();
+        passLevelModal.classList.remove('active');
+      });
+    }
+
+    if (confirmPassLevelBtn) {
+      confirmPassLevelBtn.addEventListener('click', () => {
+        audioManager.playClick();
+        if (coins >= 1000) {
+          coins -= 1000;
+          if (targetPassLevel >= currentLevel && currentLevel < 100) {
+            currentLevel = targetPassLevel + 1;
+            levelConsecutiveWins = 0;
+          } else if (targetPassLevel < currentLevel && currentLevel < 100) {
+            currentLevel++;
+            levelConsecutiveWins = 0;
+          }
+          updateUI();
+          saveState();
+          audioManager.playVictory();
+          passLevelModal.classList.remove('active');
+          const newV = FENI_100_VILLAGES[currentLevel - 1] || `Level ${currentLevel}`;
+          alert(`🎉 Level Passed for 🪙 1000 Coins!\nWelcome to Level ${currentLevel}: ${newV}! 🚀`);
+          renderVerticalSPathAndNodes();
+          setTimeout(scrollToActiveNode, 150);
+        } else {
+          alert(`💔 Not enough coins! You have 🪙 ${coins} coins, but need 🪙 1000 coins.`);
+          passLevelModal.classList.remove('active');
+        }
+      });
     }
 
     cancelPreGameBtn.addEventListener('click', () => {
@@ -1547,6 +1731,49 @@
     });
 
     closeSettingsCtaBtn.addEventListener('click', () => settingsModal.classList.remove('active'));
+
+    // PHONE NUMBER LOGIN ENGINE
+    const phoneLoginModal = document.getElementById('phoneLoginModal');
+    const openPhoneLoginFromWelcomeBtn = document.getElementById('openPhoneLoginFromWelcomeBtn');
+    const openPhoneLoginFromHubBtn = document.getElementById('openPhoneLoginFromHubBtn');
+    const closePhoneLoginBtn = document.getElementById('closePhoneLoginBtn');
+    const submitPhoneLoginBtn = document.getElementById('submitPhoneLoginBtn');
+    const loginPhoneInput = document.getElementById('loginPhoneInput');
+    const loginUsernameInput = document.getElementById('loginUsernameInput');
+
+    function openPhoneLoginModal() {
+      audioManager.playClick();
+      if (loginPhoneInput) loginPhoneInput.value = playerPhone;
+      if (loginUsernameInput) loginUsernameInput.value = playerUsername;
+      phoneLoginModal.classList.add('active');
+    }
+
+    if (openPhoneLoginFromWelcomeBtn) openPhoneLoginFromWelcomeBtn.addEventListener('click', openPhoneLoginModal);
+    if (openPhoneLoginFromHubBtn) openPhoneLoginFromHubBtn.addEventListener('click', () => {
+      profileHubModal.classList.remove('active');
+      openPhoneLoginModal();
+    });
+    if (closePhoneLoginBtn) closePhoneLoginBtn.addEventListener('click', () => phoneLoginModal.classList.remove('active'));
+
+    if (submitPhoneLoginBtn) {
+      submitPhoneLoginBtn.addEventListener('click', () => {
+        audioManager.playClick();
+        const phoneVal = loginPhoneInput.value.trim();
+        const unameVal = loginUsernameInput.value.trim();
+
+        if (!phoneVal || phoneVal.length < 10) {
+          alert('⚠️ Please enter a valid 11-digit Bangladeshi phone number (e.g. 01712345678).');
+          return;
+        }
+
+        playerPhone = phoneVal;
+        if (unameVal) playerUsername = unameVal;
+        saveState();
+        updateUI();
+        phoneLoginModal.classList.remove('active');
+        alert(`🎉 Logged in successfully!\nPhone: +880 ${playerPhone}\nPlayer: ${playerUsername}`);
+      });
+    }
 
     // NAVIGATION SYSTEM
     const welcomeScreen = document.getElementById('welcomeScreen');
